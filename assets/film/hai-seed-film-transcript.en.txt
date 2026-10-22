@@ -1,0 +1,40 @@
+HAI Seed: Talk to your company
+English film · 2 minutes 4 seconds
+
+00:00-00:08.5
+What needs my attention today? The answer is spread across your company, in emails, records and conversations.
+
+00:08.5-00:20.5
+HAI Seed is software that connects AI to your company’s information, rules and tools, so your team can get work done without explaining the business from scratch every time.
+
+00:20.5-00:27.5
+Existing AI models provide the reasoning. HAI brings your business into the task.
+
+00:27.5-00:36.5
+HAI connects selected sources into a working memory for your company, linking records, decisions and follow-ups across tasks.
+
+00:36.5-00:49
+For example, an invoice is overdue. The same customer has reported an unresolved delivery issue. HAI connects both, so your team can check the report before chasing payment.
+
+00:49-00:59.5
+Now ask bigger questions. Where are sales getting stuck? What is tying up cash? What should we know before meeting this customer?
+
+00:59.5-01:12.5
+The same company context can support analysis, proposals, marketing, procurement and onboarding guidance. You get prepared work and a clearer basis for decisions.
+
+01:12.5-01:24
+With recurring checks configured, HAI can surface changes, prepare priorities and carry agreed follow-ups forward. Your team decides what action to take.
+
+01:24-01:35
+Teach it as you work. Share a reliable source. Correct an assumption. Confirm what it should remember. The next task starts from that knowledge.
+
+01:35-01:47.5
+Start with one useful job on a supported company computer, or a dedicated setup by arrangement. Connect sources, set access, then expand by role.
+
+01:47.5-01:58.5
+Company memory is stored on your machine. Connected AI services process information used for the task. You choose the sources and access you grant.
+
+01:58.5-02:04
+HAI Seed. Talk to your company.
+
+End card only: HAI Seed by MUNERON. Talk to your company. Start with one question.
