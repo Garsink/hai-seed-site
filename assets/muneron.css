@@ -141,7 +141,7 @@ button,a,summary{-webkit-tap-highlight-color:transparent}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:'+';font-size:1.75rem;line-height:1;width:28px;flex:none;color:var(--accent);text-align:center}
 .faq[open] summary::after{transform:rotate(45deg)}.faq .answer{padding:0 64px 28px 0;color:var(--dim);max-width:68ch}
-.closing{background:var(--tint);padding-block:clamp(72px,9vw,136px)}
+.closing{background:var(--surface);border-top:1px solid var(--line);padding-block:clamp(72px,9vw,136px)}
 .closing .inner{display:grid;grid-template-columns:1.3fr 1fr;gap:40px 64px;align-items:end}
 .closing h2{font-size:clamp(2.8rem,5.8vw,5.5rem);line-height:1.03;max-width:14ch;margin-bottom:28px}
 .closing .lead{max-width:42ch}.closing .actions{margin:0;justify-content:flex-end}.closing .button{min-width:240px}
@@ -207,7 +207,7 @@ button,a,summary{-webkit-tap-highlight-color:transparent}
   .nav-menu-links a{padding:16px 0;font-size:1.65rem}
   .hero{min-height:680px;max-height:900px}.hero-content{padding-top:180px;padding-bottom:64px}
   .hero h1{font-size:clamp(3.1rem,9.5vw,5.2rem)}
-  .hero-photo img{object-position:58% center}
+  .hero-photo img{object-position:30% center}
   .hero-bottom{align-items:flex-start;gap:24px}.hero-explore{gap:20px}
   .chapter-head,.split,.arch,.origin,.agents-grid,.closing .inner{grid-template-columns:1fr;gap:32px}
   .demo-panel{grid-template-columns:1fr;gap:40px}.demo-rail{max-width:none}.demo-sub{max-width:50ch}.demo-rail h2 br{display:none}
@@ -258,3 +258,10 @@ button,a,summary{-webkit-tap-highlight-color:transparent}
 .footer-brand{display:block;padding:16px 0}.footer-brand img{display:block;width:300px;height:auto}
 @media(max-width:800px){.identity-endorsement{display:none}.extra-costs>div{gap:24px}.pricing-plans{grid-template-columns:1fr;gap:0}.pricing-plans>div+div{border-top:0}}
 @media(max-width:480px){.identity-logo{width:132px}.header-cta{display:none}.extra-costs>div{grid-template-columns:1fr;gap:12px}.footer-brand img{width:min(260px,100%)}.price-summary{font-size:1.125rem}}
+
+/* The architecture diagram has an equivalent readable view on narrow screens. */
+.wiring-mobile{display:none}
+.wiring-intro{font-size:1rem;color:var(--dim);margin-bottom:24px}
+.wiring-mobile ul{padding-left:20px;margin-top:16px}.wiring-mobile li+li{margin-top:8px}
+.wiring-mobile .answer{font-size:1rem;padding-right:0}.wiring-mobile .answer p+p,.wiring-mobile .answer ul+p{margin-top:18px}
+@media(max-width:1000px){#wiring .diagram-wrap{display:none}.wiring-mobile{display:block;margin-bottom:40px}.wiring-mobile .faq summary{font-size:1.125rem}}
