@@ -1,5 +1,5 @@
 HAI Seed: Talk to your company
-English film · 2 minutes 4 seconds
+English film · About 2 minutes
 
 00:00-00:08.5
 What needs my attention today? The answer is spread across your company, in emails, records and conversations.
@@ -14,7 +14,7 @@ Existing AI models provide the reasoning. HAI brings your business into the task
 HAI connects selected sources into a working memory for your company, linking records, decisions and follow-ups across tasks.
 
 00:36.5-00:49
-For example, an invoice is overdue. The same customer has reported an unresolved delivery issue. HAI connects both, so your team can check the report before chasing payment.
+After a management meeting, HAI checks commitments against company records, email and earlier decisions. Open items return in the next review, with a named owner and a recommended next step.
 
 00:49-00:59.5
 Now ask bigger questions. Where are sales getting stuck? What is tying up cash? What should we know before meeting this customer?
@@ -22,19 +22,19 @@ Now ask bigger questions. Where are sales getting stuck? What is tying up cash? 
 00:59.5-01:12.5
 The same company context can support analysis, proposals, marketing, procurement and onboarding guidance. You get prepared work and a clearer basis for decisions.
 
-01:12.5-01:24
-With recurring checks configured, HAI can surface changes, prepare priorities and carry agreed follow-ups forward. Your team decides what action to take.
+01:12.5-01:25.2
+Recurring checks keep HAI active between conversations. It spots changes before you think to ask, prepares priorities and carries agreed follow-ups forward. Your team decides what to do.
 
-01:24-01:35
+01:25.2-01:36.2
 Teach it as you work. Share a reliable source. Correct an assumption. Confirm what it should remember. The next task starts from that knowledge.
 
-01:35-01:47.5
-Start with one useful job on a supported company computer, or a dedicated setup by arrangement. Connect sources, set access, then expand by role.
+01:36.2-01:49
+Start on a supported company computer or a preconfigured machine. A dedicated engineer guides the self-onboarding. Then expand across teams, each person with the knowledge and access their role needs.
 
-01:47.5-01:58.5
+01:49-02:00
 Company memory is stored on your machine. Connected AI services process information used for the task. You choose the sources and access you grant.
 
-01:58.5-02:04
+02:00-02:05.5
 HAI Seed. Talk to your company.
 
 End card only: HAI Seed by MUNERON. Talk to your company. Start with one question.

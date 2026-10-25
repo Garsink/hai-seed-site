@@ -1,0 +1,94 @@
+/* Approved HAI Seed layout. */
+.lab-intro h2{max-width:32ch}
+.lab-intro .lab-team{margin-top:28px;max-width:58ch}
+.lab-legacy-anchor{display:block;height:0;line-height:0}
+
+.lab-actions .text-link{min-height:44px}
+.compact-contact{scroll-margin-top:124px}
+
+/* Shared footer: brand introduction and three clear navigation groups. */
+.grouped-footer{background:var(--ground);color:var(--ink);border-top:1px solid var(--line);padding-top:clamp(56px,7vw,96px);scroll-margin-top:124px}
+.footer-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,2fr);gap:clamp(48px,6vw,88px);padding-bottom:clamp(48px,6vw,80px)}
+.footer-intro .footer-brand{display:inline-block;padding:0;margin-bottom:28px;max-width:100%}
+.footer-intro .footer-brand img{width:240px;max-width:100%;height:auto}
+.footer-intro>p{max-width:42ch;color:var(--dim);font-size:1rem;line-height:1.65;text-wrap:pretty}
+.footer-navigation{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;padding-top:14px}
+.footer-group h2{font-size:.875rem;line-height:1.5;font-weight:600;letter-spacing:0;margin:0 0 24px;color:var(--ink)}
+.footer-group ul{list-style:none;padding:0;margin:0}
+.footer-group a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding-block:8px;color:var(--dim);font-size:.9375rem;line-height:1.4}
+.footer-group a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:5px}
+.grouped-footer :focus-visible{outline:2px solid var(--focus);outline-offset:5px}
+.footer-legal{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-block:24px 28px;border-top:1px solid var(--line);color:var(--muted);font-size:.8125rem;line-height:1.5}
+@media(max-width:1000px){.footer-layout{grid-template-columns:1fr;gap:40px}.footer-intro>p{max-width:58ch}.footer-navigation{padding-top:0}.footer-group h2{margin-bottom:16px}}
+@media(max-width:600px){.footer-navigation{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px}.footer-layout{padding-bottom:40px}.footer-intro .footer-brand{margin-bottom:20px}.footer-intro .footer-brand img{width:216px}.footer-group a{font-size:.9375rem}.footer-legal{align-items:flex-start;flex-direction:column;gap:8px}}
+
+/* Product family: broad rows, original marks, and clear routes into detail. */
+.product-row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(100px,.55fr) minmax(0,1fr);grid-template-areas:"copy mark title";align-items:center;gap:clamp(28px,4vw,64px);padding:clamp(40px,5vw,72px) 0;border-top:1px solid var(--line)}
+.product-row:last-child{border-bottom:1px solid var(--line)}
+.product-copy{grid-area:copy;max-width:49ch;color:var(--dim);font-size:1rem;line-height:1.6;text-wrap:pretty}
+.product-copy p+p{margin-top:18px}
+.product-mark{grid-area:mark;width:100%;max-width:152px;height:auto;justify-self:center;color:var(--ink)}
+.product-row-title{grid-area:title;min-width:0}
+.product-row-title h3{font-size:clamp(2.5rem,4vw,4rem);line-height:1.08;letter-spacing:-.035em;font-weight:500;margin:0 0 24px;text-wrap:balance}
+.product-link{display:inline-flex;align-items:center;gap:18px;min-height:44px;font-size:1rem;line-height:1.4;text-decoration:underline;text-underline-offset:6px}
+.product-link span{font-size:1.3em}
+.product-link:focus-visible{outline:2px solid var(--focus);outline-offset:6px}
+.product-link:hover{color:var(--accent)}
+.product-detail-head{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:64px;align-items:center}
+.product-detail-head h1{font-size:clamp(3rem,6vw,5.5rem);line-height:1.05;letter-spacing:-.035em}
+.product-detail-head .product-mark{grid-area:auto;max-width:200px}
+.product-detail-head .lead{max-width:49ch}
+.product-back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:24px;color:var(--accent);font-size:.9375rem;text-decoration:underline;text-underline-offset:5px}
+.product-detail-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(36px,6vw,96px)}
+.product-detail-grid h2{font-size:clamp(2.125rem,3.5vw,3.25rem);max-width:17ch;line-height:1.1;letter-spacing:-.03em;text-wrap:balance}
+.product-detail-copy{max-width:65ch;color:var(--dim)}
+.product-detail-copy p+p{margin-top:20px}
+.product-detail-head .product-detail-copy{margin-top:24px}
+.product-source-list{list-style:none;padding:0;margin-top:28px}
+.product-source-list li{padding:18px 0;border-top:1px solid var(--line)}
+.product-source-list li:last-child{border-bottom:1px solid var(--line)}
+.product-steps{list-style:none;padding:0;margin:0;counter-reset:product-steps}
+.product-steps li{counter-increment:product-steps;position:relative;padding:0 0 28px 42px}
+.product-steps li+li{padding-top:28px;border-top:1px solid var(--line)}
+.product-steps li::before{content:counter(product-steps,decimal-leading-zero);position:absolute;left:0;color:var(--accent);font-size:.875rem;line-height:1.8}
+.product-steps h3{font-size:1.25rem;line-height:1.4;margin-bottom:12px;color:var(--ink);letter-spacing:-.015em}
+.product-detail-copy .actions{margin-top:32px}
+.product-note{border-top:1px solid var(--line);padding-top:24px;margin-top:8px;font-size:.9375rem}
+.product-detail-page .page-head{padding-bottom:64px}
+
+/* Expanded menu retains the existing toggle, Escape and focus behaviour. */
+.site-header.is-open{--z-menu:40;z-index:var(--z-menu);height:calc(100dvh - 36px);background:var(--dark);color:var(--dark-ink);border-color:var(--dark-line)}
+.site-header.is-open .identity-logo{filter:brightness(0) invert(1)}
+.site-header.is-open .identity-endorsement{color:var(--dark-dim)}
+.site-header.is-open .button,.site-header.is-open .nav-toggle{color:var(--dark-ink);border-color:var(--dark-line)}
+.site-header.is-open .nav-toggle:hover,.site-header.is-open .button:hover{background:var(--dark-ink);color:var(--dark)}
+.site-header.is-open .nav-menu{height:calc(100dvh - 154px);max-height:none;padding:24px 20px 36px;border-top-color:var(--dark-line);gap:80px;align-items:flex-start}
+.site-header.is-open .nav-menu-links{min-width:0;flex:1}
+.site-header.is-open .nav-menu-links a{border:0;padding:8px 0;font-size:clamp(1.75rem,3.8vw,3.6rem);letter-spacing:-.03em;min-height:44px}
+.site-header.is-open .nav-menu-links a:nth-child(n+2){color:var(--dark-dim);font-size:clamp(1.35rem,2.5vw,2.5rem)}
+.site-header.is-open .nav-menu-links a:nth-child(5){margin-top:24px}
+.site-header.is-open .nav-menu-links a:hover,.site-header.is-open .nav-menu-links a:focus-visible{color:var(--dark-accent)}
+.site-header.is-open .nav-menu-links a:focus-visible{outline:2px solid var(--dark-accent);outline-offset:5px}
+.site-header.is-open .nav-menu p{color:var(--dark-dim);align-self:flex-end;max-width:24ch}
+body:has(.site-header.is-open){overflow:hidden}
+@media(max-width:800px){
+ .product-row{grid-template-columns:minmax(0,1fr) 116px;grid-template-areas:"title mark" "copy copy";gap:28px 32px;padding:40px 0}
+ .product-row-title h3{font-size:2.5rem;margin-bottom:12px}.product-copy{max-width:62ch}
+ .product-mark{max-width:108px}.product-detail-head{grid-template-columns:minmax(0,1fr) 116px;gap:24px;align-items:start}.product-detail-head>div{display:contents}
+ .product-detail-head .product-back{grid-column:1/-1;margin-bottom:0}.product-detail-head h1{grid-column:1;align-self:center}
+ .product-detail-head .product-mark{grid-column:2;grid-row:2;max-width:116px;align-self:center;margin:0}
+ .product-detail-head .lead,.product-detail-head .product-detail-copy{grid-column:1/-1;margin:0}
+ .product-detail-grid{grid-template-columns:1fr;gap:32px}.product-detail-grid h2{max-width:24ch}
+ .site-header.is-open{height:calc(100dvh - 24px)}.site-header.is-open .nav-menu{height:calc(100dvh - 120px);padding:24px 4px;gap:24px}
+ .site-header.is-open .nav-menu-links a{font-size:2.25rem}.site-header.is-open .nav-menu-links a:nth-child(n+2){font-size:1.5rem}
+}
+@media(max-width:480px){
+ .product-row{grid-template-columns:minmax(0,1fr) 88px;gap:24px 20px}.product-mark{max-width:88px}.product-row-title h3{font-size:2.25rem}.product-copy{font-size:1rem}
+ .product-detail-head{grid-template-columns:minmax(0,1fr) 76px;gap:16px}.product-detail-head .product-mark{max-width:76px}.product-detail-head .lead{font-size:1.1rem}.product-detail-head h1{font-size:3rem}
+ .product-detail-page .page-head{padding-bottom:44px}.product-detail-copy .button{width:100%}
+ .site-header.is-open{height:calc(100dvh - 20px)}.site-header.is-open .nav-menu{height:calc(100dvh - 110px)}
+}
+
+/* One HAI Seed system, with three readable component rows. */
+.products-section .chapter-head>p:last-child{max-width:52ch;margin-top:16px;color:var(--muted)}
+.product-row[id]{scroll-margin-top:110px}
