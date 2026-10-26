@@ -1,5 +1,5 @@
 (() => {
-  const oldHomeLinks = {'#film':'/use-cases/#film','#ask':'/use-cases/#cases','#origin':'/about/#origin','#offer':'/pricing/#pricing'};
+  const oldHomeLinks = {'#film':'/how-it-works/#film','#ask':'/use-cases/#cases','#origin':'/about/#origin','#offer':'/pricing/#pricing'};
   if (location.pathname === '/' && oldHomeLinks[location.hash]) {
     location.replace(oldHomeLinks[location.hash]); return;
   }

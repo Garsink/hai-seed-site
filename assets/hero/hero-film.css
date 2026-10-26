@@ -14,7 +14,7 @@
 .hero-film>picture img{width:100%;height:100%;object-fit:cover}
 .hero-film>video{opacity:0}
 .hero-film>video.is-on{opacity:1}
-.hero-film-toggle{position:absolute;right:22px;bottom:calc(var(--film-bottom,132px) + 14px);z-index:1;display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid rgba(244,247,246,.32);border-radius:50%;background:rgba(17,17,17,.55);color:#f4f7f6;cursor:pointer;transition:border-color 160ms var(--ease),background-color 160ms var(--ease)}
+.hero-film-toggle{position:absolute;right:22px;bottom:calc(var(--film-bottom,132px) + 14px);z-index:1;display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid rgba(244,247,246,.32);border-radius:50%;background:rgba(17,17,17,.55);color:#f4f7f6;cursor:pointer}
 .hero-film-toggle svg{width:14px;height:14px;fill:currentColor}
 .hero-film-toggle .icon-play,.hero-film-toggle[aria-pressed="true"] .icon-pause{display:none}
 .hero-film-toggle[aria-pressed="true"] .icon-play{display:block}
