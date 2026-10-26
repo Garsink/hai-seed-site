@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://haiseed.ai/</loc></url>
-  <url><loc>https://haiseed.ai/root/</loc></url>
-  <url><loc>https://haiseed.ai/kernel/</loc></url>
-  <url><loc>https://haiseed.ai/crown/</loc></url>
-  <url><loc>https://haiseed.ai/practice/</loc></url>
-  <url><loc>https://haiseed.ai/aviation/</loc></url>
   <url><loc>https://haiseed.ai/about/</loc></url>
-  <url><loc>https://haiseed.ai/start-here/</loc></url>
-  <url><loc>https://haiseed.ai/start/</loc></url>
   <url><loc>https://haiseed.ai/privacy/</loc></url>
+  <url><loc>https://haiseed.ai/how-it-works/</loc></url>
+  <url><loc>https://haiseed.ai/use-cases/</loc></url>
+  <url><loc>https://haiseed.ai/case-study/</loc></url>
+  <url><loc>https://haiseed.ai/pricing/</loc></url>
+  <url><loc>https://haiseed.ai/contact/</loc></url>
 </urlset>

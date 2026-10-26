@@ -105,3 +105,6 @@
 }
 @media(prefers-reduced-motion:reduce){.hf-ring,.ht-siren .lit{animation:none}.ht-turn,.ht-item,.hf-ring-wrap{transition:none}}
 @media print{.hero-film,.hero-film-toggle,.hero-talk{display:none}}
+/* paused: the ring and the siren stop with the film; the film's words for screen readers stay off screen */
+.hero.is-paused .hf-ring,.hero.is-paused .ht-siren .lit{animation-play-state:paused}
+.ht-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}

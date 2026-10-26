@@ -81,6 +81,17 @@
     place();
     narrow.addEventListener('change', place);
     talk = {box, turns, overlay, ring, pass: 0};
+    // Screen readers get the film's first conversations once, as a plain list, instead of the moving words.
+    const said = el('div', 'ht-sr');
+    el('p', '', said, 'Illustrative examples from the film:');
+    const list = el('ul', '', said);
+    for (const key of ['sales', 'finance', 'marketing']) {
+      const set = DATA.sets[key].sets[0];
+      el('li', '', list, `${key[0].toUpperCase() + key.slice(1)} asks: ${set.ask} HAI answers: ${set.answer}`);
+    }
+    const ceo = DATA.sets.ceo.sets[0];
+    el('li', '', list, `Heads-up from HAI: ${ceo.alert} HAI to the CEO: ${ceo.answer}`);
+    message.appendChild(said);
   }
 
   // Write a turn's words (only while it is hidden).
@@ -170,11 +181,20 @@
   if ('ResizeObserver' in window) new ResizeObserver(fit).observe(hero);
   else addEventListener('resize', fit);
 
+  // The still shows a moment of the first story; its conversation is written once, without motion.
+  const stillFrame = hero.querySelector('.hero-film-still source');
+  const staticTalk = () => {
+    if (!talk || talk.box.classList.contains('is-static')) return;
+    if (still && stillFrame) still.src = stillFrame.srcset;
+    talk.box.classList.add('is-static');
+    talk.overlay.classList.add('is-on');
+    show(sayLoop(DATA.showcase), true);
+    fit();
+  };
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const saveData = navigator.connection && navigator.connection.saveData;
   if (calm || saveData || !intro || !loop || !toggle) {
-    // The still shows a moment of the first story; its conversation is written once, without motion.
-    if (talk) { talk.box.classList.add('is-static'); talk.overlay.classList.add('is-on'); show(sayLoop(DATA.showcase), true); fit(); }
+    staticTalk();
     return;
   }
 
@@ -213,7 +233,7 @@
   };
   const startLoop = () => {
     if (!loop.getAttribute('src')) loop.src = source(loop);
-    play(loop).then(ok => { if (ok) showVideo(loop); });
+    play(loop).then(ok => { if (ok) showVideo(loop); else if (!active) staticTalk(); });
   };
 
   if (seen) {
@@ -232,7 +252,8 @@
       try { sessionStorage.setItem(KEY, 'seen'); } catch {}
       startLoop();
     }, { once: true });
-    play(intro);
+    // Autoplay refused (power saving, browser settings): the still and its conversation, as for reduced motion.
+    play(intro).then(ok => { if (!ok) staticTalk(); });
   }
 
   // Rest off screen; resume only if the visitor has not paused it.
@@ -247,6 +268,7 @@
   toggle.addEventListener('click', () => {
     paused = !paused;
     toggle.setAttribute('aria-pressed', String(paused));
+    hero.classList.toggle('is-paused', paused);           // the ring and the siren stop with the film
     if (!active) return;
     if (paused) active.pause();
     else if (visible) active.play().catch(() => {});

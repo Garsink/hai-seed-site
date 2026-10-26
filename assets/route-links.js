@@ -1,11 +1,11 @@
 (() => {
-  const oldHomeLinks = {'#film':'/practice/#film','#ask':'/practice/#ask','#origin':'/about/#origin','#offer':'/start-here/#pricing'};
+  const oldHomeLinks = {'#film':'/use-cases/#film','#ask':'/use-cases/#cases','#origin':'/about/#origin','#offer':'/pricing/#pricing'};
   if (location.pathname === '/' && oldHomeLinks[location.hash]) {
     location.replace(oldHomeLinks[location.hash]); return;
   }
   const movedTeamHash = /^#(?:teams(?:-h)?|team-(?:leadership|marketing|sales|procurement|hr|legal|finance)|review-(?:comment|input)-start-here-teams)$/;
   if (location.pathname.replace(/\/$/,'') === '/start-here' && movedTeamHash.test(location.hash)) {
-    location.replace('/practice/' + (location.hash.startsWith('#review-') ? '#teams' : location.hash));
+    location.replace('/use-cases/' + (location.hash.startsWith('#review-') ? '#teams' : location.hash));
     return;
   }
   function revealHashTarget() {

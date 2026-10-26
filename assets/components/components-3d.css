@@ -3,6 +3,4 @@
 .product-mark.is-3d{max-width:236px;margin-block:-24px}
 @media(max-width:800px){.product-mark.is-3d{max-width:156px;margin-block:-14px}}
 @media(max-width:480px){.product-mark.is-3d{max-width:124px;margin-block:-10px}}
-/* the renders sit on pure white; multiplied onto the section they leave only the object and its shadow, whatever the
-   section's ground */
-.product-mark.is-3d{mix-blend-mode:multiply}
+/* the renders are cut out with transparency (2026-10-26): only the object and its soft shadow, on any ground */
