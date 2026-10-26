@@ -1,0 +1,107 @@
+/* Homepage hero film (2026-10-25): the story video replaces the office photo.
+   Wide screens: the film sits right of the headline, above the proof line, and fades into the neutral ground;
+   what is said in the film is written under the headline (.hero-talk), where it reads comfortably.
+   Narrow screens: the film follows the text at full width and the conversation sits under it.
+   Reduced motion keeps the still. */
+.home .hero.has-film{background:#111}
+/* The ground darkens the left of the film all the way down, so the headline and the conversation under it read cleanly. */
+.home .hero.has-film::before{background:linear-gradient(90deg,rgba(17,17,17,.94) 0%,rgba(17,17,17,.87) 36%,rgba(17,17,17,0) 60%);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 86%,transparent 98%);mask-image:linear-gradient(180deg,#000 0%,#000 86%,transparent 98%)}
+/* Where the film runs under the text (short screens), a soft shadow keeps the words readable without darkening it. */
+.home .hero.has-film .hero-message{text-shadow:0 1px 2px rgba(17,17,17,.6),0 0 18px rgba(17,17,17,.75)}
+.hero-film{overflow:hidden}
+.hero-film>picture,.hero-film>video,.hero-film-overlay{position:absolute;right:0;bottom:var(--film-bottom,132px);display:block;height:min(calc(100% - 96px - var(--film-bottom,132px)),56.25vw);width:auto;max-width:none;aspect-ratio:16/9}
+.hero-film>picture,.hero-film>video{object-fit:cover;-webkit-mask-image:linear-gradient(to right,transparent,#000 6%),linear-gradient(to bottom,transparent,#000 5%,#000 92%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 6%),linear-gradient(to bottom,transparent,#000 5%,#000 92%,transparent);mask-composite:intersect}
+.hero-film>picture img{width:100%;height:100%;object-fit:cover}
+.hero-film>video{opacity:0}
+.hero-film>video.is-on{opacity:1}
+.hero-film-toggle{position:absolute;right:22px;bottom:calc(var(--film-bottom,132px) + 14px);z-index:1;display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid rgba(244,247,246,.32);border-radius:50%;background:rgba(17,17,17,.55);color:#f4f7f6;cursor:pointer;transition:border-color 160ms var(--ease),background-color 160ms var(--ease)}
+.hero-film-toggle svg{width:14px;height:14px;fill:currentColor}
+.hero-film-toggle .icon-play,.hero-film-toggle[aria-pressed="true"] .icon-pause{display:none}
+.hero-film-toggle[aria-pressed="true"] .icon-play{display:block}
+.hero-film-toggle:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media(hover:hover) and (pointer:fine){.hero-film-toggle:hover{border-color:rgba(244,247,246,.7);background:rgba(17,17,17,.78)}}
+
+/* The only mark on the film itself: a pulsing ring round the fruit HAI raised before anyone asked. It lives in the
+   film's own 1920 x 1080 pixels and scales with it. */
+.hero-film-overlay{z-index:1;pointer-events:none;visibility:hidden}
+.hero-film-overlay.is-on{visibility:visible}
+.hf-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.hf-ring-wrap{position:absolute;width:0;height:0;opacity:0;transition:opacity 240ms cubic-bezier(.23,1,.32,1)}
+.hf-ring-wrap.is-on{opacity:1}
+.hf-ring{position:absolute;left:-50px;top:-50px;width:100px;height:100px;box-sizing:border-box;border:3px solid #ff5a4e;border-radius:50%;animation:hf-ring 1.2s cubic-bezier(.23,1,.32,1) infinite}
+@keyframes hf-ring{from{transform:scale(.55);opacity:.95}to{transform:scale(1.7);opacity:0}}
+
+/* The conversation: who speaks on a small line, what they say in large type. No boxes; it is part of the page. */
+/* Headline, one line under it, then the conversation right below, level with the person at the tree: a short
+   sideways glance between what happens and what is said. The headline is a little smaller than the site's
+   default so the conversation sits higher. */
+.home .hero.has-film .hero-content{padding-top:clamp(128px,16vh,180px)}
+.home .hero.has-film h1{font-size:clamp(3.1rem,5.2vw,4.5rem)}
+.hero-talk{max-width:30rem;min-height:11rem;margin-top:clamp(24px,3.6vh,36px)}
+.ht-turn{opacity:0;transform:translateY(6px);transition:opacity 220ms cubic-bezier(.23,1,.32,1),transform 220ms cubic-bezier(.23,1,.32,1)}
+.ht-turn.is-on{opacity:1;transform:none}
+.ht-turn+.ht-turn{margin-top:14px}
+.ht-who{display:flex;align-items:center;gap:9px;min-height:22px;margin:0 0 7px;font-size:.875rem;font-weight:600;line-height:1.2;letter-spacing:.01em;color:rgba(244,247,246,.72)}
+.ht-who.is-hai{color:#8bd6ca}
+.ht-who.is-alert{color:#ff8a80}
+.ht-dot{flex:none;width:9px;height:9px;border-radius:50%}
+.ht-mark{flex:none;width:12px;height:16px}
+.ht-mark .b{fill:#f4f7f6}
+.ht-mark .a{fill:#8bd6ca}
+.ht-year{font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:0;color:#8bd6ca}
+.ht-text{margin:0;font-size:clamp(1.1875rem,1.45vw,1.375rem);font-weight:600;line-height:1.28;color:#f4f7f6;text-wrap:balance}
+.ht-turn+.ht-turn .ht-text{font-size:clamp(1.0625rem,1.25vw,1.1875rem);font-weight:500;color:rgba(244,247,246,.9)}
+.ht-item{display:block;opacity:0;transform:translateY(4px);transition:opacity 220ms cubic-bezier(.23,1,.32,1),transform 220ms cubic-bezier(.23,1,.32,1)}
+.ht-item.is-on{opacity:1;transform:none}
+.ht-item+.ht-item{margin-top:4px}
+.ht-note{margin:7px 0 0;font-size:.875rem;line-height:1.45;color:rgba(244,247,246,.62)}
+.ht-siren{position:relative;flex:none;width:36px;height:36px;margin:-10px -4px -10px -8px}
+.ht-siren img{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen}
+.ht-siren .dim{filter:brightness(.38)}
+.ht-siren .lit{animation:hf-flash .8s steps(1,end) infinite}
+@keyframes hf-flash{50%{opacity:0}}
+.hero-talk.is-static .ht-turn,.hero-talk.is-static .ht-item{transition:none}
+
+/* Light variant (.is-light): the film on a white backdrop, so the hero's words turn ink. */
+.home .hero.has-film.is-light{background:var(--film-ground,#ececea);color:#15191e}
+.home .hero.has-film.is-light::before{background:linear-gradient(90deg,rgba(236,236,234,.95) 0%,rgba(236,236,234,.88) 36%,rgba(236,236,234,0) 60%)}
+.home .hero.has-film.is-light .hero-message{text-shadow:0 0 18px rgba(236,236,234,.9)}
+.hero.has-film.is-light h1 span{color:#5d6670}
+.hero.has-film.is-light .hero-explore{border-bottom-color:rgba(21,25,30,.6)}
+.hero.has-film.is-light .hero-explore:focus-visible,.hero.has-film.is-light .hero-film-link:focus-visible,.hero.has-film.is-light .hero-proof a:focus-visible{outline-color:#15191e}
+.hero.has-film.is-light .hero-film-link,.hero.has-film.is-light .hero-proof a{color:#15191e}
+.hero.has-film.is-light .hero-proof{border-top-color:rgba(21,25,30,.28)}
+.hero.has-film.is-light .hero-proof p>span{color:#3f4852}
+.hero.has-film.is-light .hero-film-toggle{border-color:rgba(21,25,30,.3);background:rgba(255,255,255,.72);color:#15191e}
+.hero.has-film.is-light .hero-film-toggle:focus-visible{outline-color:#15191e}
+@media(hover:hover) and (pointer:fine){.hero.has-film.is-light .hero-film-toggle:hover{border-color:rgba(21,25,30,.6);background:#fff}}
+.is-light .ht-who{color:rgba(21,25,30,.66)}
+.is-light .ht-who.is-hai,.is-light .ht-year{color:#076e67}
+.is-light .ht-who.is-alert{color:#c0392b}
+.is-light .ht-mark .b{fill:#15191e}
+.is-light .ht-mark .a{fill:#076e67}
+.is-light .ht-text{color:#15191e}
+.is-light .ht-turn+.ht-turn .ht-text{color:rgba(21,25,30,.86)}
+.is-light .ht-note{color:rgba(21,25,30,.62)}
+/* the siren is lit on black; on white it sits in its own dark disc */
+.is-light .ht-siren{border-radius:50%;background:#15191e}
+
+@media(max-width:800px){
+  .home .hero.has-film{display:flex;flex-direction:column;min-height:0;max-height:none}
+  .home .hero.has-film::before{display:none}
+  .home .hero.has-film .hero-message{text-shadow:none}
+  /* phones: headline, then straight into the film and its conversation; the proof line follows them, so the film
+     starts on the first screen instead of below the fold */
+  .hero.has-film .hero-content{display:contents}
+  .hero.has-film .hero-message{order:1;width:inherit;margin-inline:auto;padding-top:clamp(108px,15vh,150px);padding-bottom:24px}
+  .hero.has-film .hero-proof{order:4;width:inherit;margin:0 auto;padding-bottom:32px}
+  .hero.has-film .hero-film{order:2;position:relative;inset:auto;z-index:0;width:100%;aspect-ratio:16/9}
+  .hero-film>picture,.hero-film>video{inset:0;width:100%;height:100%;aspect-ratio:auto;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 10%);mask-image:linear-gradient(to bottom,transparent,#000 10%)}
+  .hero-film-overlay{inset:0;width:100%;height:100%;aspect-ratio:auto}
+  .hero-film-toggle{right:12px;bottom:var(--toggle-bottom,12px);width:36px;height:36px}
+  .hero-talk{order:3;max-width:none;min-height:10.5rem;margin-block:0;padding-block:16px 28px}
+  .ht-text{font-size:1.125rem}
+  .ht-turn+.ht-turn{margin-top:14px}
+}
+@media(prefers-reduced-motion:reduce){.hf-ring,.ht-siren .lit{animation:none}.ht-turn,.ht-item,.hf-ring-wrap{transition:none}}
+@media print{.hero-film,.hero-film-toggle,.hero-talk{display:none}}

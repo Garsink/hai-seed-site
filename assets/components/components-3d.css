@@ -1,0 +1,8 @@
+/* "Inside HAI Seed": Root, Kernel and Crown as 3D pieces, the same porcelain and mint glass as the homepage film
+   (2026-10-26). The renders carry a little air round the object, so they sit larger than the flat marks did. */
+.product-mark.is-3d{max-width:236px;margin-block:-24px}
+@media(max-width:800px){.product-mark.is-3d{max-width:156px;margin-block:-14px}}
+@media(max-width:480px){.product-mark.is-3d{max-width:124px;margin-block:-10px}}
+/* the renders sit on pure white; multiplied onto the section they leave only the object and its shadow, whatever the
+   section's ground */
+.product-mark.is-3d{mix-blend-mode:multiply}
