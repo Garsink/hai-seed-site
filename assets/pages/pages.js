@@ -120,7 +120,7 @@
 
   // Belts: cards on a gentle curve that turn slowly on their own, like a carousel (owner, after tryholo.ai). A belt
   // moves only while it is on screen and nobody is pointing at it, using the keyboard in it or reading from it; it has
-  // previous, pause and next controls, and it stands still for reduced motion. Phones get a plain swipe row. A numbered
+  // previous, pause and next controls, and it stands still for reduced motion. Phones get a flat moving swipe row. A numbered
   // sequence does not loop: its cards keep their order and the curve sways gently instead. The list keeps its order for
   // screen readers; the copies that close a loop are hidden from them and from the keyboard, but open like the original.
   const flatScreen = matchMedia('(max-width: 1023px)');
@@ -144,9 +144,9 @@
       bar.append(c);
       return c;
     };
-    const prev = loops ? control('belt-prev', `Previous ${label}`, '←') : null;
+    const prev = control('belt-prev', `Previous ${label}`, '←');
     const toggle = control('belt-pause', `Pause the moving ${label}`);
-    const next = loops ? control('belt-next', `Next ${label}`, '→') : null;
+    const next = control('belt-next', `Next ${label}`, '→');
     toggle.setAttribute('aria-pressed', 'false');
     view.after(bar);
     if (loops) for (let r = Math.max(1, Math.ceil(10 / own.length) - 1); r > 0; r--) own.forEach(el => {
@@ -159,45 +159,102 @@
     });
     const all = [...list.children];
     const speed = 26;                                   // pixels a second: slow enough to read a card as it passes
-    let offset = 0, phase = 0, last = 0, raf = 0, glideRaf = 0, step = 320, span = 1, radius = 1400;
-    let flat = true, visible = false, pointer = false, keyboard = false, paused = false, held = false;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const pointers = new Set();
+    let offset = 0, phase = 0, last = 0, raf = 0, step = 320, span = 1, radius = 1400;
+    let flat = true, mobile = flatScreen.matches, visible = false, pointer = false, keyboard = false, paused = false, held = false;
+    let glide = null, gesture = null, input = 'keyboard', direction = 1, dwell = 1400, measuredWidth = 0, suppressClick = false;
+    const limit = () => Math.max(0, (own.length - 1) * step);
+    const bounded = value => loops ? value : Math.max(0, Math.min(limit(), value));
     const xOf = k => {
-      if (!loops) return (k - (own.length - 1) / 2) * step - offset;
+      if (!loops) return (mobile ? k : k - (own.length - 1) / 2) * step - offset;
       const x = ((k * step - offset) % span + span) % span;
       return x > span / 2 ? x - span : x;
     };
-    const place = () => all.forEach((el, k) => {
-      const a = xOf(k) / radius;
-      el.style.transform = `translate3d(${(radius * Math.sin(a)).toFixed(1)}px,0,${(radius * (Math.cos(a) - 1)).toFixed(1)}px) rotateY(${(a * 57.2958).toFixed(2)}deg)`;
-    });
-    const running = () => !flat && visible && !pointer && !keyboard && !paused && !held && !document.hidden;
+    const controls = () => {
+      const position = flat ? list.scrollLeft : offset;
+      const end = flat ? Math.max(0, list.scrollWidth - list.clientWidth) : limit();
+      prev.disabled = !loops && position <= 1;
+      next.disabled = !loops && position >= end - 1;
+    };
+    const place = () => {
+      all.forEach((el, k) => {
+        const x = xOf(k), a = x / radius;
+        el.style.transform = mobile ? `translate3d(${x.toFixed(1)}px,0,0)`
+          : `translate3d(${(radius * Math.sin(a)).toFixed(1)}px,0,${(radius * (Math.cos(a) - 1)).toFixed(1)}px) rotateY(${(a * 57.2958).toFixed(2)}deg)`;
+      });
+      controls();
+    };
+    const stop = () => { cancelAnimationFrame(raf); raf = 0; glide = null; last = 0; };
+    const available = () => !flat && visible && !keyboard && !held && !document.hidden && !pointers.size;
+    const running = () => available() && !pointer && !paused;
     const tick = now => {
       raf = 0;
-      if (!running()) return;
+      if (!available()) { stop(); return; }
       const dt = last ? Math.min(64, now - last) : 0;
       last = now;
-      if (loops) offset += dt * speed / 1000;
-      else { phase += dt / 16000 * 2 * Math.PI; offset = step * 0.3 * Math.sin(phase); }   // a sixteen-second sway
+      if (glide) {
+        const p = Math.min(1, (now - glide.start) / 240);
+        offset = glide.from + (glide.to - glide.from) * easeOut(p);
+        if (p === 1) glide = null;
+      } else if (running()) {
+        if (loops) offset += dt * speed / 1000;
+        else if (mobile) {
+          if (dwell > 0) dwell = Math.max(0, dwell - dt);
+          else {
+            offset = bounded(offset + direction * dt * speed / 1000);
+            if (offset === 0 || offset === limit()) { direction *= -1; dwell = 1400; }
+          }
+        } else { phase += dt / 16000 * 2 * Math.PI; offset = step * 0.3 * Math.sin(phase); }
+      } else { last = 0; return; }
       place();
-      raf = requestAnimationFrame(tick);
+      if (glide || running()) raf = requestAnimationFrame(tick);
+      else last = 0;
     };
-    const go = () => { if (running() && !raf) { last = 0; raf = requestAnimationFrame(tick); } };
+    const go = () => {
+      if (!available()) { stop(); return; }
+      if ((glide || running()) && !raf) { last = 0; raf = requestAnimationFrame(tick); }
+    };
     const setPaused = on => {
       paused = on;
       toggle.setAttribute('aria-pressed', String(on));
       toggle.setAttribute('aria-label', `${on ? 'Play' : 'Pause'} the moving ${label}`);
+      if (on) stop();
       go();
     };
+    const settle = (to, instant = false) => {
+      stop();
+      to = bounded(to);
+      if (instant || !available()) { offset = to; place(); return; }
+      glide = {from: offset, to, start: performance.now()};
+      go();
+    };
+    const releaseGesture = () => {
+      gesture = null;
+      const ids = [...pointers];
+      pointers.clear();
+      ids.forEach(id => { if (view.hasPointerCapture(id)) view.releasePointerCapture(id); });
+    };
     const measure = () => {
-      flat = flatScreen.matches || still;
+      stop();
+      releaseGesture();
+      const wasMobile = mobile, previousStep = step;
+      flat = motion.matches;
+      mobile = flatScreen.matches;
       view.classList.toggle('belt-flat', flat);
-      toggle.hidden = flat;                             // a still row has nothing to pause
-      bar.hidden = flat && !loops;
-      all.forEach(el => { el.style.minHeight = ''; });
-      if (flat) { list.style.height = ''; all.forEach(el => { el.style.transform = ''; }); return; }
-      step = own[0].offsetWidth + 28;
+      view.classList.toggle('belt-mobile', mobile && !flat);
+      toggle.hidden = flat;
+      prev.hidden = next.hidden = !loops && !mobile && !flat;
+      all.forEach(el => { el.style.minHeight = ''; el.style.transform = ''; });
+      measuredWidth = view.clientWidth;
+      if (flat) { list.style.height = ''; controls(); return; }
+      list.scrollLeft = 0;
+      step = own[0].offsetWidth + (mobile ? 14 : 28);
       span = step * all.length;
       radius = Math.max(1200, view.clientWidth * 1.1);
+      if (loops || wasMobile === mobile) offset *= step / previousStep;
+      else { offset = mobile ? 0 : step * 0.3 * Math.sin(phase); direction = 1; dwell = 1400; }
+      if (!loops && mobile) offset = bounded(offset);
       const tallest = Math.max(...own.map(el => el.offsetHeight));
       all.forEach(el => { el.style.minHeight = tallest + 'px'; });   // every card on a belt stands the same height
       list.style.height = tallest + 'px';
@@ -205,44 +262,102 @@
       go();
     };
     // previous and next: one card at a time, and the drift stops until Play. A click glides; a key press moves at once.
-    let aim = 0;
     const move = (dir, instant) => {
-      if (flat) { list.scrollBy({left: dir * (own[0].offsetWidth + 14), behavior: still || instant ? 'auto' : 'smooth'}); return; }
+      if (flat) { list.scrollBy({left: dir * (own[0].offsetWidth + 14), behavior: 'auto'}); return; }
+      const base = glide ? glide.to : offset;           // repeated presses continue from the pending destination
       setPaused(true);
-      const base = glideRaf ? aim : offset;             // a second press during a glide goes one card further
-      cancelAnimationFrame(glideRaf);
-      glideRaf = 0;
-      aim = (dir > 0 ? Math.floor(base / step + 1e-6) + 1 : Math.ceil(base / step - 1e-6) - 1) * step;
-      if (instant) { offset = aim; place(); return; }
-      const from = offset, to = aim, t0 = performance.now();
-      const glide = now => {
-        const p = Math.min(1, (now - t0) / 240);
-        offset = from + (to - from) * easeOut(p);
-        place();
-        glideRaf = p < 1 ? requestAnimationFrame(glide) : 0;
-      };
-      glideRaf = requestAnimationFrame(glide);
+      settle((dir > 0 ? Math.floor(base / step + 1e-6) + 1 : Math.ceil(base / step - 1e-6) - 1) * step, instant);
     };
-    if (prev) prev.addEventListener('click', e => move(-1, e.detail === 0));
-    if (next) next.addEventListener('click', e => move(1, e.detail === 0));
+    prev.addEventListener('click', e => move(-1, e.detail === 0));
+    next.addEventListener('click', e => move(1, e.detail === 0));
     toggle.addEventListener('click', () => setPaused(!paused));
-    view.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') pointer = true; });
-    view.addEventListener('pointerleave', () => { pointer = false; go(); });
+    view.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { pointer = true; stop(); } });
+    view.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { pointer = false; go(); } });
+    // A touch freezes its target before click dispatch. Horizontal intent owns the drag; vertical pan and pinch stay native.
+    view.addEventListener('pointerdown', e => {
+      suppressClick = false;
+      if (flat || (!loops && !mobile) || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      pointers.add(e.pointerId);
+      stop();
+      if (pointers.size > 1) { gesture = null; return; }
+      gesture = {id: e.pointerId, x: e.clientX, y: e.clientY, from: offset, dragged: false,
+        lastX: e.clientX, lastTime: performance.now(), velocity: 0};
+    });
+    view.addEventListener('pointermove', e => {
+      if (!gesture || e.pointerId !== gesture.id || pointers.size !== 1) return;
+      const dx = e.clientX - gesture.x, dy = e.clientY - gesture.y;
+      if (!gesture.dragged) {
+        if (Math.abs(dy) > 8 && Math.abs(dy) >= Math.abs(dx)) { gesture = null; return; }
+        if (Math.abs(dx) < 8 || Math.abs(dx) <= Math.abs(dy)) return;
+        gesture.dragged = true;
+        setPaused(true);
+        view.setPointerCapture(e.pointerId);
+      }
+      const time = performance.now();
+      gesture.velocity = (e.clientX - gesture.lastX) / Math.max(1, time - gesture.lastTime);
+      gesture.lastX = e.clientX;
+      gesture.lastTime = time;
+      const nextOffset = gesture.from - dx;
+      offset = loops ? nextOffset : bounded(nextOffset);
+      place();
+    });
+    const finishPointer = e => {
+      // Promoting a touch's implicit child capture to the viewport also bubbles a child lostcapture event.
+      if (e.type === 'lostpointercapture' && e.target !== view) return;
+      if (!pointers.has(e.pointerId)) return;
+      pointers.delete(e.pointerId);
+      const drag = gesture && gesture.id === e.pointerId ? gesture : null;
+      if (drag) gesture = null;
+      if (view.hasPointerCapture(e.pointerId)) view.releasePointerCapture(e.pointerId);
+      if (drag && drag.dragged) {
+        suppressClick = true;
+        const velocity = performance.now() - drag.lastTime < 100 ? Math.max(-1.2, Math.min(1.2, drag.velocity)) : 0;
+        if (e.type === 'pointerup') settle(Math.round((offset - velocity * 160) / step) * step);
+      }
+      go();
+    };
+    document.addEventListener('pointerup', finishPointer);
+    document.addEventListener('pointercancel', finishPointer);
+    view.addEventListener('lostpointercapture', finishPointer);
+    list.addEventListener('click', e => {
+      if (!suppressClick) return;
+      suppressClick = false;
+      if (e.detail === 0) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }, true);
+    list.addEventListener('dragstart', e => { if (!flat) e.preventDefault(); });
+    // Pointer-origin focus restoration after a reader must not turn into a permanent keyboard pause on touch browsers.
+    document.addEventListener('pointerdown', () => { input = 'pointer'; keyboard = false; go(); }, true);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Tab' || e.key === 'Enter' || e.key === ' ' || e.key === 'Escape' || e.key.startsWith('Arrow')) {
+        input = 'keyboard';
+        if (list.contains(document.activeElement)) { keyboard = true; stop(); }
+      }
+    }, true);
     // a card reached with the keyboard comes to the front and the belt waits; a mouse press never moves its card
     list.addEventListener('focusin', e => {
-      if (!byKeyboard(e.target)) return;
+      if (input !== 'keyboard' || !byKeyboard(e.target)) return;
       keyboard = true;
+      stop();
       const i = own.findIndex(el => el.contains(e.target));
-      if (i >= 0 && !flat && loops) { offset = i * step; place(); }
+      if (i >= 0 && !flat && (loops || mobile)) { offset = i * step; place(); }
     });
-    list.addEventListener('focusout', () => { keyboard = false; go(); });
+    list.addEventListener('focusout', e => { if (!list.contains(e.relatedTarget)) { keyboard = false; go(); } });
+    list.addEventListener('scroll', controls, {passive: true});
     new IntersectionObserver(es => { visible = es[0].isIntersecting; go(); }).observe(view);
-    document.addEventListener('visibilitychange', go);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) { releaseGesture(); stop(); } else go(); });
+    addEventListener('blur', () => { pointer = false; releaseGesture(); stop(); });
+    addEventListener('focus', go);
+    addEventListener('pageshow', () => { pointer = false; measure(); });
+    motion.addEventListener('change', measure);
     flatScreen.addEventListener('change', measure);
-    addEventListener('resize', measure);
+    const resize = () => { if (Math.abs(view.clientWidth - measuredWidth) > 1) measure(); };
+    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(view);
+    else addEventListener('resize', resize);
     if (document.fonts) document.fonts.ready.then(measure);
     measure();
-    return {hold: on => { held = on; go(); }};
+    return {hold: on => { held = on; if (on) { releaseGesture(); stop(); } else go(); }};
   };
 
   // Homepage: the six cases. Each article becomes a card on the belt; the full case opens in a reader.
@@ -346,22 +461,54 @@
   // Other belts named in the page: the growth steps keep their order 1, 2, 3 and sway instead of looping
   document.querySelectorAll('[data-belt]').forEach(list => belt(list, list.dataset.belt, {loops: list.dataset.loop !== 'no'}));
 
-  // Header: floating pills at the top of the page; once the page moves, the links step aside and the mark and the
-  // actions wait in the corners (owner, after tryholo.ai). A short fade carries the change, never a slide.
+  // The header follows the scroll continuously. Its layout is measured only on resize;
+  // each scroll frame changes transforms and opacity, so the controls never disappear.
   const head = document.querySelector('.site-header');
   if (head) {
-    let compact = false, swap = 0;
-    const set = on => {
-      if (on === compact) return;
-      compact = on;
-      clearTimeout(swap);
-      if (still) { head.classList.toggle('is-compact', on); return; }
-      head.classList.add('is-switching');
-      swap = setTimeout(() => { head.classList.toggle('is-compact', on); head.classList.remove('is-switching'); }, 160);
+    const nav = head.querySelector('.nav');
+    const identity = head.querySelector('.identity');
+    const actions = head.querySelector('.nav-actions');
+    const links = head.querySelector('.nav-shortcuts');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    let left = 0, right = 0, frame = 0, open = head.classList.contains('is-open');
+    const paint = () => {
+      frame = 0;
+      if (open) return;
+      const focusedLink = links && links.contains(document.activeElement);
+      const p = focusedLink ? 0 : reduced.matches ? (scrollY > 64 ? 1 : 0) : clamp(scrollY / 180);
+      head.style.setProperty('--header-progress', p.toFixed(4));
+      head.style.setProperty('--header-left', (left * p).toFixed(2) + 'px');
+      head.style.setProperty('--header-right', (right * p).toFixed(2) + 'px');
+      head.style.setProperty('--header-wordmark', (1 - clamp(p / .72)).toFixed(4));
+      head.style.setProperty('--header-mark', clamp((p - .3) / .7).toFixed(4));
+      head.classList.toggle('is-compact', p === 1);
+      if (links) links.inert = p > .92;
     };
-    const check = () => { if (scrollY > 64) set(true); else if (scrollY < 16) set(false); };
-    addEventListener('scroll', check, {passive: true});
-    check();
+    const ask = () => { if (!frame) frame = requestAnimationFrame(paint); };
+    const measure = () => {
+      if (open) return;
+      head.style.setProperty('--header-left', '0px');
+      head.style.setProperty('--header-right', '0px');
+      const n = nav.getBoundingClientRect(), a = identity.getBoundingClientRect(), b = actions.getBoundingClientRect();
+      left = n.left - a.left;
+      right = n.right - b.right;
+      paint();
+    };
+    head.classList.add('header-scroll');
+    new MutationObserver(() => {
+      const next = head.classList.contains('is-open');
+      if (next === open) return;
+      open = next;
+      if (open && links) links.inert = true;
+      if (!open) measure();
+    }).observe(head, {attributes: true, attributeFilter: ['class']});
+    addEventListener('scroll', ask, {passive: true});
+    addEventListener('resize', measure);
+    head.addEventListener('focusin', ask);
+    head.addEventListener('focusout', ask);
+    reduced.addEventListener('change', paint);
+    if (document.fonts) document.fonts.ready.then(measure);
+    measure();
   }
 
   // Scroll-linked painting, only while the element is near the screen.

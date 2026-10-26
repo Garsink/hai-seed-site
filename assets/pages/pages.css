@@ -442,9 +442,8 @@
 @media(hover:hover) and (pointer:fine){.button:hover{background:#2a3038;color:#fff}.button.ghost:hover{background:var(--ink);color:#fff}}
 
 /* Header (owner, 2026-10-26, after tryholo.ai): floating pills centred at the top of the page. Once the page moves,
-   the links step aside and the mark and the actions wait in the corners; a short fade carries the change. */
-.site-header{border:0;background:none;transition:opacity 160ms var(--ease),transform 160ms var(--ease)}
-.site-header.is-switching{opacity:0;transform:translateY(-6px)}
+   the links fold away and the mark and actions travel continuously with the scroll. */
+.site-header{border:0;background:none;transition:none}
 .site-header .nav{justify-content:center;gap:8px;min-height:0;padding:0}
 .site-header .identity,.site-header .nav-shortcuts,.site-header .nav-toggle{border:1px solid rgba(21,25,30,.08);background:rgba(255,255,255,.84);box-shadow:0 1px 3px rgba(21,25,30,.08);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
 .site-header .identity{height:48px;padding:0 22px;border-radius:var(--r-pill)}
@@ -457,11 +456,17 @@
 .site-header .header-cta{min-height:48px;padding:10px 20px;gap:14px;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
 .site-header .nav-toggle{width:48px;min-height:48px;padding:0;gap:0;border-radius:50%}
 .site-header .menu-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.site-header.is-compact .nav{justify-content:space-between}
-.site-header.is-compact .nav-shortcuts{display:none}
-.site-header.is-compact .identity{width:48px;padding:0;justify-content:center}
-.site-header.is-compact .identity-logo{display:none}
-.site-header.is-compact .identity-mark{display:block}
+.header-scroll{--header-progress:0;--header-left:0px;--header-right:0px;--header-wordmark:1;--header-mark:0}
+.header-scroll:not(.is-open) .identity{position:relative;width:172px;padding:0;border:0;background:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;transform:translate3d(var(--header-left),0,0)}
+.header-scroll:not(.is-open) .identity::before,.header-scroll:not(.is-open) .identity::after{content:"";position:absolute;inset:0;border:1px solid rgba(21,25,30,.08);border-radius:24px;background:rgba(255,255,255,.94);box-shadow:0 1px 3px rgba(21,25,30,.08);pointer-events:none}
+.header-scroll:not(.is-open) .identity::before{transform-origin:left center;transform:scaleX(calc(1 - .72 * var(--header-progress)));opacity:calc(1 - var(--header-progress))}
+.header-scroll:not(.is-open) .identity::after{width:48px;z-index:-1;background:#fff}
+.header-scroll:not(.is-open) .identity-logo{position:absolute;left:22px;z-index:1;opacity:var(--header-wordmark);transform:translateX(calc(-8px * var(--header-progress))) scale(calc(1 - .08 * var(--header-progress)));transform-origin:left center}
+.header-scroll:not(.is-open) .identity-mark{position:absolute;left:13px;z-index:1;display:block;opacity:var(--header-mark)}
+.header-scroll:not(.is-open) .nav-actions{transform:translate3d(var(--header-right),0,0)}
+.header-scroll:not(.is-open) .nav-shortcuts{opacity:calc(1 - var(--header-progress));transform:translateY(calc(-8px * var(--header-progress))) scale(calc(1 - .1 * var(--header-progress)))}
+.header-scroll.is-compact:not(.is-open) .identity{clip-path:inset(-4px 120px -4px -4px)}
+.header-scroll.is-compact:not(.is-open) .nav-shortcuts{visibility:hidden;pointer-events:none}
 .site-header.is-open{border:1px solid var(--dark-line);border-radius:var(--r-xl);background:var(--dark)}
 .site-header.is-open .nav{justify-content:space-between;padding:8px 18px}
 .site-header.is-open .identity,.site-header.is-open .nav-shortcuts,.site-header.is-open .nav-toggle{border-color:transparent;background:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
@@ -564,23 +569,24 @@
 .sc-reader .sc-talk{padding-right:30px}
 @media(min-width:901px){.sc-reader .sc-doc{padding-top:68px}}
 
-/* Belts: cards on a gentle curve, turning slowly on their own (owner, after tryholo.ai). The script places them;
-   without it, or on a phone, or with reduced motion, they are a plain row. */
+/* Belts: a gentle curve on desktop, a flat moving row on phones. Reduced motion retains native horizontal scrolling. */
 .belt-view{position:relative}
 .pg-grow[data-belt]>li{padding:14px 14px 22px;border-radius:var(--r-lg);background:var(--surface);box-shadow:var(--lift)}
 .pg-grow[data-belt] .pg-tile{margin-bottom:16px}
 .belt-controls{display:flex;justify-content:flex-end;gap:8px;margin-top:4px}
 .belt-controls[hidden],.belt-controls [hidden]{display:none}
 .belt-controls button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);font:inherit;font-size:1.05rem;line-height:1;cursor:pointer}
+.belt-controls button:disabled{opacity:.35;cursor:default}
 .belt-pause::before{content:'';width:10px;height:12px;border-inline:3px solid currentColor;box-sizing:border-box}
 .belt-pause[aria-pressed=true]::before{width:0;height:0;border:0;border-left:11px solid currentColor;border-block:7px solid transparent;margin-left:3px}
-@media(min-width:1024px){
-  /* clip, not hidden: the browser must never scroll the belt sideways to reach a focused card */
-  .belt-view:not(.belt-flat){overflow:hidden;overflow:clip;padding:28px 0 36px;perspective:1700px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%)}
-  .belt-view:not(.belt-flat) .belt-track{position:relative;display:block;margin:0;padding:0;list-style:none}
-  .belt-view:not(.belt-flat) .belt-track>li{position:absolute;top:0;left:50%;width:300px;margin:0 0 0 -150px;will-change:transform}
-  .belt-view:not(.belt-flat)+.belt-controls{margin-top:-6px}
-}
+/* clip avoids native focus scrolling; a keyboard-focused original is positioned by the controller. */
+.belt-view:not(.belt-flat){overflow:hidden;overflow:clip;padding:28px 0 36px;perspective:1700px;touch-action:pan-y pinch-zoom;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%)}
+.belt-view:not(.belt-flat) .belt-track{position:relative;display:block;margin:0;padding:0;list-style:none}
+.belt-view:not(.belt-flat) .belt-track>li{position:absolute;top:0;left:50%;width:300px;margin:0 0 0 -150px;will-change:transform}
+.belt-view:not(.belt-flat)+.belt-controls{margin-top:-6px}
+.belt-view.belt-mobile{padding:10px 0 18px;perspective:none;-webkit-mask-image:none;mask-image:none}
+.belt-view.belt-mobile .belt-track>li{width:min(78vw,300px);margin-left:max(-39vw,-150px)}
+.belt-view.belt-mobile+.belt-controls{margin-top:4px}
 .belt-flat .belt-track{display:flex;gap:14px;overflow-x:auto;margin:0;padding:4px 2px 12px;list-style:none;scroll-snap-type:x mandatory;scrollbar-width:none}
 .belt-flat .belt-track::-webkit-scrollbar{display:none}
 .belt-flat .belt-track>li{flex:0 0 min(78vw,300px);scroll-snap-align:center}
