@@ -204,3 +204,32 @@
   .hero-talk.hf-dialogue .ht-turn,.ht-word{transition:none;transform:none}
   .ht-word{opacity:1}
 }
+
+/* v18: a gently rounded cloud and a short, curved cue toward the speaking scene.
+   The complete film remains visible; source-coordinate tracking is unchanged. */
+.ht-cloud-tail{right:-24px;width:36px}
+.hf-dialogue[data-position="arrival"] .ht-cloud-tail{left:-24px}
+.hf-dialogue[data-anchor="outside"] .ht-cloud-tail{left:auto;right:-24px}
+.hero-talk.hf-dialogue .ht-question .ht-cloud-tail{top:calc(56% - 10px)}
+.hero-talk.hf-dialogue .ht-answer .ht-cloud-tail{top:calc(44% - 10px)}
+.hero-talk.hf-dialogue[data-layout="below"] .ht-turn .ht-cloud-tail{top:-4px;left:auto;right:var(--hf-tail-right,30%)}
+.hf-dialogue[data-layout="below"] .ht-question{--hf-tail-right:14%;--hf-cloud-origin:86% 0%}
+.hf-dialogue[data-layout="below"] .ht-answer{--hf-tail-right:30%;--hf-cloud-origin:70% 0%}
+@media(max-width:1100px){
+  .hero-film-toggle{width:44px;height:44px;min-width:44px;min-height:44px}
+  .hero-film-replay{right:66px;min-height:44px}
+  .hero-talk.hf-dialogue.wrap{margin-top:12px}
+  .hero-talk.hf-dialogue.wrap .ht-question{--hf-tail-right:14%;--hf-cloud-origin:86% 0%}
+  .hero-talk.hf-dialogue.wrap .ht-answer{--hf-tail-right:30%;--hf-cloud-origin:70% 0%}
+  .hero-talk.hf-dialogue.wrap .ht-turn .ht-cloud-tail{top:-4px;left:auto;right:var(--hf-tail-right);transform:rotate(-90deg)}
+}
+
+/* Narration has no invented speaker. Proactive HAI alerts point to the tree,
+   just like its answers, rather than to the employee who has not asked yet. */
+.hero-talk.hf-dialogue .ht-turn[data-speaker="context"] .ht-cloud-tail{display:none}
+.hero-talk.hf-dialogue[data-layout="below"] .ht-turn[data-speaker="hai"],
+.hero-talk.hf-dialogue[data-layout="below"] .ht-turn[data-speaker="engineer"]{--hf-tail-right:30%;--hf-cloud-origin:70% 0%}
+@media(max-width:1100px){
+  .hero-talk.hf-dialogue.wrap .ht-turn[data-speaker="hai"],
+  .hero-talk.hf-dialogue.wrap .ht-turn[data-speaker="engineer"]{--hf-tail-right:30%;--hf-cloud-origin:70% 0%}
+}

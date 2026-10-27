@@ -40,13 +40,13 @@
     svg.setAttribute('preserveAspectRatio', 'none');
     svg.setAttribute('aria-hidden', 'true');
     const path = document.createElementNS(SVG, 'path');
-    path.setAttribute('d', 'M28 10 C52 2 95 2 120 8 C153 2 195 2 224 8 C260 2 309 2 340 8 C381 2 426 2 456 8 C492 2 533 2 555 10 Q584 7 590 32 C598 47 598 66 591 80 C598 98 597 118 589 131 Q589 153 561 151 C526 159 487 159 458 153 C423 160 380 160 348 153 C308 160 265 160 234 153 C192 160 154 160 126 153 C90 160 52 158 30 150 Q9 151 10 130 C2 115 3 96 9 80 C2 64 3 46 11 32 Q8 11 28 10Z');
+    path.setAttribute('d', 'M34 9 C76 5 116 5 158 9 C204 5 250 5 296 9 C342 5 388 5 434 9 C478 5 522 5 566 9 C584 10 594 23 594 41 C597 67 597 93 594 119 C594 137 584 150 566 151 C522 155 478 155 434 151 C388 155 342 155 296 151 C250 155 204 155 158 151 C116 155 76 155 34 151 C16 150 6 137 6 119 C3 93 3 67 6 41 C6 23 16 10 34 9Z');
     svg.appendChild(path); parent.appendChild(svg);
     const tail = document.createElementNS(SVG, 'svg');
     tail.setAttribute('class', 'ht-cloud-tail'); tail.setAttribute('viewBox', '0 0 28 20');
     tail.setAttribute('aria-hidden', 'true');
     const tip = document.createElementNS(SVG, 'path');
-    tip.setAttribute('d', 'M0 1 Q10 3 26 10 Q11 10 0 19Z');
+    tip.setAttribute('d', 'M0 2 C9 3 14 7 24 8 C27 8.3 27 10.5 24 11 C14 12 9 17 0 18Z');
     tail.appendChild(tip); parent.appendChild(tail);
   };
 
@@ -126,6 +126,8 @@
 
   // Write a turn's words (only while it is hidden).
   const fill = (t, w) => {
+    t.dataset.speaker = w.key === 'years' ? 'context' : w.key === 'engineer' ? 'engineer' :
+      (w.key === 'seed' || w.icon === 'mark' || w.icon === 'siren') ? 'hai' : 'person';
     t.classList.toggle('is-components', w.key === 'seed');
     t.meta.hidden = !w.who && !w.icon && !w.note;
     t.who.textContent = '';
@@ -373,12 +375,22 @@
   let seen = false;
   try { seen = sessionStorage.getItem(KEY) === 'seen'; } catch {}
 
-  let active = null, paused = false, visible = true, pageVisible = !document.hidden, last = 0, ticking = false, playEpoch = 0;
+  let active = null, paused = false, visible = true, pageVisible = !document.hidden, last = 0, frameRequest = 0, playEpoch = 0;
   const play = video => {
     const epoch = ++playEpoch;
     return video.play().then(() => epoch === playEpoch, () => false);
   };
-  const tick = () => {
+  // BEGIN ACTIVE FRAME SCHEDULER
+  const canTick = () => !!(talk && active && !active.paused && !active.ended &&
+    !paused && visible && pageVisible && !motionPreference.matches);
+  const stopTick = () => {
+    if (frameRequest) cancelAnimationFrame(frameRequest);
+    frameRequest = 0;
+  };
+  const scheduleTick = () => {
+    if (!frameRequest && canTick()) frameRequest = requestAnimationFrame(tick);
+  };
+  const renderFrame = () => {
     if (talk && active) {
       const t = active.currentTime;
       if (active === loop) {
@@ -390,9 +402,16 @@
         show(sayIntro(t * DATA.fps), false, t * DATA.fps, active.playbackRate);
       }
     }
-    requestAnimationFrame(tick);
   };
+  const tick = () => {
+    frameRequest = 0;
+    if (!canTick()) return;
+    renderFrame();
+    scheduleTick();
+  };
+  // END ACTIVE FRAME SCHEDULER
   const showVideo = video => {
+    stopTick();
     video.classList.add('is-on');
     if (active && active !== video) { active.classList.remove('is-on'); active.pause(); }
     active = video;
@@ -402,9 +421,23 @@
     if (talk) {
       talk.overlay.classList.add('is-on');
       fit();
-      if (!ticking) { ticking = true; requestAnimationFrame(tick); }
+      renderFrame();
+      scheduleTick();
     }
   };
+  // Native pause/buffering/seek events also suspend the clock. A resumed or
+  // explicitly sought frame restarts it only when the hero is allowed to play.
+  for (const video of [intro, loop]) {
+    video.addEventListener('playing', () => { if (video === active) scheduleTick(); });
+    for (const type of ['pause', 'waiting', 'seeking', 'ended']) {
+      video.addEventListener(type, () => { if (video === active) stopTick(); });
+    }
+    video.addEventListener('seeked', () => {
+      if (video !== active) return;
+      renderFrame();
+      scheduleTick();
+    });
+  }
   const startLoop = (restart = false) => {
     // 39 seconds becomes 52: the dialogue remains locked to source frames, not wall time.
     loop.defaultPlaybackRate = .75;
@@ -439,6 +472,7 @@
   }
 
   replay.addEventListener('click', () => {
+    stopTick();
     paused = false;
     hero.classList.remove('is-paused');
     toggle.setAttribute('aria-pressed', 'false');
@@ -454,6 +488,7 @@
   motionPreference.addEventListener('change', event => {
     if (!event.matches) return;
     ++playEpoch;
+    stopTick();
     paused = true;
     active = null;
     for (const video of [intro, loop]) { video.pause(); video.classList.remove('is-on'); }
@@ -468,15 +503,15 @@
     new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       if (!active) return;
-      if (visible && pageVisible && !paused) active.play().catch(() => {});
-      else active.pause();
+      if (visible && pageVisible && !paused) active.play().then(scheduleTick).catch(() => {});
+      else { active.pause(); stopTick(); }
     }).observe(hero);
   }
   document.addEventListener('visibilitychange', () => {
     pageVisible = !document.hidden;
     if (!active) return;
-    if (pageVisible && visible && !paused) active.play().catch(() => {});
-    else active.pause();
+    if (pageVisible && visible && !paused) active.play().then(scheduleTick).catch(() => {});
+    else { active.pause(); stopTick(); }
   });
   toggle.addEventListener('click', () => {
     paused = !paused;
@@ -484,7 +519,7 @@
     toggle.setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation');
     hero.classList.toggle('is-paused', paused);           // the ring and the siren stop with the film
     if (!active) return;
-    if (paused) active.pause();
-    else if (visible && pageVisible) active.play().catch(() => {});
+    if (paused) { active.pause(); stopTick(); }
+    else if (visible && pageVisible) active.play().then(scheduleTick).catch(() => {});
   });
 })();
