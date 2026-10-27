@@ -56,14 +56,50 @@
     follow();
   }
 
-  // A link to one answer (#q-...) opens it.
-  const openLinked = () => {
-    let id; try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
+  // Open linked details immediately, but position an initial deep link after the
+  // browser's load/restore cycle and final font metrics. Later hash changes stay immediate.
+  const openLinked = (scroll = true) => {
+    let id; try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return null; }
     const card = id && document.getElementById(id);
-    if (card && card.matches('details.pg-case')) { card.open = true; card.scrollIntoView({block: 'center'}); }
+    if (!card || !card.matches('details.pg-case, details.pg-win, details.pg-win-group')) return null;
+    const chain = [card];
+    let parent = card.parentElement && card.parentElement.closest('details');
+    while (parent) {
+      chain.push(parent);
+      parent = parent.parentElement && parent.parentElement.closest('details');
+    }
+    chain.reverse().forEach(detail => { detail.open = true; });
+    if (scroll) card.scrollIntoView({block: card.matches('.pg-win-group') ? 'start' : 'center'});
+    return card;
   };
-  addEventListener('hashchange', openLinked);
-  openLinked();
+  let cancelInitialLink = () => {};
+  addEventListener('hashchange', () => { cancelInitialLink(); openLinked(); });
+  const initialLinked = openLinked(false);
+  if (initialLinked) {
+    const initialHash = location.hash;
+    let cancelled = false;
+    const intentEvents = ['pointerdown', 'touchstart', 'wheel', 'keydown'];
+    const cancel = () => {
+      cancelled = true;
+      intentEvents.forEach(type => removeEventListener(type, cancel, true));
+    };
+    cancelInitialLink = cancel;
+    intentEvents.forEach(type => addEventListener(type, cancel, {capture: true, passive: true}));
+    const settle = () => {
+      if (cancelled) return;
+      Promise.resolve(document.fonts ? document.fonts.ready : null).catch(() => {}).then(() => {
+        // Two rendering frames let restored scroll and responsive layout settle;
+        // no timer can pull a visitor back after they have started interacting.
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          if (!cancelled && location.hash === initialHash) openLinked();
+          cancel();
+        }));
+      });
+    };
+    if (document.readyState === 'complete') settle();
+    else addEventListener('pageshow', event => { if (event.persisted) cancel(); else settle(); }, {once: true});
+  }
+  // END LINKED RESULTS
 
   // Book a call: a tapped idea, or the visitor's own words, goes into the email draft.
   const builder = document.querySelector('.pg-builder');
@@ -121,7 +157,7 @@
   // Belts: cards on a gentle curve that turn slowly on their own, like a carousel (owner, after tryholo.ai). A belt
   // moves only while it is on screen and nobody is pointing at it, using the keyboard in it or reading from it; it has
   // previous, pause and next controls, and it stands still for reduced motion. Phones get a flat moving swipe row. A numbered
-  // sequence does not loop: its cards keep their order and the curve sways gently instead. The list keeps its order for
+  // sequence does not loop: it stays still when all cards fit, otherwise it moves through them in order. The list keeps its order for
   // screen readers; the copies that close a loop are hidden from them and from the keyboard, but open like the original.
   const flatScreen = matchMedia('(max-width: 1023px)');
   const easeOut = t => 1 - Math.pow(1 - t, 5);         // close to the site's own ease-out curve
@@ -162,7 +198,7 @@
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const pointers = new Set();
     let offset = 0, phase = 0, last = 0, raf = 0, step = 320, span = 1, radius = 1400;
-    let flat = true, mobile = flatScreen.matches, visible = false, pointer = false, keyboard = false, paused = false, held = false;
+    let flat = true, mobile = flatScreen.matches, staticRow = false, visible = false, pointer = false, keyboard = false, paused = false, held = false;
     let glide = null, gesture = null, input = 'keyboard', direction = 1, dwell = 1400, measuredWidth = 0, suppressClick = false;
     const limit = () => Math.max(0, (own.length - 1) * step);
     const bounded = value => loops ? value : Math.max(0, Math.min(limit(), value));
@@ -178,6 +214,7 @@
       next.disabled = !loops && position >= end - 1;
     };
     const place = () => {
+      if (staticRow) return;
       all.forEach((el, k) => {
         const x = xOf(k), a = x / radius;
         el.style.transform = mobile ? `translate3d(${x.toFixed(1)}px,0,0)`
@@ -186,7 +223,7 @@
       controls();
     };
     const stop = () => { cancelAnimationFrame(raf); raf = 0; glide = null; last = 0; };
-    const available = () => !flat && visible && !keyboard && !held && !document.hidden && !pointers.size;
+    const available = () => !flat && !staticRow && visible && !keyboard && !held && !document.hidden && !pointers.size;
     const running = () => available() && !pointer && !paused;
     const tick = now => {
       raf = 0;
@@ -238,23 +275,41 @@
     const measure = () => {
       stop();
       releaseGesture();
-      const wasMobile = mobile, previousStep = step;
+      const wasMobile = mobile, wasStatic = staticRow, previousStep = step;
       flat = motion.matches;
       mobile = flatScreen.matches;
+      // Measure the normal card width, not a grid column that shrinks with its container.
+      view.classList.toggle('belt-static', false);
       view.classList.toggle('belt-flat', flat);
       view.classList.toggle('belt-mobile', mobile && !flat);
-      toggle.hidden = flat;
-      prev.hidden = next.hidden = !loops && !mobile && !flat;
       all.forEach(el => { el.style.minHeight = ''; el.style.transform = ''; });
       measuredWidth = view.clientWidth;
+      staticRow = !loops && own.reduce((width, el) => width + el.offsetWidth, 0) + Math.max(0, own.length - 1) * 14 <= measuredWidth;
+      // A finite row can overflow inside a narrow column even on a wide screen.
+      if (!loops && !staticRow) mobile = true;
+      view.classList.toggle('belt-static', staticRow);
+      view.classList.toggle('belt-mobile', mobile && !flat && !staticRow);
+      bar.hidden = staticRow;
+      toggle.hidden = flat || staticRow;
+      prev.hidden = next.hidden = staticRow || (!loops && !mobile && !flat);
+      if (staticRow) {
+        offset = 0; phase = 0; direction = 1; dwell = 1400;
+        list.style.height = ''; list.scrollLeft = 0;
+        return;
+      }
       if (flat) { list.style.height = ''; controls(); return; }
       list.scrollLeft = 0;
       step = own[0].offsetWidth + (mobile ? 14 : 28);
       span = step * all.length;
       radius = Math.max(1200, view.clientWidth * 1.1);
-      if (loops || wasMobile === mobile) offset *= step / previousStep;
+      if (wasStatic) { offset = 0; direction = 1; dwell = 1400; }
+      else if (loops || wasMobile === mobile) offset *= step / previousStep;
       else { offset = mobile ? 0 : step * 0.3 * Math.sin(phase); direction = 1; dwell = 1400; }
       if (!loops && mobile) offset = bounded(offset);
+      if (wasStatic && keyboard) {
+        const focused = own.findIndex(el => el.contains(document.activeElement));
+        if (focused >= 0) offset = focused * step;
+      }
       const tallest = Math.max(...own.map(el => el.offsetHeight));
       all.forEach(el => { el.style.minHeight = tallest + 'px'; });   // every card on a belt stands the same height
       list.style.height = tallest + 'px';
@@ -263,6 +318,7 @@
     };
     // previous and next: one card at a time, and the drift stops until Play. A click glides; a key press moves at once.
     const move = (dir, instant) => {
+      if (staticRow) return;
       if (flat) { list.scrollBy({left: dir * (own[0].offsetWidth + 14), behavior: 'auto'}); return; }
       const base = glide ? glide.to : offset;           // repeated presses continue from the pending destination
       setPaused(true);
@@ -276,7 +332,7 @@
     // A touch freezes its target before click dispatch. Horizontal intent owns the drag; vertical pan and pinch stay native.
     view.addEventListener('pointerdown', e => {
       suppressClick = false;
-      if (flat || (!loops && !mobile) || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      if (flat || staticRow || (!loops && !mobile) || (e.pointerType === 'mouse' && e.button !== 0)) return;
       pointers.add(e.pointerId);
       stop();
       if (pointers.size > 1) { gesture = null; return; }
@@ -326,7 +382,7 @@
       e.preventDefault();
       e.stopImmediatePropagation();
     }, true);
-    list.addEventListener('dragstart', e => { if (!flat) e.preventDefault(); });
+    list.addEventListener('dragstart', e => { if (!flat && !staticRow) e.preventDefault(); });
     // Pointer-origin focus restoration after a reader must not turn into a permanent keyboard pause on touch browsers.
     document.addEventListener('pointerdown', () => { input = 'pointer'; keyboard = false; go(); }, true);
     document.addEventListener('keydown', e => {
@@ -341,7 +397,7 @@
       keyboard = true;
       stop();
       const i = own.findIndex(el => el.contains(e.target));
-      if (i >= 0 && !flat && (loops || mobile)) { offset = i * step; place(); }
+      if (i >= 0 && !flat && !staticRow && (loops || mobile)) { offset = i * step; place(); }
     });
     list.addEventListener('focusout', e => { if (!list.contains(e.relatedTarget)) { keyboard = false; go(); } });
     list.addEventListener('scroll', controls, {passive: true});
@@ -352,7 +408,7 @@
     addEventListener('pageshow', () => { pointer = false; measure(); });
     motion.addEventListener('change', measure);
     flatScreen.addEventListener('change', measure);
-    const resize = () => { if (Math.abs(view.clientWidth - measuredWidth) > 1) measure(); };
+    const resize = () => { if (Math.abs(view.clientWidth - measuredWidth) > (loops ? 1 : .5)) measure(); };
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(view);
     else addEventListener('resize', resize);
     if (document.fonts) document.fonts.ready.then(measure);
@@ -458,7 +514,7 @@
       if (t) open(t.dataset.case, e.detail === 0);
     });
   }
-  // Other belts named in the page: the growth steps keep their order 1, 2, 3 and sway instead of looping
+  // Growth steps keep their order 1, 2, 3, and move only when they need more room than the available width.
   document.querySelectorAll('[data-belt]').forEach(list => belt(list, list.dataset.belt, {loops: list.dataset.loop !== 'no'}));
 
   // The header follows the scroll continuously. Its layout is measured only on resize;
