@@ -101,7 +101,7 @@
   }
   // END LINKED RESULTS
 
-  // Book a call: a tapped idea, or the visitor's own words, goes into the email draft.
+  // Request a demo: the visitor’s question goes into an email draft.
   const builder = document.querySelector('.pg-builder');
   if (builder) {
     const box = builder.querySelector('textarea');
@@ -109,8 +109,8 @@
     const ideas = [...builder.querySelectorAll('.pg-idea')];
     const address = send.getAttribute('href').split('?')[0];
     const update = () => {
-      const body = 'Company:\n\nOne question we would like HAI to answer:\n' + box.value.trim() + '\n\nBest times for a short call:\n';
-      send.href = address + '?subject=' + encodeURIComponent('A question for HAI Seed') + '&body=' + encodeURIComponent(body);
+      const body = 'Company:\n\nWhat we would like to understand or improve:\n' + box.value.trim() + '\n\nBest times for a demo:\n';
+      send.href = address + '?subject=' + encodeURIComponent('HAI Seed demo request') + '&body=' + encodeURIComponent(body);
     };
     ideas.forEach(b => b.addEventListener('click', () => {
       box.value = b.textContent.trim();

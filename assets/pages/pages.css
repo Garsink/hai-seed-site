@@ -828,3 +828,12 @@
 .pg-results-art img{object-fit:contain}
 @media(max-width:900px){.pg-head .pg-results-art{max-width:300px}}
 @media(prefers-reduced-motion:reduce){.pg-win-group-head::after{transition:none}}
+
+/* Approved clarity pass: preserve the hero scene, give the explanation a readable column. */
+.home .hero-summary{max-width:42ch;font-size:clamp(1.0625rem,1.4vw,1.25rem)}
+.home .hero-demo{margin-top:24px;background:transparent;color:var(--dark-ink);border-color:var(--dark-line);text-shadow:none}
+.home .hero-demo:focus-visible{outline-color:var(--dark-ink)}
+@media(hover:hover) and (pointer:fine){.home .hero-demo:hover{background:var(--dark-ink);color:var(--dark)}}
+
+.pg-context-answers .pg-note-fold{font-size:1rem;padding-block:20px;margin:0;border-top:1px solid var(--line);color:var(--dim)}
+.pg-context-answers .pg-note-fold summary{font-size:1.125rem;color:var(--ink)}
