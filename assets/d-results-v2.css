@@ -1,0 +1,90 @@
+/* Results uses the existing HAI type, palette and disclosure patterns. */
+.d-results .pg-results-art img{transform:scaleX(-1)}
+
+/* The page index names sections; business-area links live beside their results. */
+.d-results .d-index{gap:8px 24px}
+.d-results .d-index a{min-height:44px;padding:10px 0;border:0;border-radius:0;background:none;text-decoration:underline;text-underline-offset:4px}
+.d-results .d-area-index{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 24px;margin:0 0 24px}
+.d-results .d-area-index a{display:flex;align-items:baseline;justify-content:space-between;gap:12px;min-height:44px;padding:10px 0;color:var(--ink);font-size:.9375rem;line-height:1.5;text-decoration:underline;text-underline-offset:4px}
+.d-results .d-area-index a span{flex:none;color:var(--muted);font-variant-numeric:tabular-nums}
+.d-results .d-area-index a:focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+@media(hover:hover) and (pointer:fine){.d-results .d-area-index a:hover{color:var(--accent)}}
+
+/* Comparison text and its explanation share one left edge and full column width. */
+.d-results .pg-benchmark-compare>div{padding-left:0;border-left:0}
+.d-results .pg-benchmark-output{max-width:none}
+
+/* A sample document ends with its content, even when the evidence beside it opens. */
+.d-results .oc-worked .sc-card{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:start}
+.d-results .sc-talk{min-width:0;padding:24px 0 0}
+.d-results .oc-worked .sc-doc{min-width:0;margin:0;padding:24px 0 0;align-self:start}
+.d-results .sc-sheet{height:auto;padding:24px}
+.d-results .sc-sheet p{font-size:.9375rem;line-height:1.5}
+.d-results .sc-sheet .sc-sub{font-size:.875rem!important;line-height:1.5}
+.d-results .sc-sheet .sc-foot{font-size:.875rem}
+.d-results .sc-sheet table{font-size:.875rem;line-height:1.5;overflow-wrap:normal;word-break:normal}
+.d-results .sc-sheet th{padding:8px 12px 10px 0;font-weight:600}
+.d-results .sc-sheet td{padding:12px 12px 12px 0}
+.d-results .sc-sheet th:last-child,.d-results .sc-sheet td:last-child{padding-right:0}
+.d-results .sc-sheet .sc-items li{font-size:.9375rem;line-height:1.5}
+.d-results .sc-tag,.d-results .sc-sample{font-size:.875rem}
+.d-results .sc-src,.d-results .sc-checked,.d-results .sc-sources li,.d-results .sc-by,.d-results .sc-label,.d-results .sc-status{font-size:.875rem;line-height:1.5}
+.d-results .sc-status{display:block;color:var(--dim)}
+.d-results .sc-status .sc-sample{margin-left:8px}
+.d-results .d-evidence-status{font-weight:600;color:var(--ink)}
+.d-results .d-evidence-status.is-alert{color:var(--red)}
+.d-results .d-evidence-status.is-done{color:var(--accent)}
+.d-results .d-demand-table th:nth-child(2){width:20%}
+.d-results .d-demand-table .sc-bar{margin-top:7px;background:var(--muted)}
+
+/* Each case spans the category so opening it cannot leave an empty neighbour. */
+.d-results #more .pg-wins{grid-template-columns:minmax(0,1fr);gap:0}
+.d-results #more .pg-win-body{padding:0 0 24px}
+.d-results #more .pg-win>summary{padding:20px 0}
+.d-results #more .pg-win-head{font-size:1.125rem;line-height:1.5;max-width:90ch}
+.d-results #more .pg-win-group-head{grid-template-columns:minmax(0,1fr) 24px;gap:8px 24px}
+.d-results #more .pg-win-title,.d-results #more .pg-win-description{grid-column:1}
+.d-results #more .pg-win-group-head::after{grid-column:2}
+.d-results #more .pg-win-title{flex-wrap:nowrap;justify-content:space-between;align-items:baseline;gap:16px;line-height:1.3}
+.d-results #more .d-area-name{min-width:0;text-wrap:balance}
+.d-results #more .pg-win-count{display:inline;flex:none;min-width:0;height:auto;padding:0;background:none;color:var(--muted);font-size:.875rem;font-weight:500;white-space:nowrap}
+.d-results #more .pg-win-description{font-size:1rem;line-height:1.5}
+
+/* Expanded result stories: the work and its business payoff. */
+.d-site #more .d-result-story{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:18px 40px;margin:2px 0 16px;padding:0}
+.d-site #more .d-result-story>div{min-width:0}
+.d-site #more .d-result-story dt{margin:0 0 6px;font-size:.9375rem;line-height:1.4;font-weight:700;color:var(--accent)}
+.d-site #more .d-result-story dd{max-width:60ch;margin:0;font-size:1rem;line-height:1.6;color:var(--dim);text-wrap:pretty;overflow-wrap:break-word}
+.d-site #more .pg-win-body .d-result-context{max-width:78ch;margin:10px 0 0;font-size:.9375rem;line-height:1.5;color:var(--dim)}
+.d-site #more .d-result-context strong{font-weight:700;color:var(--ink)}
+.d-site #more .pg-win-body .pg-win-src{margin-top:14px;font-size:.875rem;line-height:1.5;color:var(--muted)}
+@media(max-width:700px){.d-site #more .d-result-story{grid-template-columns:minmax(0,1fr);gap:16px;margin-bottom:14px}.d-site #more .d-result-story dd{max-width:65ch}}
+@media(max-width:1000px){
+  .d-results .oc-worked .sc-card{grid-template-columns:minmax(0,1fr);gap:24px}
+  .d-results .oc-worked .sc-doc{padding-top:0}
+  .d-results .sc-talk{padding-top:12px}
+  .d-results .d-area-index{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .d-results .pg-results-art{display:none}
+  .d-results .d-index{gap:4px 20px}
+  .d-results .sc-sheet{padding:16px}
+  .d-results .sc-sheet th{padding-right:8px}
+  .d-results .sc-sheet td{padding-right:8px}
+  .d-results #more .pg-win-group-head{gap:8px 16px}
+  .d-results #more .pg-win-title{font-size:1.25rem;gap:12px}
+  .d-results #more .pg-win-head{font-size:1.0625rem}
+}
+@media(max-width:480px){
+  .d-results .d-area-index{grid-template-columns:minmax(0,1fr);gap:0}
+  .d-results #more .pg-win-title{display:block}
+  .d-results #more .d-area-name{display:block;text-wrap:pretty}
+  .d-results #more .pg-win-count{display:block;margin-top:4px}
+}
+@media print{.d-site #more .d-result-story{break-inside:avoid}}
+
+/* Make the scale of the work visible without adding another card layer. */
+.d-site .d-work-scope{font-size:1rem;line-height:1.55;color:var(--ink);margin:0 0 18px;max-width:72ch;text-wrap:pretty}
+.d-site .d-work-scope strong{font-weight:600}
+.d-site #more .pg-win-body .d-work-scope{font-size:1rem;margin:0 0 20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.d-site .pg-benchmark-output .d-scope-line{display:block;margin-bottom:10px;font-weight:600;color:var(--ink)}

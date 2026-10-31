@@ -1,0 +1,59 @@
+/* D v7: the company architecture, drawn with the film's own picture.
+   Sources below ground, the company AI in the trunk, people and agents above.
+   Charcoal only where the film's picture appears; #111 is the film's exact backdrop. */
+.d-site #how{--dv7-charcoal:#111;--dv7-mint:#8bd6ca;--dv7-ink:#f4f7f6;--dv7-soft:#cfd8d5;--dv7-leader:rgba(139,214,202,.6)}
+
+/* Heading and explanation stay on the light reading surface, on the page's half split. */
+.d-site #how .dv7-head{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--d-column-gap,64px);row-gap:clamp(16px,2vw,24px);align-items:start}
+.d-site #how .dv7-head h2{grid-column:1/-1;max-width:none;margin:0;font-size:var(--d-section-title,clamp(2.1rem,3.5vw,3.25rem));line-height:1.1;text-wrap:balance}
+.d-site #how .dv7-head h2 span{display:inline-block;text-wrap:balance}
+.d-site #how .dv7-head .lead{margin:0;padding:0;font-size:1.125rem;line-height:1.55;max-width:52ch}
+.d-site #how .dv7-more p{margin:0;font-size:1rem;line-height:1.6;color:var(--dim);max-width:52ch}
+.d-site #how .dv7-more .text-link{margin-top:14px;font-size:.9375rem}
+
+/* The picture: one cutaway, labels in its empty sky. */
+.d-site #how .dv7-cutaway{margin:clamp(28px,3.4vw,44px) 0 0;min-width:0}
+.d-site #how .dv7-stage{position:relative;overflow:hidden;background:var(--dv7-charcoal);border-radius:var(--r-xl,28px);color:var(--dv7-ink)}
+.d-site #how .dv7-film{display:block;width:100%;height:auto;max-width:none}
+.d-site #how .dv7-labels{position:absolute;inset:0;margin:0;padding:0;list-style:none}
+.d-site #how .dv7-labels>li{position:absolute;left:4.5%;margin:0;padding:0}
+
+/* Each leader starts where its words end and stops at a fixed point in the picture. */
+.d-site #how .dv7-work::after,.d-site #how .dv7-core h3::after{content:"";flex:1;min-width:20px;height:9px;margin-left:16px;background:radial-gradient(circle at calc(100% - 4.5px) 50%,var(--dv7-mint) 3.5px,transparent 4px),linear-gradient(var(--dv7-leader),var(--dv7-leader)) left center/calc(100% - 6px) 1px no-repeat}
+.d-site #how .dv7-work{top:calc(18.5% - 13px);right:46.5%;display:flex;align-items:center;font-size:1.0625rem;line-height:1.5;font-weight:500;color:var(--dv7-ink);white-space:nowrap}
+.d-site #how .dv7-work span,.d-site #how .dv7-sources span{white-space:nowrap}
+.d-site #how .dv7-work span:not(:last-child)::after,.d-site #how .dv7-sources span:not(:last-child)::after{content:"\00b7";margin:0 .55em;color:var(--dv7-soft)}
+.d-site #how .dv7-core{top:calc(37.9% - 46px);right:34.9%}
+.d-site #how .dv7-name{display:block;font-size:.9375rem;line-height:1.4;color:var(--dv7-soft)}
+.d-site #how .dv7-core h3{display:flex;align-items:center;margin:4px 0 0;font-size:clamp(1.625rem,2.5vw,2.25rem);line-height:1.15;font-weight:600;color:var(--dv7-mint);white-space:nowrap}
+.d-site #how .dv7-core p{margin:12px 0 0;font-size:1rem;line-height:1.55;color:var(--dv7-soft);max-width:none}
+.d-site #how .dv7-sources{top:calc(63.6% - 44px);font-size:1rem;line-height:1.55;font-weight:500;color:var(--dv7-ink)}
+.d-site #how .dv7-sources::after{content:"";position:absolute;left:0;top:calc(100% + 8px);width:9px;height:clamp(64px,8vw,104px);background:radial-gradient(circle at 50% calc(100% - 4.5px),var(--dv7-mint) 3.5px,transparent 4px),linear-gradient(var(--dv7-leader),var(--dv7-leader)) center top/1px calc(100% - 6px) no-repeat}
+
+.d-site #how .dv7-cutaway figcaption{margin:14px 0 0;font-size:.9375rem;line-height:1.5;color:var(--dim)}
+
+/* No room in the sky: the same three layers sit under the picture, in the same order. */
+@media(max-width:1180px){
+  .d-site #how .dv7-labels{position:static;display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:28px;padding:24px 28px 28px}
+  .d-site #how .dv7-labels>li{position:static}
+  .d-site #how .dv7-work,.d-site #how .dv7-sources{display:flex;flex-direction:column;align-items:flex-start;white-space:normal;font-size:1rem;line-height:1.55}
+  .d-site #how .dv7-work span:not(:last-child)::after,.d-site #how .dv7-sources span:not(:last-child)::after,.d-site #how .dv7-work::after,.d-site #how .dv7-core h3::after,.d-site #how .dv7-sources::after{content:none}
+  .d-site #how .dv7-core h3{font-size:1.625rem;white-space:normal}
+}
+@media(max-width:900px){
+  .d-site #how .dv7-head{grid-template-columns:1fr;row-gap:16px}
+}
+@media(max-width:760px){
+  .d-site #how .dv7-stage{border-radius:var(--r-lg,24px)}
+  .d-site #how .dv7-labels{display:block;padding:4px 20px 8px}
+  .d-site #how .dv7-labels>li{padding:16px 0}
+  .d-site #how .dv7-labels>li+li{border-top:1px solid rgba(244,247,246,.16)}
+  .d-site #how .dv7-work,.d-site #how .dv7-sources{flex-direction:row;flex-wrap:wrap;gap:2px 18px}
+}
+
+/* How it works: each part wears the piece of the same picture it stands for. */
+#route .pg-route picture{display:contents}
+#route .pg-route .dv7-part{display:block;width:calc(100% + 44px);max-width:none;height:auto;max-height:220px;aspect-ratio:2/1;object-fit:cover;margin:-22px -22px 18px;background:#111;border-radius:var(--r-lg,24px) var(--r-lg,24px) 0 0}
+@media(max-width:760px){
+  #route .pg-route .dv7-part{aspect-ratio:5/2}
+}

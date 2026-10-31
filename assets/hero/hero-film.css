@@ -210,6 +210,9 @@
 .ht-cloud-tail{right:-24px;width:36px}
 .hf-dialogue[data-position="arrival"] .ht-cloud-tail{left:-24px}
 .hf-dialogue[data-anchor="outside"] .ht-cloud-tail{left:auto;right:-24px}
+/* D keeps every speaker in one sky slot, with the cue facing the scene. */
+.d-site .hero-talk.hf-dialogue[data-anchor="scene"]{--hf-cloud-origin:100% 50%}
+.d-site .hf-dialogue[data-anchor="scene"] .ht-cloud-tail{left:auto;right:-24px;transform:none}
 .hero-talk.hf-dialogue .ht-question .ht-cloud-tail{top:calc(56% - 10px)}
 .hero-talk.hf-dialogue .ht-answer .ht-cloud-tail{top:calc(44% - 10px)}
 .hero-talk.hf-dialogue[data-layout="below"] .ht-turn .ht-cloud-tail{top:-4px;left:auto;right:var(--hf-tail-right,30%)}

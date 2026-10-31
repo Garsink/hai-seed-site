@@ -1,0 +1,107 @@
+/* HAI Seed D: additions for the How it works, Results and About pages. Built on the shared tokens in muneron.css
+   and pages.css; no new colours or fonts. */
+
+/* How it works: one normal week, read left to right (top to bottom on small screens) */
+.d-day{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px 28px;margin:8px 0 0;padding:0;list-style:none}
+.d-day::before{content:"";position:absolute;top:7px;left:0;right:0;height:1px;background:var(--line)}
+.d-day-step{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding-top:34px}
+.d-day-step::before{content:"";position:absolute;top:0;left:0;width:15px;height:15px;box-sizing:border-box;border:2px solid var(--accent);border-radius:50%;background:var(--ground)}
+.d-day-when{margin:0;font-size:.8125rem;font-weight:600;color:var(--accent)}
+.d-day-step h3{margin:0;font-size:1.3rem;line-height:1.2;text-wrap:balance}
+.d-day-step>p{margin:0;font-size:1rem;line-height:1.5;color:var(--dim)}
+.d-day-show{margin-top:auto;padding-top:8px}
+.d-ask{margin:0;padding:14px 16px;border-radius:var(--r-sm) var(--r-sm) var(--r-sm) 4px;background:var(--tint);font-weight:600;line-height:1.35;color:var(--ink)}
+.d-label{margin:0 0 6px;font-size:.75rem;font-weight:600;color:var(--muted)}
+.d-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.d-chips li{padding:4px 10px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--surface);font-size:.8125rem;line-height:1.3;color:var(--dim)}
+.d-found{margin:12px 0 0;font-weight:700;color:var(--ink)}
+.d-flag{margin:0;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);line-height:1.4;color:var(--ink)}
+.d-flag span{display:block;margin-bottom:4px;font-size:.75rem;font-weight:700;color:var(--red)}
+.d-doc{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:var(--surface);color:var(--ink);text-decoration:none;transition:border-color 160ms var(--ease)}
+.d-doc-name{font-weight:700}
+.d-doc-open{font-size:.875rem;color:var(--accent)}
+.d-doc:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.d-note{margin:22px 0 0;font-size:.875rem;color:var(--muted)}
+
+/* How it works: one line under the three growth steps; the details live on Pricing */
+.d-setup-more{max-width:none;margin:32px 0 0;padding-top:22px;border-top:1px solid var(--line);color:var(--dim)}
+.d-setup-more .text-link{margin-left:6px}
+
+/* How it works: what each team asks (illustrative), one line each until opened */
+.d-tag{display:inline-block;margin:0 2px;padding:1px 9px;border-radius:var(--r-pill);background:var(--tint);font-size:.8125rem;font-weight:700;line-height:1.5;color:var(--accent);vertical-align:.08em}
+.d-teams{margin:8px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.d-teams>li{border-bottom:1px solid var(--line)}
+.d-team>summary{display:grid;grid-template-columns:36px 112px minmax(0,1fr) auto;gap:4px 20px;align-items:center;padding:14px 0;list-style:none;cursor:pointer}
+.d-team>summary::-webkit-details-marker{display:none}
+.d-team>summary::after{content:"+";font-size:1.25rem;line-height:1;color:var(--accent)}
+.d-team[open]>summary::after{content:"\2212"}
+.d-team>summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.d-team-fruit{width:36px;height:36px;object-fit:contain}
+.d-team-who{font-weight:700;color:var(--accent)}
+.d-team-q{font-size:1.1rem;font-weight:600;line-height:1.3;color:var(--ink)}
+.d-team-body{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px 32px;padding:0 0 20px 168px}
+.d-team-body p:last-child{margin:0;line-height:1.5;color:var(--dim)}
+
+/* How it works: short, candid questions in one list */
+.d-faq{max-width:860px;margin-top:8px}
+.d-q{border-bottom:1px solid var(--line)}
+.d-q>summary{display:flex;justify-content:space-between;gap:16px;padding:16px 0;list-style:none;cursor:pointer;font-size:1.05rem;font-weight:600;line-height:1.35;color:var(--ink)}
+.d-q>summary::-webkit-details-marker{display:none}
+.d-q>summary::after{content:"+";flex:none;font-size:1.25rem;font-weight:400;line-height:1;color:var(--accent)}
+.d-q[open]>summary::after{content:"\2212"}
+.d-q>summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.d-a{padding:0 0 18px}
+.d-a p{max-width:62ch;margin:0;line-height:1.6;color:var(--dim)}
+.d-more{margin:28px 0 0}
+
+/* Results: how to read the labels, and one row of links into the page */
+.d-legend{max-width:60ch;margin:18px 0 0;font-size:.9375rem;line-height:1.55;color:var(--muted)}
+.d-index{display:flex;flex-wrap:wrap;gap:8px}
+.d-index a{display:inline-flex;align-items:baseline;gap:6px;padding:9px 14px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--surface);font-size:.9375rem;font-weight:600;color:var(--ink);text-decoration:none;transition:border-color 160ms var(--ease),color 160ms var(--ease)}
+.d-index a span{font-weight:500;color:var(--muted)}
+.d-index a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.d-sub{max-width:64ch;margin:0 0 18px;color:var(--dim)}
+.d-sub strong{color:var(--ink)}
+.d-more-stories>summary{display:inline-flex;align-items:center;gap:10px;margin:24px 0 8px;padding:12px 20px;border:1px solid var(--line-strong);border-radius:var(--r-pill);background:var(--surface);list-style:none;cursor:pointer;font-weight:600;color:var(--ink)}
+.d-more-stories>summary::-webkit-details-marker{display:none}
+.d-more-stories>summary::after{content:"+";font-size:1.15rem;line-height:1;color:var(--accent)}
+.d-more-stories[open]>summary::after{content:"\2212"}
+.d-more-stories>summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.d-more-stories[open] .d-show,.d-more-stories:not([open]) .d-hide{display:none}
+
+/* About: the lab statement leads, then what it means in practice */
+.d-about-head h1{max-width:19ch;font-size:clamp(2.5rem,4.6vw,4.25rem);text-wrap:balance}
+.d-about-head h1 em{font-style:normal;color:var(--accent)}
+.d-lab-band{margin:clamp(40px,6vw,72px) 0;background:var(--tint)}
+.d-lab-inner{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:24px 56px;padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(40px,5vw,64px)}
+.d-lab-band h2{margin:0;font-size:clamp(1.9rem,3.2vw,2.75rem);line-height:1.1;text-wrap:balance}
+.d-lab-copy p{max-width:56ch;margin:0 0 14px;font-size:1.125rem;line-height:1.55;color:var(--ink)}
+.d-lab-links{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:8px}
+.d-lab-copy .d-partners{margin:18px 0 0;font-size:1rem;color:var(--dim)}
+
+@media (hover:hover) and (pointer:fine){
+  .d-doc:hover,.d-more-stories>summary:hover{border-color:var(--accent)}
+  .d-index a:hover{border-color:var(--accent);color:var(--accent)}
+  .d-team>summary:hover .d-team-q{color:var(--accent)}
+}
+
+@media (max-width:980px){
+  .d-day{grid-template-columns:1fr;gap:28px}
+  .d-day::before{top:4px;bottom:4px;left:7px;right:auto;width:1px;height:auto}
+  .d-day-step{padding:0 0 0 36px}
+  .d-day-step::before{top:2px}
+  .d-day-show{max-width:440px;margin-top:6px}
+}
+
+@media (max-width:860px){
+  .d-team>summary{grid-template-columns:36px minmax(0,1fr) auto}
+  .d-team-who{grid-column:2;grid-row:1}
+  .d-team-q{grid-column:2;grid-row:2}
+  .d-team>summary::after{grid-column:3;grid-row:1 / span 2}
+  .d-team-body{grid-template-columns:1fr;padding-left:56px}
+  .d-lab-inner{grid-template-columns:1fr}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .d-doc,.d-index a{transition:none}
+}

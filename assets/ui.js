@@ -28,4 +28,19 @@
   header.addEventListener('focusout', event => {
     if (open && event.relatedTarget && !header.contains(event.relatedTarget)) setOpen(false);
   });
+  // D's desktop links replace the narrow-screen panel. Close it at the same
+  // breakpoint so its scroll lock and now-hidden Close control cannot remain.
+  if (document.body.classList.contains('d-site')) {
+    const desktop = matchMedia('(min-width: 1101px)');
+    desktop.addEventListener('change', event => {
+      if (!event.matches || !open) return;
+      const focused = document.activeElement;
+      const restoreFocus = button.contains(focused) || menu.contains(focused);
+      const href = focused && focused.closest('a')?.href;
+      const destination = [...header.querySelectorAll('.nav-shortcuts a')].find(a => a.href === href)
+        || header.querySelector('.header-cta');
+      setOpen(false);
+      if (restoreFocus && destination) destination.focus({preventScroll: true});
+    });
+  }
 })();

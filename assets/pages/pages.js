@@ -162,7 +162,7 @@
   const flatScreen = matchMedia('(max-width: 1023px)');
   const easeOut = t => 1 - Math.pow(1 - t, 5);         // close to the site's own ease-out curve
   const byKeyboard = el => { try { return el.matches(':focus-visible'); } catch (_) { return false; } };
-  const belt = (list, label, {loops = true} = {}) => {
+  const belt = (list, label, {loops = true, autoplay = true} = {}) => {
     const own = [...list.children];
     const view = document.createElement('div');
     view.className = 'belt-view';
@@ -224,7 +224,7 @@
     };
     const stop = () => { cancelAnimationFrame(raf); raf = 0; glide = null; last = 0; };
     const available = () => !flat && !staticRow && visible && !keyboard && !held && !document.hidden && !pointers.size;
-    const running = () => available() && !pointer && !paused;
+    const running = () => autoplay && available() && !pointer && !paused;
     const tick = now => {
       raf = 0;
       if (!available()) { stop(); return; }
@@ -290,7 +290,7 @@
       view.classList.toggle('belt-static', staticRow);
       view.classList.toggle('belt-mobile', mobile && !flat && !staticRow);
       bar.hidden = staticRow;
-      toggle.hidden = flat || staticRow;
+      toggle.hidden = !autoplay || flat || staticRow;
       prev.hidden = next.hidden = staticRow || (!loops && !mobile && !flat);
       if (staticRow) {
         offset = 0; phase = 0; direction = 1; dwell = 1400;
@@ -514,58 +514,12 @@
       if (t) open(t.dataset.case, e.detail === 0);
     });
   }
-  // Growth steps keep their order 1, 2, 3, and move only when they need more room than the available width.
-  document.querySelectorAll('[data-belt]').forEach(list => belt(list, list.dataset.belt, {loops: list.dataset.loop !== 'no'}));
-
-  // The header follows the scroll continuously. Its layout is measured only on resize;
-  // each scroll frame changes transforms and opacity, so the controls never disappear.
-  const head = document.querySelector('.site-header');
-  if (head) {
-    const nav = head.querySelector('.nav');
-    const identity = head.querySelector('.identity');
-    const actions = head.querySelector('.nav-actions');
-    const links = head.querySelector('.nav-shortcuts');
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    let left = 0, right = 0, frame = 0, open = head.classList.contains('is-open');
-    const paint = () => {
-      frame = 0;
-      if (open) return;
-      const focusedLink = links && links.contains(document.activeElement);
-      const p = focusedLink ? 0 : reduced.matches ? (scrollY > 64 ? 1 : 0) : clamp(scrollY / 180);
-      head.style.setProperty('--header-progress', p.toFixed(4));
-      head.style.setProperty('--header-left', (left * p).toFixed(2) + 'px');
-      head.style.setProperty('--header-right', (right * p).toFixed(2) + 'px');
-      head.style.setProperty('--header-wordmark', (1 - clamp(p / .72)).toFixed(4));
-      head.style.setProperty('--header-mark', clamp((p - .3) / .7).toFixed(4));
-      head.classList.toggle('is-compact', p === 1);
-      if (links) links.inert = p > .92;
-    };
-    const ask = () => { if (!frame) frame = requestAnimationFrame(paint); };
-    const measure = () => {
-      if (open) return;
-      head.style.setProperty('--header-left', '0px');
-      head.style.setProperty('--header-right', '0px');
-      const n = nav.getBoundingClientRect(), a = identity.getBoundingClientRect(), b = actions.getBoundingClientRect();
-      left = n.left - a.left;
-      right = n.right - b.right;
-      paint();
-    };
-    head.classList.add('header-scroll');
-    new MutationObserver(() => {
-      const next = head.classList.contains('is-open');
-      if (next === open) return;
-      open = next;
-      if (open && links) links.inert = true;
-      if (!open) measure();
-    }).observe(head, {attributes: true, attributeFilter: ['class']});
-    addEventListener('scroll', ask, {passive: true});
-    addEventListener('resize', measure);
-    head.addEventListener('focusin', ask);
-    head.addEventListener('focusout', ask);
-    reduced.addEventListener('change', paint);
-    if (document.fonts) document.fonts.ready.then(measure);
-    measure();
-  }
+  // Growth steps stay still until the visitor swipes or uses an arrow. When all
+  // steps fit, the existing static row remains; there is no Play control.
+  document.querySelectorAll('[data-belt]').forEach(list => belt(list, list.dataset.belt, {
+    loops: list.dataset.loop !== 'no',
+    autoplay: list.dataset.belt !== 'steps'
+  }));
 
   // Scroll-linked painting, only while the element is near the screen.
   const onScroll = (el, paint) => {
@@ -618,23 +572,8 @@
     });
   }
 
-  // Entrances: whole blocks fade in once as they arrive. Whatever is already on screen when this runs stays put, and
-  // printing shows everything.
-  if ('IntersectionObserver' in window) {
-    const blocks = [...document.querySelectorAll(['main .chapter-head', 'main .pg-cta .inner > div:first-child',
-      '.pg-grow', '.pg-outcomes', '.pg-sources', '.pg-parts', '.pg-plant', '.pg-folds', '.pg-feature', '.pg-cases',
-      '.pg-timeline', '.pg-shifts', '.pg-route', '.pg-trace', '.pg-daily', '.pg-three', '.pg-carousel', '.sc-tiles', '.pg-plans', '.pg-two', '.pg-callers', '.pg-teams', '.pg-topics', '.pg-cta .pg-duo'].join(','))];
-    const io = new IntersectionObserver(entries => entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-    }), {rootMargin: '0px 0px -6% 0px'});
-    blocks.forEach(el => {
-      el.classList.add('rv');
-      if (el.getBoundingClientRect().top < innerHeight) el.classList.add('is-in', 'was-in');
-      else io.observe(el);
-    });
-    document.documentElement.classList.add('js-reveal');
-    addEventListener('beforeprint', () => blocks.forEach(el => el.classList.add('is-in', 'was-in')));
-  }
+  // Reading content is visible immediately. Scrolling never gates a section's
+  // visibility or schedules an entrance, including with reduced motion.
 
   // Case study: the timeline's line draws as the timeline is read.
   if (!still && 'IntersectionObserver' in window) {

@@ -1,0 +1,60 @@
+/* Practical setup, film and everyday use. Architecture is in d-how-v10.css. */
+.d-how-v9 main [id]{scroll-margin-top:100px}
+.d-how-v9 .page-head{padding-bottom:28px}
+.d-how-v9 .page-head .lead{max-width:58ch}
+.d-how-v9 .chapter{padding-block:44px}
+.d-how-v9 .page-head+.d9-setup{padding-top:32px}
+.d-how-v9 .d9-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin:0;padding:0;list-style:none}
+.d-how-v9 .d9-steps>li{min-width:0}
+.d-how-v9 .d9-step-art{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;height:144px;margin:0 0 24px}
+.d-how-v9 .d9-step-art img{display:block;width:116px;height:116px;object-fit:contain}
+.d-how-v9 .d9-step-art figcaption{font-size:.875rem;line-height:1.4;color:var(--muted)}
+.d-how-v9 .d9-step-contact{align-items:flex-start;justify-content:center}
+.d-how-v9 .d9-steps h3{display:flex;align-items:baseline;gap:10px;margin:0 0 12px;font-size:1.25rem;line-height:1.3}
+.d-how-v9 .d9-steps h3>span{color:var(--accent);font-size:1rem;font-weight:500;font-variant-numeric:tabular-nums}
+.d-how-v9 .d9-steps p{margin:0 0 10px;font-size:1rem;line-height:1.55;color:var(--dim)}
+.d-how-v9 .d-setup-more{margin-top:28px;padding-top:20px;font-size:.9375rem;line-height:1.55}
+.d-how-v9 .d-setup-more .text-link{margin-left:0}
+.d-how-v9 .film-player{display:block;width:100%;max-width:1040px;height:auto;margin-inline:auto}
+.d-how-v9 .film-notes{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;max-width:1040px;margin:14px auto 0}
+.d-how-v9 .film-notes p,.d-how-v9 .film-notes .text-link{margin:0;font-size:.875rem;line-height:1.5}
+.d-how-v9 .d9-anchor{display:block;height:0}
+
+/* Everyday use stays a short, plain sequence; the film has already shown the story. */
+.d-how-v9 #day .d-day{gap:28px;margin:0}
+.d-how-v9 #day .d-day::before,.d-how-v9 #day .d-day-step::before{content:none}
+.d-how-v9 #day .d-day-step{padding:16px 0 0;border-top:1px solid var(--line);gap:10px}
+.d-how-v9 #day .d-day-when{font-size:.875rem}
+.d-how-v9 #day .d-day-step h3{font-size:1.25rem;line-height:1.3}
+.d-how-v9 #day .d-day-show{margin:4px 0 0;padding:0}
+.d-how-v9 #day .d-ask,.d-how-v9 #day .d-flag{padding:0;border:0;border-radius:0;background:none;color:var(--ink);font-size:1rem;line-height:1.5}
+.d-how-v9 #day .d-ask{font-style:italic}
+.d-how-v9 #day .d-chips{display:flex;flex-wrap:wrap;gap:4px 12px;margin:0 0 8px}
+.d-how-v9 #day .d-chips li{padding:0;border:0;border-radius:0;background:none;font-size:.875rem;line-height:1.5;color:var(--dim)}
+.d-how-v9 #day .d-chips li::before{content:none}
+.d-how-v9 #day .d-label,.d-how-v9 #day .d-flag span{font-size:.875rem}
+.d-how-v9 #day .d-found{font-size:1rem;line-height:1.5}
+.d-how-v9 #day .d-doc{padding:0;border:0;border-radius:0;background:none;box-shadow:none}
+.d-how-v9 #day .d-doc-name{font-size:1rem}
+.d-how-v9 #day .d-doc-open{font-size:.875rem;text-decoration:underline;text-underline-offset:4px}
+.d-how-v9 #day .d-note{margin-top:20px;font-size:.875rem}
+
+@media(max-width:1100px){
+  .d-how-v9 .d9-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px}
+  .d-how-v9 .d9-step-art{height:120px;margin-bottom:20px}
+  .d-how-v9 .d9-step-art img{width:96px;height:96px}
+  .d-how-v9 #day .d-day{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .d-how-v9 .chapter{padding-block:32px}
+  .d-how-v9 .d9-steps{grid-template-columns:minmax(0,1fr);gap:24px}
+  .d-how-v9 .d9-steps>li{display:grid;grid-template-columns:minmax(0,1fr) 72px;gap:12px 16px;padding-top:20px;border-top:1px solid var(--line)}
+  .d-how-v9 .d9-step-art{grid-column:2;grid-row:1;width:72px;height:72px;margin:0}
+  .d-how-v9 .d9-step-art img{width:72px;height:72px}
+  .d-how-v9 .d9-step-art figcaption{display:none}
+  .d-how-v9 .d9-step-contact{grid-column:1/-1;grid-row:3;width:auto;height:auto;margin:0;align-items:flex-start}
+  .d-how-v9 .d9-steps h3{grid-column:1;grid-row:1;align-self:center;margin:0;font-size:1.2rem}
+  .d-how-v9 .d9-step-contact+h3{grid-column:1/-1}
+  .d-how-v9 .d9-steps p{grid-column:1/-1;margin:0}
+  .d-how-v9 #day .d-day{grid-template-columns:minmax(0,1fr);gap:24px}
+}

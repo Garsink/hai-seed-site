@@ -1,0 +1,23 @@
+/* D: fixed navigation and immediately readable content. Load after shared CSS. */
+.d-site .site-header.nav-ready {
+  transform: none;
+  transition: none;
+}
+
+/* Keep the visible default even if an older cached script adds reveal classes. */
+.d-site .rv,
+.js-reveal .d-site .rv:not(.is-in),
+.js-reveal .d-site .rv.is-in:not(.was-in) {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d-site .button:active,
+  .d-site .nav-toggle:active,
+  .d-site .nav-menu-links a:hover span,
+  .d-site .hero-explore:hover span {
+    transform: none;
+  }
+}

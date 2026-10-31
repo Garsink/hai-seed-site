@@ -1,0 +1,101 @@
+/* D v7: one reading grid, one type scale, and mint reserved for HAI output. */
+.d-site {
+  --tint: #e5f1ee;
+  --d-section-space: clamp(40px, 4.5vw, 64px);
+  --d-column-gap: clamp(32px, 4.5vw, 64px);
+  --d-section-title: clamp(2rem, 3.4vw, 3.25rem);
+  --d-page-title: clamp(2.6rem, 5vw, 4.5rem);
+}
+.d-site main :is(h1,h2,h3) {text-wrap:balance}
+.d-site main :is(section,details)[id] {scroll-margin-top:100px}
+.d-site.inner-page main {padding-top:0}
+.d-site .page-head {padding-block:124px 48px}
+.d-site .pg-crumbs {margin-bottom:30px;font-size:.875rem;line-height:1.5}
+.d-site .d-breadcrumb {padding-top:124px;font-size:.875rem;line-height:1.5}
+.d-site .d-page-intro {padding-top:30px;padding-bottom:48px}
+.d-site :is(.page-head,.d-page-intro) h1 {
+  font-size:var(--d-page-title);line-height:1.06;letter-spacing:-.03em;
+}
+.d-site .d-about-head h1 {max-width:860px}
+.d-site .page-head .lead {font-size:1.2rem;line-height:1.55;margin-top:24px;max-width:62ch}
+.d-site .page-head .lead+.lead {margin-top:18px}
+.d-site .page-head .actions {margin-top:28px}
+.d-site .chapter {padding-block:var(--d-section-space)}
+.d-site .page-head+.chapter {padding-top:var(--d-section-space)}
+.d-site .chapter-head {grid-template-columns:repeat(2,minmax(0,1fr));gap:24px var(--d-column-gap);margin-bottom:32px}
+.d-site :is(.chapter-head h2,.origin-copy h2,.product-detail-grid>h2,.d-lab-band h2) {
+  font-size:var(--d-section-title);line-height:1.1;max-width:24ch;
+}
+.d-site .chapter-head .lead {padding-top:0;font-size:1.125rem;line-height:1.55;max-width:46ch}
+.d-site :is(.d-product,.d-start-grid,.d-outcomes,.d-connected-head,.d-lab-inner,.product-detail-grid,.origin,.d-pricing,.d-seat,.d-included-extra) {
+  grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--d-column-gap);
+}
+.d-site :is(.d-product,.d-connected,.d-proof-band,.d-start) {padding-block:var(--d-section-space)}
+.d-site :is(.d-product h2,.d-section-head h2,.d-start h2) {font-size:var(--d-section-title);line-height:1.1}
+.d-site .d-product-intro h2 {max-width:22ch}
+.d-site .origin-copy h2 {margin-bottom:24px}
+.d-site .film-player {max-width:none}
+
+/* Stable shared surfaces. The user's rounded family remains intact. */
+.d-site :is(.d-workspace,.d-form-panel) {border-radius:var(--r-lg,24px)}
+.d-site .d-file {border-radius:var(--r-sm,12px)}
+.d-site :is(.d-form-panel input,.d-form-panel textarea) {border-radius:var(--r-sm,12px)}
+.d-site .d-workspace-top {background:var(--ground);font-size:.875rem}
+.d-site .d-workspace figcaption {font-size:.875rem}
+.d-site :is(.d-user-line,.d-ask) {background:var(--ground);border:1px solid var(--line);color:var(--ink)}
+.d-site .d-user-line {border-radius:var(--r-sm,12px)}
+.d-site .d-user-line>span {color:var(--dim);font-size:.875rem}
+.d-site .d-hai-line {background:var(--tint);padding:22px;border-radius:var(--r-sm,12px)}
+.d-site :is(.d-flag,.sc-decide,.d-proof-band) {background:var(--tint)}
+.d-site :is(.d-lab-band,.d-price-terms) {background:var(--surface);border-block:1px solid var(--line)}
+.d-site .d-lab-band {margin-block:0}
+.d-site .d-lab-inner {padding-block:var(--d-section-space)}
+.d-site .d-form-panel {background:var(--surface);border:1px solid var(--line)}
+.d-site :is(.d-form-note,.d-file small,.d-proof-note) {font-size:.875rem}
+.d-site .d-tag {background:var(--ground);color:var(--dim)}
+
+/* FAQs are readable rows, not padded panels inside more panels. */
+.d-site #faq .chapter-head {display:block}
+.d-site #faq .chapter-head h2 {max-width:none}
+.d-site .pg-faq {display:block;border-top:1px solid var(--line);max-width:960px}
+.d-site .pg-faq>details {border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none}
+.d-site .pg-faq summary {padding:20px 0;font-size:1.0625rem;line-height:1.45}
+.d-site .pg-faq details>div {padding:0 38px 20px 0;font-size:1rem;line-height:1.6;max-width:72ch}
+.d-site .d-faq {max-width:960px}
+.d-site .d-q>summary {padding-block:20px;font-size:1.0625rem;line-height:1.45}
+
+/* A common, compact page ending; buttons follow the offer. */
+.d-site .pg-cta {margin:0;border-radius:0;padding-block:var(--d-section-space);background:var(--surface)}
+.d-site .pg-cta .inner {display:block}
+.d-site :is(.pg-cta h2,.d-end-cta h2) {font-size:var(--d-section-title);line-height:1.1;max-width:25ch;margin:0 0 20px}
+.d-site .pg-cta .lead {max-width:58ch;font-size:1.125rem;line-height:1.55}
+.d-site .pg-cta-actions {flex-direction:row;align-items:center;flex-wrap:wrap;gap:20px 28px;margin-top:28px}
+.d-site .d-end-cta {display:block;padding-block:var(--d-section-space);border-top:1px solid var(--line)}
+.d-site .d-end-cta>.button {margin-top:28px}
+.d-site .d-end-cta p {max-width:58ch;font-size:1.125rem;line-height:1.55}
+.d-site .text-link {min-height:44px;align-items:center}
+.d-site .site-footer nav a {min-height:32px}
+
+@media (max-width:980px) {
+  .d-site .chapter-head {grid-template-columns:1fr;gap:18px}
+  .d-site .chapter-head :is(h2,.lead) {max-width:62ch}
+  .d-site .d-contact {column-gap:32px}
+}
+@media (max-width:760px) {
+  .d-site .page-head {padding-block:100px 36px}
+  .d-site .d-breadcrumb {padding-top:100px}
+  .d-site .pg-crumbs {margin-bottom:24px}
+  .d-site .d-page-intro {padding-block:24px 32px}
+  .d-site .page-head .lead {font-size:1.125rem;margin-top:20px}
+  .d-site :is(.d-product,.d-start-grid,.d-outcomes,.d-connected-head,.d-lab-inner,.product-detail-grid,.origin,.d-pricing,.d-seat,.d-included-extra) {grid-template-columns:1fr;gap:28px}
+  .d-site .d-product-intro h2 {max-width:24ch}
+  .d-site .d-conversation {padding:20px 16px}
+  .d-site .d-hai-line {padding:18px 16px}
+  .d-site .d-user-line {margin-left:12px}
+  .d-site .d-form-panel {padding:24px 20px}
+  .d-site .pg-faq summary {padding-block:18px;font-size:1rem}
+  .d-site .pg-faq details>div {padding-right:0}
+  .d-site .pg-cta-actions {gap:16px 24px;margin-top:24px}
+  .d-site .site-footer nav a {min-height:44px}
+  .d-site .d-next-steps p {font-size:1rem}
+}

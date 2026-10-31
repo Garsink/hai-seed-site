@@ -1,0 +1,79 @@
+/* Results v8: one question, one readable story, evidence available on request. */
+.d-results #weekly .chapter-head{display:block;max-width:760px}
+.d-results #weekly .d-sub{margin:16px 0 0;font-size:1.125rem;line-height:1.55;max-width:58ch}
+.d-results #weekly [hidden]{display:none!important}
+.d-results #weekly .d-example-layout{display:block}
+.d-results #weekly.is-enhanced .d-example-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px}
+.d-results #weekly .d-example-controls{min-width:0}
+.d-results #weekly .d-example-nav p,
+.d-results #weekly .d-example-mobile label{display:block;margin:0 0 12px;color:var(--muted);font-size:.875rem;line-height:1.5}
+.d-results #weekly .d-example-nav a{display:block;padding:12px 16px;margin:0 0 4px;border-radius:var(--r-sm);color:var(--dim);font-size:1rem;line-height:1.5;text-decoration:none}
+.d-results #weekly .d-example-nav a[aria-current="true"]{background:var(--ground);color:var(--ink);font-weight:600}
+.d-results #weekly .d-example-nav a[aria-current="true"]::after{content:' →';color:var(--accent)}
+.d-results #weekly .d-example-mobile{display:none}
+.d-results #weekly .d-example-mobile select{display:block;width:100%;min-height:48px;padding:10px 36px 10px 12px;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:var(--surface);color:var(--ink);font:inherit;font-size:1rem;line-height:1.5}
+.d-results #weekly :is(.d-example-nav a,.d-example-mobile select,.d-example-details summary):focus-visible{outline:2px solid var(--focus);outline-offset:4px}
+.d-results #weekly .d-example-question:focus-visible{outline:2px solid var(--focus);outline-offset:6px}
+@media(hover:hover) and (pointer:fine){.d-results #weekly .d-example-nav a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:4px}}
+
+/* Native outer details remain readable when the enhancement is unavailable. */
+.d-results #weekly .oc-library-list{min-width:0;max-width:800px}
+.d-results #weekly.is-enhanced .oc-library-list{border:0}
+.d-results #weekly.is-enhanced .oc-worked{border:0}
+.d-results #weekly:not(.is-enhanced) .d-example-question{display:none}
+.d-results #weekly .d-example-story{display:block;padding:24px 0 32px;margin:0;border:0;border-radius:0;background:none;box-shadow:none;animation:none;transition:none}
+.d-results #weekly.is-enhanced .d-example-story{padding:0}
+.d-results #weekly .d-example-question{margin:0 0 8px;font-size:clamp(1.25rem,1.8vw,1.5rem);font-weight:500;line-height:1.4;letter-spacing:0;color:var(--dim);text-wrap:pretty}
+.d-results #weekly .sc-meta{display:block;margin:0 0 24px}
+.d-results #weekly .sc-src{font-size:.875rem;line-height:1.5}
+.d-results #weekly .sc-head{margin:0 0 20px;font-size:clamp(1.75rem,2.6vw,2.25rem);line-height:1.2;letter-spacing:-.02em;text-wrap:pretty}
+.d-results #weekly .sc-finds{margin:0;padding-left:20px;list-style:disc;max-width:68ch}
+.d-results #weekly .sc-finds li{margin:0 0 10px;padding:0 0 0 4px;border:0;color:var(--dim);font-size:1.0625rem;line-height:1.6}
+.d-results #weekly .sc-finds li::before{content:none}
+.d-results #weekly .sc-next{margin-top:28px}
+.d-results #weekly .sc-decide{padding:0;border:0;border-radius:0;background:none}
+.d-results #weekly .sc-label{margin:0 0 8px;color:var(--ink);font-size:1rem;line-height:1.5;font-weight:600}
+.d-results #weekly .sc-decide ul{padding-left:20px;font-size:1.0625rem;line-height:1.6;list-style:disc}
+.d-results #weekly .sc-decide li{padding-left:4px;margin-bottom:6px}
+.d-results #weekly .sc-decide.is-done ul{padding-left:0;list-style:none}
+.d-results #weekly .sc-decide.is-done li{padding-left:0}
+.d-results #weekly .sc-status{margin:12px 0 0;color:var(--muted);font-size:.9375rem;line-height:1.5}
+.d-results #weekly .sc-sample{padding:0;border:0;border-radius:0;font-size:inherit}
+
+/* Evidence and samples are two simple rows, below the complete story. */
+.d-results #weekly .d-example-details{margin-top:32px;border-top:1px solid var(--line)}
+.d-results #weekly .d-example-details>details{border-bottom:1px solid var(--line)}
+.d-results #weekly .d-example-details>details>summary{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:48px;padding:16px 0;list-style:none;cursor:pointer;font-size:1rem;font-weight:500;line-height:1.5;color:var(--ink)}
+.d-results #weekly .d-example-details>details>summary::-webkit-details-marker{display:none}
+.d-results #weekly .d-example-details>details>summary::after{content:'+';flex:none;color:var(--accent);font-size:1.5rem;line-height:1}
+.d-results #weekly .d-example-details>details[open]>summary::after{content:'−'}
+.d-results #weekly .d-example-detail-body{padding:4px 0 24px;max-width:68ch}
+.d-results #weekly .sc-checked{margin:0 0 8px;font-size:1rem;line-height:1.5;color:var(--ink)}
+.d-results #weekly .sc-sources{display:block;margin:0 0 20px;padding-left:20px;list-style:disc}
+.d-results #weekly .sc-sources li{display:list-item;margin:0 0 4px;padding:0 0 0 4px;border:0;border-radius:0;font-size:1rem;line-height:1.5}
+.d-results #weekly .sc-sources li::before{content:none}
+.d-results #weekly .sc-how-body{padding:0;border:0;font-size:1rem;line-height:1.6}
+.d-results #weekly .sc-how-body ul{padding-left:20px;margin:0 0 16px}
+.d-results #weekly .sc-how-body li{margin-bottom:8px}
+.d-results #weekly .sc-how-body p{color:var(--dim)}
+.d-results #weekly .sc-doc{margin:0;padding:4px 0 24px;animation:none;transition:none}
+.d-results #weekly .sc-sheet{height:auto;padding:24px}
+.d-results #weekly .sc-sheet table{font-size:.9375rem;line-height:1.5}
+.d-results #weekly .d-reader-note{max-width:68ch;margin:40px 0 0;color:var(--muted);font-size:.9375rem;line-height:1.6}
+.d-results #weekly .d-reader-note p{margin:0 0 10px}
+.d-results #weekly .d-reader-note .text-link{font-size:.9375rem}
+
+@media(max-width:900px){
+  .d-results #weekly.is-enhanced .d-example-layout{grid-template-columns:minmax(0,1fr);gap:28px}
+  .d-results #weekly .d-example-nav{display:none}
+  .d-results #weekly .d-example-mobile{display:block}
+  .d-results #weekly .oc-library-list{max-width:none}
+  .d-results #weekly .d-example-mobile label{margin-bottom:8px}
+}
+@media(max-width:600px){
+  .d-results #weekly .sc-sheet{padding:16px}
+  .d-results #weekly .sc-sheet table{font-size:.875rem}
+  .d-results #weekly .sc-head{font-size:1.75rem}
+  .d-results #weekly .sc-finds li,.d-results #weekly .sc-decide ul{font-size:1rem}
+  .d-results #weekly .d-example-details>details>summary{gap:16px}
+}

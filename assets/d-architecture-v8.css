@@ -1,0 +1,10 @@
+/* D v8: purpose-made artwork, with live readable labels on its clear left side. */
+.d-site #how .dv7-film{aspect-ratio:2/1;object-fit:cover;object-position:right center}
+@media(min-width:1181px){
+  .d-site #how .dv7-core{top:calc(46% - 46px);right:26.5%}
+  .d-site #how .dv7-sources{top:64%}
+  .d-site #how .dv7-sources::after{height:70px}
+}
+@media(max-width:760px){
+  .d-site #how .dv7-film{aspect-ratio:1.15;object-fit:cover;object-position:right center}
+}

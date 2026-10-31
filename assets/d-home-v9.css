@@ -1,0 +1,65 @@
+/* D v9: the product story, proof and practical first steps. Hero unchanged. */
+.d-site .d-product-intro h2{max-width:20ch}
+.d-site .d-product-intro .lead{font-size:1.125rem;line-height:1.6;max-width:44ch}
+.d-site .d-product-intro>p{max-width:48ch}
+.d-site .d-product-intro .d-analogy-payoff{margin-top:28px;color:var(--ink)}
+.d-site .d-analogy-payoff strong{display:block;margin-bottom:8px;font-size:1.125rem;font-weight:600}
+.d-site .d-section-head{margin-bottom:28px}
+.d-site .d-outcomes{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.d-site .d-outcomes>article{display:flex;flex-direction:column;align-items:flex-start;border-top:1px solid #a2bcb3;padding-top:22px;min-width:0}
+.d-site .d-result-type{font-size:.875rem;line-height:1.5;margin:0 0 16px}
+.d-site .d-outcomes h3{font-size:clamp(1.5rem,2.15vw,2rem);line-height:1.2;max-width:24ch}
+.d-site .d-outcomes article>p:not(.d-result-type){font-size:1rem;line-height:1.55;color:#304c42;margin:16px 0 18px;max-width:38ch}
+.d-site .d-outcomes .text-link{font-size:.9375rem;margin-top:auto}
+.d-site .d-owner-quote{margin-top:30px;padding-top:24px;gap:24px}
+.d-site .d-owner-quote blockquote{font-size:clamp(1.25rem,2vw,1.65rem);max-width:42ch;line-height:1.4}
+.d-site .d-owner-quote figcaption{font-size:.875rem;line-height:1.5;max-width:20ch}
+.d-site .d-proof-note{margin-top:18px}
+.d-getting-started{padding-block:var(--d-section-space)}
+.d-setup-head{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--d-column-gap);align-items:start}
+.d-setup-head h2{font-size:var(--d-section-title);line-height:1.1;max-width:24ch}
+.d-setup-head .lead{font-size:1.125rem;line-height:1.55;max-width:46ch}
+.d-setup-steps{list-style:none;padding:0;margin:36px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.d-setup-steps li{border-top:1px solid var(--line-strong);padding-top:18px;min-width:0}
+.d-step-number{display:block;color:var(--accent);font-size:1rem;font-weight:500;margin-bottom:14px}
+.d-setup-steps h3{font-size:1.3rem;line-height:1.3}
+.d-setup-steps p{margin-top:12px;font-size:1rem;line-height:1.55;color:var(--dim)}
+.d-setup-foot{display:flex;flex-wrap:wrap;gap:16px 32px;margin-top:24px}
+.d-setup-foot a{font-size:.9375rem}
+@media(max-width:1000px){
+ .d-setup-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 36px}
+ .d-site .d-outcomes{gap:24px}
+ .d-site .d-section-head{align-items:start;flex-direction:column;gap:16px}
+}
+@media(max-width:760px){
+ .d-site .d-product-intro h2{max-width:24ch}
+ .d-site .d-product-intro .lead{font-size:1.0625rem}
+ .d-site .d-product-intro .d-analogy-payoff{margin-top:22px}
+ .d-site .d-outcomes{grid-template-columns:1fr;gap:24px}
+ .d-site .d-outcomes h3{font-size:1.65rem}
+ .d-site .d-outcomes article>p:not(.d-result-type){max-width:60ch;margin-block:12px}
+ .d-site .d-result-type{margin-bottom:10px}
+ .d-site .d-section-head .text-link{margin-top:0}
+ .d-site .d-owner-quote figcaption{max-width:none;margin-top:12px}
+ .d-setup-head{grid-template-columns:1fr;gap:20px}
+ .d-setup-head h2{font-size:2rem}
+ .d-setup-steps{margin-top:28px;gap:26px 22px}
+ .d-setup-steps h3{font-size:1.2rem}
+ .d-setup-foot{gap:8px 24px}
+}
+@media(max-width:480px){
+ .d-setup-steps{grid-template-columns:1fr;gap:20px}
+ .d-setup-steps li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:0 12px;padding-top:18px}
+ .d-step-number{grid-column:1;grid-row:1/3;margin:0;padding-top:2px}
+ .d-setup-steps h3,.d-setup-steps p{grid-column:2}
+ .d-setup-steps p{margin-top:8px}
+}
+
+/* Closing invitation: the pricing detail remains on the Pricing page. */
+.d-site .d-start-grid{align-items:start}
+.d-site .d-start-grid>h2{max-width:20ch}
+.d-site .d-start-copy .lead{margin-top:0;max-width:45ch}
+.d-site .d-start-copy .d-next-step{max-width:52ch}
+.d-site .d-start-actions{display:flex;align-items:center;flex-wrap:wrap;gap:18px 28px;margin-top:26px}
+.d-site .d-start-actions .button,.d-site .d-start-actions .text-link{margin:0}
+@media(max-width:760px){.d-site .d-start-grid{gap:22px}.d-site .d-start-actions{margin-top:22px}}

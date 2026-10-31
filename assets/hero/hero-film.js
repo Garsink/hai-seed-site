@@ -14,7 +14,7 @@
   const toggle = hero.querySelector('.hero-film-toggle');
   const proof = hero.querySelector('.hero-proof');
   const DATA = window.HAI_HERO_FILM;
-  const BASE = (document.currentScript && document.currentScript.src || '/assets/hero/').split('?')[0].replace(/[^/]*$/, '');
+  const BASE = (document.currentScript && document.currentScript.src || 'assets/hero/').split('?')[0].replace(/[^/]*$/, '');
   const narrow = matchMedia('(max-width: 1100px)');
   const SVG = 'http://www.w3.org/2000/svg';
 
@@ -291,9 +291,21 @@
       hero.style.setProperty('--film-bottom', Math.max(0, Math.round(initialHero.bottom - proof.getBoundingClientRect().top + 12)) + 'px');
       const film = figure.querySelector('picture').getBoundingClientRect();
       const h = hero.getBoundingClientRect(), m = message.getBoundingClientRect();
-      const textRight = Math.max(...[...message.querySelectorAll('h1,.hero-summary')].map(node => {
+      const isD = !!hero.closest('.d-site');
+      const textRight = Math.max(...[...message.querySelectorAll(isD ? 'h1,.hero-promise,.hero-summary,.d-audience,.hero-demo,.hero-faq-link' : 'h1,.hero-summary')].map(node => {
         const range = document.createRange(); range.selectNodeContents(node); return range.getBoundingClientRect().right;
       }));
+      // D's dialogue lives in the open sky between the copy and the scene.
+      // Reserve the mature tree's left edge (source x=900), its tail, and the
+      // planting engineer's highest head position (source y=300). Measure every
+      // turn at this width, so arrival, questions and answers never relocate.
+      const sceneLeft = textRight + 24;
+      const sceneRight = film.left + film.width * (900 / 1920) - 36;
+      const sceneWidth = Math.min(380, sceneRight - sceneLeft);
+      const sceneHeight = isD && sceneWidth >= 300 ? measureCloud(sceneWidth, [...sampleText.context, ...sampleText.arrival]) : Infinity;
+      const sceneBottom = film.top + film.height * (300 / 1080) - 14;
+      const sceneTop = Math.min(h.top + h.height * .36, sceneBottom - sceneHeight);
+      const sceneSafe = isD && sceneWidth >= 300 && sceneTop >= m.top + 12;
       const safeRight = film.left + film.width * (860 / 1920) - 24;
       const contextWidth = Math.min(460, safeRight - m.left);
       const contextTop = m.bottom + 12;
@@ -304,7 +316,7 @@
       const arrivalTop = film.top + film.height * .12;
       const arrivalHeight = measureCloud(Math.max(1, arrivalWidth), sampleText.arrival);
       const arrivalSafeLeft = film.left + film.width * (1390 / 1920) + 12;
-      const safe = contextWidth >= 320 && contextTop + contextHeight <= skyBottom &&
+      const safe = !isD && contextWidth >= 320 && contextTop + contextHeight <= skyBottom &&
         arrivalWidth >= 240 && arrivalLeft >= Math.max(arrivalSafeLeft, textRight + 20) &&
         arrivalTop + arrivalHeight <= skyBottom;
       // On shorter desktops the scene moves right, leaving a genuine blank column.
@@ -313,9 +325,16 @@
       const outsideWidth = Math.min(460, film.left - m.left - 28);
       const outsideTop = m.bottom + 20;
       const outsideHeight = outsideWidth >= 320 ? measureCloud(outsideWidth, [...sampleText.context, ...sampleText.arrival]) : Infinity;
-      const outsideSafe = outsideWidth >= 320 && outsideTop + outsideHeight <= proof.getBoundingClientRect().top - 16;
-      box.dataset.layout = safe || outsideSafe ? 'sky' : 'below';
-      if (!safe && outsideSafe) {
+      const outsideSafe = !isD && outsideWidth >= 320 && outsideTop + outsideHeight <= proof.getBoundingClientRect().top - 16;
+      box.dataset.layout = sceneSafe || safe || outsideSafe ? 'sky' : 'below';
+      if (sceneSafe) {
+        box.dataset.anchor = 'scene';
+        for (const [name, value] of Object.entries({
+          'context-left': sceneLeft - h.left, 'context-top': sceneTop - h.top, 'context-width': sceneWidth,
+          'arrival-left': sceneLeft - h.left, 'arrival-top': sceneTop - h.top, 'arrival-width': sceneWidth,
+          'cloud-height': sceneHeight
+        })) box.style.setProperty('--hf-' + name, value + 'px');
+      } else if (!safe && outsideSafe) {
         box.dataset.anchor = 'outside';
         for (const [name, value] of Object.entries({
           'context-left': m.left - h.left, 'context-top': outsideTop - h.top, 'context-width': outsideWidth,

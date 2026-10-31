@@ -1,37 +1,31 @@
 (() => {
-  const oldHomeLinks = {'#film':'/how-it-works/#film','#ask':'/use-cases/#cases','#origin':'/about/#origin','#offer':'/pricing/#pricing'};
-  if (location.pathname === '/' && oldHomeLinks[location.hash]) {
-    location.replace(oldHomeLinks[location.hash]); return;
-  }
-  const oldResultsLinks = {
-    '#costs':'/use-cases/#q-service-cost','#costs-h':'/use-cases/#q-service-cost',
-    '#negotiation':'/use-cases/#q-negotiate','#negotiation-h':'/use-cases/#q-negotiate',
-    '#origin':'/about/#origin','#origin-h':'/about/#origin',
-    '#control':'/how-it-works/#control','#control-h':'/how-it-works/#control',
-    '#weekly-h':'/results/#weekly'
+  // Old shared links remain useful, but never move a visitor away from a real
+  // section that exists in D or send them into another website version.
+  const homeAliases = {
+    '#film':'/how-it-works/#film', '#ask':'/results/#stories', '#origin':'/about/#origin', '#offer':'/pricing/',
+    '#comparison':'/how-it-works/#route', '#hai-root':'/how-it-works/#root', '#hai-kernel':'/how-it-works/#kernel', '#hai-crown':'/how-it-works/#crown',
+    '#lab':'/about/', '#teams':'/how-it-works/#by-team', '#structure':'/how-it-works/#route', '#shared':'/how-it-works/#root',
+    '#teach':'/how-it-works/#setup', '#agents':'/how-it-works/#control', '#email':'/how-it-works/#control', '#grow-home':'/#get-started',
+    '#sc-run':'/results/#sc-run', '#sc-grow':'/results/#sc-grow', '#sc-buy':'/results/#sc-buy', '#sc-cash':'/results/#sc-cash', '#sc-cause':'/results/#sc-cause', '#sc-deal':'/results/#sc-deal'
   };
-  const moveOldResult = () => {
-    if (!['/results','/results/','/results/index.html'].includes(location.pathname)) return false;
-    let hash; try { hash = decodeURIComponent(location.hash); } catch (_) { return false; }
-    if (!oldResultsLinks[hash]) return false;
-    location.replace(oldResultsLinks[hash]); return true;
+  const resultAliases = {
+    '#costs':'/results/#operations', '#costs-h':'/results/#operations', '#negotiation':'/results/#operations', '#negotiation-h':'/results/#operations',
+    '#origin':'/about/#origin', '#origin-h':'/about/#origin', '#control':'/how-it-works/#control', '#control-h':'/how-it-works/#control', '#weekly-h':'/results/#weekly'
   };
-  if (moveOldResult()) return;
-  window.addEventListener('hashchange', moveOldResult);
-  const movedTeamHash = /^#(?:teams(?:-h)?|team-(?:leadership|marketing|sales|procurement|hr|legal|finance)|review-(?:comment|input)-start-here-teams)$/;
-  if (location.pathname.replace(/\/$/,'') === '/start-here' && movedTeamHash.test(location.hash)) {
-    location.replace('/use-cases/' + (location.hash.startsWith('#review-') ? '#teams' : location.hash));
-    return;
+  function revealOrMove() {
+    let id; try { id=decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    if (!id) return;
+    const target=document.getElementById(id);
+    if (target) {
+      let parent=target, opened=false;
+      while(parent){ if(parent.tagName==='DETAILS'&&!parent.open){parent.open=true;opened=true;} parent=parent.parentElement; }
+      if(opened)target.scrollIntoView({block:'start',behavior:'instant'});
+      return;
+    }
+    const path=location.pathname.replace(/\/index\.html$/, '').replace(/\/$/,'') || '/';
+    const destination=path==='/'?homeAliases[location.hash]:path==='/results'?resultAliases[location.hash]:null;
+    if(destination)location.replace(destination);
   }
-  function revealHashTarget() {
-    let id; try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
-    const target = document.getElementById(id);
-    if (!target) return;
-    let parent = target.parentElement;
-    let opened = false;
-    while (parent) { if (parent.tagName === 'DETAILS' && !parent.open) { parent.open = true; opened = true; } parent = parent.parentElement; }
-    if (opened) target.scrollIntoView({block:'start',behavior:'instant'});
-  }
-  window.addEventListener('hashchange', revealHashTarget);
-  revealHashTarget();
+  addEventListener('hashchange',revealOrMove);
+  revealOrMove();
 })();
