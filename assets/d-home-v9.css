@@ -1,4 +1,4 @@
-/* D v9: the product story, proof and practical first steps. Hero unchanged. */
+/* D v9: the product story, proof and practical first steps. Hero film unchanged. */
 .d-site .d-product-intro h2{max-width:20ch}
 .d-site .d-product-intro .lead{font-size:1.125rem;line-height:1.6;max-width:44ch}
 .d-site .d-product-intro>p{max-width:48ch}
@@ -63,3 +63,6 @@
 .d-site .d-start-actions{display:flex;align-items:center;flex-wrap:wrap;gap:18px 28px;margin-top:26px}
 .d-site .d-start-actions .button,.d-site .d-start-actions .text-link{margin:0}
 @media(max-width:760px){.d-site .d-start-grid{gap:22px}.d-site .d-start-actions{margin-top:22px}}
+
+/* Hero promise: the company's own AI gets its own, larger line. */
+.d-site .hero-promise strong{display:block;font-size:1.32em;line-height:1.2;margin-top:.1em;white-space:nowrap}
