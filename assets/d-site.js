@@ -21,7 +21,7 @@
         const response=await fetch('https://hai-seed-d-oct30.garsink.chatgpt.site/api/demo-requests',{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'application/json','Idempotency-Key':key},body:JSON.stringify(payload)});
         const data=await response.json().catch(()=>null);
         if(!response.ok||!data?.ok||!data?.submissionId){status.textContent=typeof data?.error==='string'?data.error:'Your request could not be saved. Please try again, or email hai@haiseed.ai.';return;}
-        form.hidden=true;const success=document.getElementById('request-success');document.getElementById('request-reference').textContent=data.submissionId;success.hidden=false;success.focus();
+        form.hidden=true;const success=document.getElementById('request-success');document.getElementById('request-reference').textContent=data.submissionId;const delivery=document.getElementById('request-delivery');if(delivery)delivery.textContent=data.notificationStatus==='queued'?'':"Your request is saved. Email notification is delayed; you can also reach us at hai@haiseed.ai.";success.hidden=false;success.focus();
       }catch{status.textContent='Connection interrupted. Please try again; the same request will not be added twice. You can also email hai@haiseed.ai.';}
       finally{sending=false;button.disabled=false;button.innerHTML='Request a demo <span aria-hidden="true">→</span>';}
     });
