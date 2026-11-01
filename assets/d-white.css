@@ -9,3 +9,9 @@ body.d-site .hero .button.hero-demo{background:#fff;border-color:#fff}
 .sc-sheet{border:1px solid var(--line)}
 .sc-tile-doc .sc-sheet{border:0}
 .d-results #weekly .d-example-nav a[aria-current="true"]{box-shadow:inset 0 0 0 1px var(--line)}
+
+/* Language switch (2026-11-01): EN pages show LT, LT pages show EN. Hidden in the bar on small phones, where the menu carries it. */
+.lang-switch{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid var(--line,#cbd0d2);border-radius:999px;background:#fff;color:#15191e;font-size:.8125rem;font-weight:600;letter-spacing:.04em;text-decoration:none}
+.lang-switch:hover{color:var(--accent)}
+.lang-switch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:430px){.lang-switch{display:none}}
