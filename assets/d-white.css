@@ -19,3 +19,31 @@ body.d-site .hero .button.hero-demo{background:#fff;border-color:#fff}
 /* Header menu with The Lab (2026-11-02): six links fit from 1101 px; a label never breaks inside its link. */
 .d-site .nav-shortcuts a{white-space:nowrap}
 @media(min-width:1101px) and (max-width:1199px){.d-site .nav-shortcuts{gap:12px}}
+
+/* Header fold (2026-11-02; owner: "meniu juosta nebesusiskleidzia scrolinant zemyn"). d-site.js sets .has-fold, then
+   .is-folded after 80 px of scroll; near the top it unfolds. The links fade away, the logo pill closes to a circle with
+   the mark, the logo and the buttons move to the edges, and wide screens show the menu button so the links stay one
+   click away. Transform, opacity and clip-path move; colours fade. With reduced motion nothing moves, it only fades. */
+.d-site .site-header.has-fold{--fold-ease:cubic-bezier(.23,1,.32,1);--fold-move:260ms;--fold-fade:200ms}
+.d-site .site-header.has-fold:not(.is-open) .identity{position:relative;clip-path:inset(-10px round 34px);transition:transform var(--fold-move) var(--fold-ease),clip-path var(--fold-move) var(--fold-ease),background-color var(--fold-fade) var(--fold-ease),border-color var(--fold-fade) var(--fold-ease),box-shadow var(--fold-fade) var(--fold-ease),-webkit-backdrop-filter 0s,backdrop-filter 0s}
+.d-site .site-header.has-fold:not(.is-open) .identity::after{content:"";position:absolute;top:-1px;bottom:-1px;left:-1px;z-index:-1;aspect-ratio:1;border:1px solid rgba(21,25,30,.08);border-radius:50%;background:rgba(255,255,255,.84);box-shadow:0 1px 3px rgba(21,25,30,.08);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);opacity:0;pointer-events:none;transition:opacity var(--fold-fade) var(--fold-ease)}
+.d-site .site-header.has-fold:not(.is-open) .identity-logo{transform-origin:left center;transition:opacity var(--fold-fade) var(--fold-ease),transform var(--fold-move) var(--fold-ease)}
+.d-site .site-header.has-fold:not(.is-open) .identity-mark{display:block!important;position:absolute;top:0;bottom:0;left:12px;margin-block:auto;opacity:0;transform:scale(.9);transition:opacity var(--fold-fade) var(--fold-ease),transform var(--fold-move) var(--fold-ease)}
+.d-site .site-header.has-fold:not(.is-open) .nav-shortcuts{transition:opacity var(--fold-fade) var(--fold-ease) 60ms,transform var(--fold-move) var(--fold-ease) 60ms,visibility 0s}
+.d-site .site-header.has-fold:not(.is-open) .nav-actions{position:relative;transition:transform var(--fold-move) var(--fold-ease)}
+.d-site .site-header.has-fold.is-folded:not(.is-open) .identity{transform:translateX(var(--fold-x,0px));clip-path:inset(-10px calc(100% - 58px) -10px -10px round 34px);background-color:transparent;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;transition:transform var(--fold-move) var(--fold-ease),clip-path var(--fold-move) var(--fold-ease),background-color var(--fold-fade) var(--fold-ease),border-color var(--fold-fade) var(--fold-ease),box-shadow var(--fold-fade) var(--fold-ease),-webkit-backdrop-filter 0s var(--fold-fade),backdrop-filter 0s var(--fold-fade)}
+.d-site .site-header.has-fold.is-folded:not(.is-open) .identity::after,.d-site .site-header.has-fold.is-folded:not(.is-open) .identity-mark{opacity:1;transform:none}
+.d-site .site-header.has-fold.is-folded:not(.is-open) .identity-logo{opacity:0;transform:translateX(-6px) scale(.94)}
+.d-site .site-header.has-fold.is-folded:not(.is-open) .nav-shortcuts{opacity:0;transform:translateY(-6px) scale(.98);visibility:hidden;pointer-events:none;transition:opacity var(--fold-fade) var(--fold-ease),transform var(--fold-move) var(--fold-ease),visibility 0s var(--fold-fade)}
+.d-site .site-header.has-fold.is-folded:not(.is-open) .nav-actions{transform:translateX(var(--fold-x,0px))}
+@media(min-width:1101px){
+.d-site .site-header.has-fold:not(.is-open) .nav-toggle{display:flex;position:absolute;top:0;left:100%;margin-left:8px;opacity:0;transform:scale(.9);visibility:hidden;transition:opacity var(--fold-fade) var(--fold-ease),transform var(--fold-move) var(--fold-ease),visibility 0s var(--fold-fade)}
+.d-site .site-header.has-fold.is-folded:not(.is-open) .nav-toggle{opacity:1;transform:none;visibility:visible;transition:opacity var(--fold-fade) var(--fold-ease),transform var(--fold-move) var(--fold-ease),visibility 0s}
+.d-site .site-header.has-fold.is-open .nav-toggle{display:flex}
+.d-site .site-header.has-fold.is-open .nav{flex-wrap:wrap}
+}
+/* The open menu's demo button had dark text on its dark fill; it now reads like the one in the closed bar. */
+.d-site .site-header.is-open .header-cta{background:#fff;color:#15191e;border-color:#15191e}
+@media(hover:hover) and (pointer:fine){.d-site .site-header.is-open .header-cta:hover{background:#15191e;color:#fff}}
+.d-site .site-header.fold-instant,.d-site .site-header.fold-instant *,.d-site .site-header.fold-instant .identity::after{transition:none!important}
+@media(prefers-reduced-motion:reduce){.d-site .site-header.has-fold{--fold-move:0ms}}

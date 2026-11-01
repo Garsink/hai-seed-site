@@ -26,3 +26,57 @@
       finally{sending=false;button.disabled=false;button.innerHTML='Request a demo <span aria-hidden="true">→</span>';}
     });
   }})();
+
+(() => {
+  // Header fold (owner 2026-11-01): past the first 80 px the links fade away, the logo pill closes to the mark and the
+  // logo and buttons move to the edges; wide screens then show the menu button. Near the top it unfolds again.
+  const head = document.querySelector('.site-header');
+  const nav = head && head.querySelector('.nav'), identity = head && head.querySelector('.identity');
+  const actions = head && head.querySelector('.nav-actions'), toggle = head && head.querySelector('.nav-toggle');
+  if (!nav || !identity || !actions || !toggle || !document.body.classList.contains('d-site')) return;
+  head.classList.add('has-fold');
+  // Without the matching stylesheet the fold would only hide the links, so it stays off.
+  if (!getComputedStyle(head).getPropertyValue('--fold-move')) { head.classList.remove('has-fold'); return; }
+  const links = head.querySelector('.nav-shortcuts');
+  let folded = false, open = head.classList.contains('is-open'), frame = 0, sized = 0;
+  // Layout positions ignore the fold's own transforms, so a measurement taken mid-transition is still exact.
+  const leftOf = el => { const p = el.offsetParent; return p.getBoundingClientRect().left + p.clientLeft + el.offsetLeft; };
+  const measure = () => {
+    if (open) return;
+    const n = nav.getBoundingClientRect(), s = getComputedStyle(nav), t = getComputedStyle(toggle);
+    let end = leftOf(actions) + actions.offsetWidth;
+    if (t.position === 'absolute') end += parseFloat(t.marginLeft) + toggle.offsetWidth;
+    identity.style.setProperty('--fold-x', Math.round(n.left + parseFloat(s.paddingLeft) - leftOf(identity)) + 'px');
+    actions.style.setProperty('--fold-x', Math.round(n.right - parseFloat(s.paddingRight) - end) + 'px');
+  };
+  const paint = () => {
+    frame = 0;
+    if (open) return;
+    const next = links && links.contains(document.activeElement) ? false : scrollY > (folded ? 40 : 80);
+    if (next === folded) return;
+    folded = next;
+    head.classList.toggle('is-folded', folded);
+    if (links) links.inert = folded;
+  };
+  const ask = () => { if (!frame) frame = requestAnimationFrame(paint); };
+  // No transition on the first paint, nor when the menu panel opens or closes.
+  const instant = () => {
+    head.classList.add('fold-instant');
+    requestAnimationFrame(() => requestAnimationFrame(() => head.classList.remove('fold-instant')));
+  };
+  new MutationObserver(() => {
+    const next = head.classList.contains('is-open');
+    if (next === open) return;
+    open = next;
+    instant();
+    if (!open) { measure(); paint(); }
+  }).observe(head, {attributes: true, attributeFilter: ['class']});
+  instant();
+  measure();
+  paint();
+  addEventListener('scroll', ask, {passive: true});
+  addEventListener('resize', () => { if (!sized) sized = requestAnimationFrame(() => { sized = 0; measure(); paint(); }); });
+  head.addEventListener('focusin', ask);
+  head.addEventListener('focusout', ask);
+  if (document.fonts) document.fonts.ready.then(measure);
+})();
