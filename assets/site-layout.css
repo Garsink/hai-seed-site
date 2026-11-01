@@ -66,7 +66,7 @@
 .site-header.is-open .nav-menu-links{min-width:0;flex:1}
 .site-header.is-open .nav-menu-links a{border:0;padding:8px 0;font-size:clamp(1.75rem,3.8vw,3.6rem);letter-spacing:-.03em;min-height:44px}
 .site-header.is-open .nav-menu-links a:nth-child(n+2){color:var(--dark-dim);font-size:clamp(1.35rem,2.5vw,2.5rem)}
-.site-header.is-open .nav-menu-links a:nth-child(5){margin-top:24px}
+.site-header.is-open .nav-menu-links a:last-child{margin-top:24px}
 .site-header.is-open .nav-menu-links a:hover,.site-header.is-open .nav-menu-links a:focus-visible{color:var(--dark-accent)}
 .site-header.is-open .nav-menu-links a:focus-visible{outline:2px solid var(--dark-accent);outline-offset:5px}
 .site-header.is-open .nav-menu p{color:var(--dark-dim);align-self:flex-end;max-width:24ch}
