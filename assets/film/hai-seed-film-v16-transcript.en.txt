@@ -1,0 +1,37 @@
+HAI Seed: Talk to your company
+English film · About 2 minutes
+
+00:00-00:14
+Everyone is selling you a piece of AI. Where do you start? Your company runs in pieces. A customer writes to one person. The plan sits with another. You chase the whole story. And things slip.
+
+00:14-00:27.5
+Start with your company. HAI Seed gives your whole company its own AI. Most AI knows the world. HAI makes one that knows your company. The world’s best AI, plus your business.
+
+00:27.5-00:40.5
+It starts as a seed, planted in your company. It discovers your business, learns your rules, and turns it all into answers. Day by day, it becomes your company’s own AI foundation. On screen: Memory. Rules. Answers. HAI Seed: your company’s own AI foundation.
+
+00:40.5-00:52.5
+HAI’s first big job isn’t a chat. It’s a full company audit. It reads everything you choose to connect, then looks at the whole business, through the eyes of finance, sales, operations and customers.
+
+00:52.5-01:06.5
+It connects who said what, and what changed. It checks each promise against the records. It shows what’s wrong, where it found it, and how to fix it. That’s one finding. There are more. On screen, the three parts at work: HAI Root · Company memory. HAI Kernel · Rules, routines and checks. HAI Crown · Answers and action. Then one finding for each view: Finance, we still owe a supplier. Sales, enquiries left unanswered. Operations, our plan hasn’t moved. Customers, the launch moved.
+
+01:06.5-01:13.5
+Each fix arrives prepared. You review, you decide. Your team acts.
+
+01:13.5-01:29.5
+And it doesn’t stop there. The checks you agree on keep running. HAI reports on its own. When a task keeps coming back, HAI offers to build an agent in a few minutes. Whatever you build on this foundation already knows your company. On screen: “This follow-up keeps coming back. An agent could chase it for you.” “Agent ready for your OK · 16:04.” “On this foundation: an agent, a tool, an automation.”
+
+01:29.5-01:40.5
+Then bring in your teams. Sales, finance and operations each ask their own questions. You see what is happening, without chasing it. You can ask any time. On screen: “Each team sees what you allow.” On screen, the answer to “What changed today?”: “Delivery is on its way. Your agent sent the reminder you approved. Nothing else changed.”
+
+01:40.5-01:48
+And the longer it works with you, the more your company knows. No more explaining your business from scratch. On screen, the company memory, newest first: Today, delivery confirmed for Thursday. Today 16:04, follow-up agent added, with your OK. Monday, rule: confirm delivery before promising a date. Monday, audit: launch moved to Thursday, plan updated. Last month, customer prefers updates by email. Last quarter, supplier terms agreed for the year.
+
+01:48-01:53
+Install it on a company computer. Guided self-onboarding connects your sources. On screen: “Company memory: stored on your company’s device.” “Task processing: your chosen AI service.”
+
+01:53-02:06
+Where do you start? With your company. Bring one company question. We’ll answer it on your own records. Request a demo. HAI. Talk to your company.
+
+End card: Talk to your company. Bring one company question. We’ll answer it on your own records. Request a demo. haiseed.ai
