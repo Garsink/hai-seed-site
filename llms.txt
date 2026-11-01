@@ -28,7 +28,19 @@ Selected outcomes from the founder's business and early adopters, in aviation, f
 - [Pricing and setup](https://haiseed.ai/pricing/)
 - [How it compares](https://haiseed.ai/how-it-compares/): asking colleagues, AI chat, Copilots and AI agents next to HAI Seed
 - [About us](https://haiseed.ai/about/)
+- [The Lab](https://haiseed.ai/lab/): articles on company AI, from building HAI inside a working business
 - [Contact](https://haiseed.ai/contact/)
+
+## The Lab
+
+Articles from HAI Seed: ideas, experiments and lessons from building company AI inside a working business.
+
+- [The Company of 2046: When AI Becomes the Business](https://haiseed.ai/lab/company-of-2046/): A hypothetical morning twenty years from now, and the uncomfortable questions it raises. By the founder, Deividas Jurkštas.
+- [The AI Was Running. The Work Wasn't.](https://haiseed.ai/lab/the-ai-was-running/): What we found when we checked whether our own AI was actually doing its job. By the founder, Deividas Jurkštas.
+- [155 Enquiries. Zero Replies. Stock on the Shelf.](https://haiseed.ai/lab/155-enquiries/): An aviation business had a sales problem it did not know existed. Here is how it surfaced.
+- [Your AI Is Brilliant. Why Doesn't It Know Your Business?](https://haiseed.ai/lab/why-your-ai-doesnt-know-your-business/): The strange gap between what AI knows about the world and what it knows about your company.
+- [The Most Important Question Is the One Nobody Asked](https://haiseed.ai/lab/the-question-nobody-asked/): Why a company AI that only answers questions misses most of what matters.
+- [You Corrected the AI. Why Was It Wrong Again?](https://haiseed.ai/lab/you-corrected-the-ai/): Two corrections, and why a good AI should treat them very differently.
 
 ## Lietuviškai
 
