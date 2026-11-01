@@ -29,3 +29,12 @@ Selected outcomes from the founder's business and early adopters, in aviation, f
 - [How it compares](https://haiseed.ai/how-it-compares/): asking colleagues, AI chat, Copilots and AI agents next to HAI Seed
 - [About us](https://haiseed.ai/about/)
 - [Contact](https://haiseed.ai/contact/)
+
+## Lietuviškai
+
+HAI Seed (haiseed.ai) yra įmonės DI, diegiamas įmonės kompiuteryje. Serves: Lithuania (Lietuva).
+
+- [Dirbtinis intelektas verslui: jūsų įmonės DI](https://haiseed.ai/lt/)
+- [Kaip įdiegti dirbtinį intelektą įmonėje](https://haiseed.ai/lt/kaip-veikia/)
+- [Įmonės DI kaina](https://haiseed.ai/lt/kainos/)
+- [Dirbtinis intelektas versle: nuo ko pradėti](https://haiseed.ai/lt/dirbtinis-intelektas-versle/)
