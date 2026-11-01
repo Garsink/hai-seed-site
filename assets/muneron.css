@@ -5,7 +5,7 @@
 :root{color-scheme:light;--ground:#f7f8f8;--surface:#fff;--ink:#15191e;--dim:#3f4852;--muted:#5d6670;--line:#cbd0d2;--line-strong:#929b9e;--accent:#076e67;--tint:#e6f2f0;--focus:#076e67;--red:#ae322b;--red-tint:#fbeceb;--dark:#111a1c;--dark-line:#405051;--dark-ink:#f4f7f6;--dark-dim:#c4cece;--dark-muted:#a3b2b3;--dark-accent:#8bd6ca;--font:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;--ease:cubic-bezier(.23,1,.32,1);--wrap:1280px;--z-content:1;--z-header:10;--z-skip:20}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-padding-top:124px;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.55 var(--font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;background:#fff;color:var(--ink);font:400 17px/1.55 var(--font);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 h1,h2,h3,h4,p,figure,dl,dd,ol,ul,details{margin:0}
 h1,h2,h3{font-weight:600;text-wrap:balance;letter-spacing:-.035em}
 h1{font-size:clamp(3rem,7.3vw,6rem);line-height:1;letter-spacing:-.04em}

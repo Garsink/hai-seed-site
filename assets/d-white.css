@@ -1,0 +1,11 @@
+/* Clean white site (owner, 2026-11-01): no pale green or grey backgrounds. Thin lines keep the structure. */
+:root,.d-site{--ground:#fff;--tint:#fff}
+body.d-site .d-proof-band{background:#fff;border-block:1px solid var(--line)}
+body.d-site .d-hai-line{background:#fff;border:1px solid var(--line)}
+body.d-site .d-user-line,body.d-site .d-workspace-top{background:#fff}
+body.d-site .d-workspace figcaption{background:#fff;border-top:1px solid var(--line)}
+body.d-site .hero .button.hero-demo{background:#fff;border-color:#fff}
+.hero-talk .ht-turn,.hero-talk .ht-answer{--bubble:#fff}
+.sc-sheet{border:1px solid var(--line)}
+.sc-tile-doc .sc-sheet{border:0}
+.d-results #weekly .d-example-nav a[aria-current="true"]{box-shadow:inset 0 0 0 1px var(--line)}

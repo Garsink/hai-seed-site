@@ -1,0 +1,31 @@
+# HAI Seed
+
+> HAI Seed gives your whole company its own AI. Built on your company's history and knowledge. Connected to its systems. Ready to answer questions, spot what matters and get work done. For small and mid-sized businesses.
+
+## What it does
+- You ask in one line. HAI answers with its sources and shows where information is missing.
+- Agreed routines keep watch between questions and flag what changed.
+- Reports and drafts arrive prepared for a person to review. People make the decisions.
+- HAI is not an agent, but it can create agents in a few minutes and gives them your company's memory and rules.
+- Three connected parts: HAI Root (company memory), HAI Kernel (rules, routines and checks), HAI Crown (answers and action).
+
+## Prices (from, excluding VAT)
+- One-time setup: from EUR 3,000.
+- Licence and maintenance: from EUR 490 a month.
+- Additional user: from EUR 99 a user a month, plus setup from EUR 500 per user and each user's AI app subscription.
+- AI accounts, usage and any computer you buy cost extra.
+- The first 30 days of use are included with paid setup. Half of setup is due when work starts, half on acceptance. If the agreed result fails acceptance, the second half is not payable.
+
+## Where information lives
+Company memory is stored on the deployment machine. Connected AI services process task information under your chosen account and service terms. Local installation does not mean AI processing is entirely offline.
+
+## Evidence so far
+Selected outcomes from the founder's business and early adopters, in aviation, food production and contracting. Every result names the type of business, never the company. Results depend on the work and the company's setup.
+
+## Pages
+- [How it works](https://haiseed.ai/how-it-works/)
+- [Results](https://haiseed.ai/results/)
+- [Pricing and setup](https://haiseed.ai/pricing/)
+- [How it compares](https://haiseed.ai/how-it-compares/): asking colleagues, AI chat, Microsoft Copilot and AI agents next to HAI Seed
+- [About us](https://haiseed.ai/about/)
+- [Contact](https://haiseed.ai/contact/)
