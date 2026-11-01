@@ -1,0 +1,11 @@
+/* Home: two things your company gets, under the paragraph beside the example chat (owner 2026-11-01).
+   Load before d-white.css. */
+.d-site .d-get{margin:30px 0 0;padding:0;list-style:none;border-top:1px solid var(--line);max-width:48ch}
+.d-site .d-get li{padding:18px 0 20px;border-bottom:1px solid var(--line)}
+.d-site .d-get .d-get-text{margin:0;color:var(--dim);font-size:1rem;line-height:1.55}
+.d-site .d-get .d-get-text strong{display:block;margin-bottom:4px;color:var(--ink);font-size:1.0625rem;font-weight:600;line-height:1.35}
+
+@media (max-width:760px){
+  .d-site .d-get{max-width:none;margin-top:24px}
+  .d-site .d-get .d-get-text{font-size:.9375rem}
+}
