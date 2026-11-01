@@ -26,6 +26,6 @@ Selected outcomes from the founder's business and early adopters, in aviation, f
 - [How it works](https://haiseed.ai/how-it-works/)
 - [Results](https://haiseed.ai/results/)
 - [Pricing and setup](https://haiseed.ai/pricing/)
-- [How it compares](https://haiseed.ai/how-it-compares/): asking colleagues, AI chat, Microsoft Copilot and AI agents next to HAI Seed
+- [How it compares](https://haiseed.ai/how-it-compares/): asking colleagues, AI chat, Copilots and AI agents next to HAI Seed
 - [About us](https://haiseed.ai/about/)
 - [Contact](https://haiseed.ai/contact/)
