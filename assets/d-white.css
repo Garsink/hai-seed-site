@@ -15,3 +15,7 @@ body.d-site .hero .button.hero-demo{background:#fff;border-color:#fff}
 .lang-switch:hover{color:var(--accent)}
 .lang-switch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media(max-width:430px){.lang-switch{display:none}}
+
+/* Header menu with The Lab (2026-11-02): six links fit from 1101 px; a label never breaks inside its link. */
+.d-site .nav-shortcuts a{white-space:nowrap}
+@media(min-width:1101px) and (max-width:1199px){.d-site .nav-shortcuts{gap:12px}}
