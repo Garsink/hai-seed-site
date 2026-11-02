@@ -47,3 +47,12 @@ body.d-site .hero .button.hero-demo{background:#fff;border-color:#fff}
 @media(hover:hover) and (pointer:fine){.d-site .site-header.is-open .header-cta:hover{background:#15191e;color:#fff}}
 .d-site .site-header.fold-instant,.d-site .site-header.fold-instant *,.d-site .site-header.fold-instant .identity::after{transition:none!important}
 @media(prefers-reduced-motion:reduce){.d-site .site-header.has-fold{--fold-move:0ms}}
+
+/* Review fixes (2026-11-02): privacy headings, lab diagrams on phones, compare tap areas, pricing note, results label. */
+.d-site section.chapter[id^="privacy-"]{padding-block:44px 8px}
+.d-site section.chapter[id^="privacy-"] h2{font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.2;margin:0 0 16px}
+.d-site .cmp-i{position:relative}
+.d-site .cmp-i::after{content:"";position:absolute;inset:-13px}
+.d-site .d-page-intro .lead+p{margin-top:16px;font-size:.9375rem;color:var(--dim)}
+.d-results #weekly .sc-status .sc-sample{display:inline-block;margin-left:8px;padding:1px 8px;border:1px solid var(--line);border-radius:999px;font-size:.75rem;line-height:1.5;color:var(--dim);vertical-align:2px}
+@media(max-width:640px){.lab-fig{overflow-x:auto;-webkit-overflow-scrolling:touch}.lab-fig svg{min-width:620px}}
