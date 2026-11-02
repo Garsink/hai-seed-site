@@ -18,6 +18,7 @@
       failed:'Jūsų užklausos išsaugoti nepavyko. Bandykite dar kartą arba rašykite adresu hai@haiseed.ai.',
       delayed:'Užklausą išsaugojome, tačiau pranešimas el. paštu vėluoja. Jei reikia, parašykite mums: hai@haiseed.ai.',
       offline:'Ryšys nutrūko. Bandykite dar kartą: ta pati užklausa du kartus nebus išsaugota. Taip pat galite rašyti adresu hai@haiseed.ai.',
+      source:'šaltinis',
       serverText:false,
       invalid:{missing:'Užpildykite šį lauką.',email:'Įrašykite teisingą el. pašto adresą.',short:'Parašykite šiek tiek daugiau.'}
     }:{
@@ -26,6 +27,7 @@
       failed:'Your request could not be saved. Please try again, or email hai@haiseed.ai.',
       delayed:'Your request is saved. Email notification is delayed; you can also reach us at hai@haiseed.ai.',
       offline:'Connection interrupted. Please try again; the same request will not be added twice. You can also email hai@haiseed.ai.',
+      source:'source',
       serverText:true,
       invalid:null
     };
@@ -35,12 +37,16 @@
     }
     // A message the visitor must read is brought into view: on a short laptop screen it can sit below the fold.
     const say=text=>{status.textContent=text;status.scrollIntoView({block:'nearest'});};
+    // The ad or post that brought the visitor (?s=fb2, kept on internal links below) ends the request as
+    // "(source: fb2)" for the owner. Nothing is stored in the browser.
+    const tag=new URLSearchParams(location.search).get('s')||'', source=/^[a-z0-9-]{1,24}$/i.test(tag)?tag:'';
     let key=crypto.randomUUID(), sending=false, lastPayload=null;
     form.addEventListener('submit',async e=>{
       e.preventDefault(); if(sending)return;
       if(!form.reportValidity())return;
       const f=new FormData(form), payload=Object.fromEntries(f.entries());
       if(String(payload.name).trim().length<2||String(payload.question).trim().length<10){say(words.short);return;}
+      if(source){const note=`\n\n(${words.source}: ${source})`;if(payload.question.length+note.length<=4000)payload.question+=note;}
       const fingerprint=JSON.stringify(payload);if(lastPayload&&lastPayload!==fingerprint)key=crypto.randomUUID();lastPayload=fingerprint;
       sending=true; button.disabled=true; button.textContent=words.sending;status.textContent='';
       try{
@@ -126,4 +132,18 @@
   });
   let frame = 0;
   addEventListener('resize', () => { if (!frame) frame = requestAnimationFrame(() => { frame = 0; boxes.forEach(update); }); });
+})();
+
+(() => {
+  // An ad or post link carries a short tag (?s=fb2). The site's own links keep it, so the contact page still knows
+  // where the visitor came from when a request is sent. In-page links and other sites are left alone.
+  const tag = new URLSearchParams(location.search).get('s');
+  if (!tag || !/^[a-z0-9-]{1,24}$/i.test(tag)) return;
+  document.querySelectorAll('a[href]').forEach(a => {
+    if (a.getAttribute('href').startsWith('#')) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || url.searchParams.has('s')) return;
+    url.searchParams.set('s', tag);
+    a.href = url.pathname + url.search + url.hash;
+  });
 })();
