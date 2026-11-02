@@ -9,21 +9,38 @@
   const form=document.getElementById('demo-request');
   if(form){
     const status=document.getElementById('request-status'), button=form.querySelector('button[type=submit]');
+    // Messages follow the page language, as ui.js does. The button gets back the page's own label after every try,
+    // so it always matches the page. English shows the server's error text; a Lithuanian page shows its own message.
+    const label=button.innerHTML, words=document.documentElement.lang==='lt'?{
+      short:'Įrašykite vardą ir šiek tiek plačiau aprašykite savo klausimą.',
+      sending:'Siunčiama…',
+      failed:'Jūsų užklausos išsaugoti nepavyko. Bandykite dar kartą arba rašykite adresu hai@haiseed.ai.',
+      delayed:'Užklausą išsaugojome, tačiau pranešimas el. paštu vėluoja. Jei reikia, parašykite mums: hai@haiseed.ai.',
+      offline:'Ryšys nutrūko. Bandykite dar kartą: ta pati užklausa du kartus nebus išsaugota. Taip pat galite rašyti adresu hai@haiseed.ai.',
+      serverText:false
+    }:{
+      short:'Please add your name and a little more detail about your question.',
+      sending:'Sending…',
+      failed:'Your request could not be saved. Please try again, or email hai@haiseed.ai.',
+      delayed:'Your request is saved. Email notification is delayed; you can also reach us at hai@haiseed.ai.',
+      offline:'Connection interrupted. Please try again; the same request will not be added twice. You can also email hai@haiseed.ai.',
+      serverText:true
+    };
     let key=crypto.randomUUID(), sending=false, lastPayload=null;
     form.addEventListener('submit',async e=>{
       e.preventDefault(); if(sending)return;
       if(!form.reportValidity())return;
       const f=new FormData(form), payload=Object.fromEntries(f.entries());
-      if(String(payload.name).trim().length<2||String(payload.question).trim().length<10){status.textContent='Please add your name and a little more detail about your question.';return;}
+      if(String(payload.name).trim().length<2||String(payload.question).trim().length<10){status.textContent=words.short;return;}
       const fingerprint=JSON.stringify(payload);if(lastPayload&&lastPayload!==fingerprint)key=crypto.randomUUID();lastPayload=fingerprint;
-      sending=true; button.disabled=true; button.textContent='Sending…';status.textContent='';
+      sending=true; button.disabled=true; button.textContent=words.sending;status.textContent='';
       try{
         const response=await fetch('https://hai-seed-d-oct30.garsink.chatgpt.site/api/demo-requests',{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'application/json','Idempotency-Key':key},body:JSON.stringify(payload)});
         const data=await response.json().catch(()=>null);
-        if(!response.ok||!data?.ok||!data?.submissionId){status.textContent=typeof data?.error==='string'?data.error:'Your request could not be saved. Please try again, or email hai@haiseed.ai.';return;}
-        form.hidden=true;const success=document.getElementById('request-success');document.getElementById('request-reference').textContent=data.submissionId;const delivery=document.getElementById('request-delivery');if(delivery)delivery.textContent=data.notificationStatus==='queued'?'':"Your request is saved. Email notification is delayed; you can also reach us at hai@haiseed.ai.";success.hidden=false;success.focus();
-      }catch{status.textContent='Connection interrupted. Please try again; the same request will not be added twice. You can also email hai@haiseed.ai.';}
-      finally{sending=false;button.disabled=false;button.innerHTML='Request a demo <span aria-hidden="true">→</span>';}
+        if(!response.ok||!data?.ok||!data?.submissionId){status.textContent=words.serverText&&typeof data?.error==='string'?data.error:words.failed;return;}
+        form.hidden=true;const success=document.getElementById('request-success');document.getElementById('request-reference').textContent=data.submissionId;const delivery=document.getElementById('request-delivery');if(delivery)delivery.textContent=data.notificationStatus==='queued'?'':words.delayed;success.hidden=false;success.focus();
+      }catch{status.textContent=words.offline;}
+      finally{sending=false;button.disabled=false;button.innerHTML=label;}
     });
   }})();
 

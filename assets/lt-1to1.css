@@ -1,0 +1,7 @@
+/* Lithuanian pages only. build_lt_from_en.py links this file on every /lt/ page (and the LT 404), right before
+   d-white.css, so rules here are scoped to :root[lang="lt"] to outrank d-white.css. English pages never load it. */
+
+/* Laptop 1101-1199 px: "Atsiųsti klausimą →" is longer than "Request a demo →" and wrapped to two lines at
+   1101-1112 px, growing the header from 48 to 61 px. Keep it on one line and give the menu a little less gap. */
+:root[lang="lt"] .d-site .header-cta{white-space:nowrap}
+@media (min-width:1101px) and (max-width:1199px){:root[lang="lt"] .d-site .nav-shortcuts{gap:8px}}

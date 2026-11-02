@@ -11,6 +11,8 @@
 
   const byId = new Map(examples.map(example => [example.id, example]));
   const stateKey = 'haiResultsExample';
+  // The screen-reader line follows the page language, as ui.js does.
+  const showing = document.documentElement.lang === 'lt' ? 'Rodoma: ' : 'Showing: ';
   let selected = null;
 
   const addressTarget = () => {
@@ -39,7 +41,7 @@
     select.setAttribute('aria-controls', example.id);
     selected = example;
     if (announce && changed && announcement) {
-      announcement.textContent = `Showing: ${example.querySelector('.d-example-question').textContent.trim()}`;
+      announcement.textContent = `${showing}${example.querySelector('.d-example-question').textContent.trim()}`;
     }
   };
   const remember = (method, example, url) => {

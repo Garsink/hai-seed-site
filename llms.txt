@@ -41,3 +41,21 @@ Articles from HAI Seed: ideas, experiments and lessons from building company AI 
 - [Your AI Is Brilliant. Why Doesn't It Know Your Business?](https://haiseed.ai/lab/why-your-ai-doesnt-know-your-business/): The strange gap between what AI knows about the world and what it knows about your company.
 - [The Most Important Question Is the One Nobody Asked](https://haiseed.ai/lab/the-question-nobody-asked/): Why a company AI that only answers questions misses most of what matters.
 - [You Corrected the AI. Why Was It Wrong Again?](https://haiseed.ai/lab/you-corrected-the-ai/): Two corrections, and why a good AI should treat them very differently.
+
+## Lietuviškai
+
+- [HAI Seed: jūsų įmonės dirbtinis intelektas](https://haiseed.ai/lt/): HAI Seed: jūsų įmonės DI, įdiegiamas jūsų kompiuteryje. Jis remiasi jūsų pasirinktais laiškais, dokumentais ir sistemomis, atsako į klausimus, pastebi svarbius pokyčius ir paruošia darbus.
+- [Kaip veikia: diegimas keliais paspaudimais](https://haiseed.ai/lt/kaip-veikia/): HAI Seed įdiegiate keliais paspaudimais. Savarankiškas diegimas su vedliu padeda prijungti pasirinktą el. paštą, dokumentus ir sistemas, o mūsų inžinierius gali padėti nuo pirmos dienos.
+- [Rezultatai pirmųjų klientų įmonėse](https://haiseed.ai/lt/rezultatai/): Pirmieji HAI rezultatai aviacijos, maisto gamybos ir rangos įmonėse: užbaigti strigę projektai, rasti praleisti pirkėjai, sutvarkyti dokumentai, aiškesni sprendimai.
+- [Kainos: diegimas nuo 3 000 € be PVM](https://haiseed.ai/lt/kainos/): Diegimas nuo 3 000 €, licencija ir priežiūra nuo 490 €/mėn. (be PVM). Papildomas naudotojas nuo 99 €/mėn., jo paruošimas nuo 500 €. DI paslaugų paskyros ir naudojimas apmokami atskirai.
+- [Kuo HAI skiriasi nuo pokalbių DI ir DI agentų](https://haiseed.ai/lt/palyginimas/): Klausimai kolegoms, pokalbių DI, Copilot asistentai, DI agentai ir HAI Seed greta: ką kiekvienas iš jų palieka atlikti jums.
+- [Apie mus: DI laboratorija verslui](https://haiseed.ai/lt/apie-mus/): Laboratorija, kurianti HAI Seed: kur prasidėjo HAI, kas ir kokia aviacijos disciplina už jo slypi ir kaip jį pradeda naudoti kitos įmonės.
+- [Susitarti dėl HAI Seed pristatymo](https://haiseed.ai/lt/kontaktai/): Atsiųskite vieną klausimą apie savo verslą. Parodysime, kaip HAI Seed galėtų padėti, ir raštu pateiksime pirmojo darbo apimtį bei kainą.
+- [Svetainės privatumo politika](https://haiseed.ai/lt/privatumas/): Kaip HAI Seed tvarko svetainės lankytojų duomenis ir užklausas bei kur kreiptis dėl savo informacijos.
+- [Įžvalgos](https://haiseed.ai/lt/lab/): Idėjos, eksperimentai ir pamokos, sukauptos kuriant įmonės dirbtinį intelektą veikiančiame versle.
+- [Įmonė 2046 metais: kai DI tampa verslu](https://haiseed.ai/lt/lab/imone-2046-metais/): Įsivaizduojamas rytas po dvidešimties metų ir nepatogūs klausimai, kuriuos jis kelia. Autorius: Deividas Jurkštas, HAI Seed įkūrėjas.
+- [DI veikė. Darbas stovėjo.](https://haiseed.ai/lt/lab/di-veike-darbas-ne/): Ką radome, kai patikrinome, ar mūsų pačių DI iš tikrųjų atlieka savo darbą. Autorius: Deividas Jurkštas, HAI Seed įkūrėjas.
+- [155 užklausos. Jokio atsakymo. Prekės lentynose.](https://haiseed.ai/lt/lab/155-uzklausu/): Aviacijos įmonė turėjo pardavimų problemą, apie kurią nežinojo. Štai kaip ji išaiškėjo.
+- [Jūsų DI genialus. Kodėl jis nepažįsta jūsų verslo?](https://haiseed.ai/lt/lab/kodel-di-nepazista-jusu-verslo/): Keistas atotrūkis tarp to, ką DI žino apie pasaulį, ir to, ką jis žino apie jūsų įmonę.
+- [Svarbiausias klausimas yra tas, kurio niekas neuždavė](https://haiseed.ai/lt/lab/klausimas-kurio-niekas-neuzdave/): Kodėl įmonės DI, kuris tik atsako į klausimus, praleidžia didžiąją dalį to, kas svarbu.
+- [Pataisėte DI. Kodėl jis vėl suklydo?](https://haiseed.ai/lt/lab/pataisete-di/): Du pataisymai ir kodėl geras DI turėtų juos vertinti labai skirtingai.

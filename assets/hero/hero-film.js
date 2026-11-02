@@ -3,7 +3,16 @@
 // conversation immediately below it. Text is HTML, independent of the video resolution. Each pass of the loop asks a new set of questions (window.HAI_HERO_FILM,
 // from hero-film-data.js). The still stays for reduced motion, data saver, or when autoplay is refused.
 // A button pauses it.
-(() => {
+// Lithuanian pages (<html lang="lt">) first load their words, hero-film-data.lt.js from this folder with this file's
+// version stamp. English pages start at once, as before.
+(start => {
+  const me = document.currentScript;
+  if (document.documentElement.lang !== 'lt' || window.HAI_HERO_FILM_LT || !document.querySelector('.hero.has-film')) { start(me); return; }
+  const words = document.createElement('script');
+  words.src = (me && me.src || '/assets/hero/hero-film.js').replace(/hero-film\.js(?=\?|#|$)/, 'hero-film-data.lt.js');
+  words.onload = words.onerror = () => start(me);
+  document.head.appendChild(words);
+})(me => {
   const hero = document.querySelector('.hero.has-film');
   if (!hero) return;
   const figure = hero.querySelector('.hero-film');
@@ -13,8 +22,60 @@
   const still = hero.querySelector('.hero-film-still img');
   const toggle = hero.querySelector('.hero-film-toggle');
   const proof = hero.querySelector('.hero-proof');
-  const DATA = window.HAI_HERO_FILM;
-  const BASE = (document.currentScript && document.currentScript.src || 'assets/hero/').split('?')[0].replace(/[^/]*$/, '');
+  // Words by page language, as ui.js does. Each language has whole sentences: no English grammar is built around
+  // Lithuanian words. The rotating questions come from hero-film-data.js (English) or hero-film-data.lt.js.
+  const LT = document.documentElement.lang === 'lt';
+  const W = LT ? {
+    years: 'Ilgus metus kauptos įmonės žinios išmėtytos po laiškus, failus ir sistemas.',
+    engineer: 'Mūsų inžinierius', connects: 'Viena sėkla sujungia viską.',
+    parts: 'Sėkla išsiskleidžia į tris dalis',
+    partLines: ['Root: gyva jūsų įmonės atmintis.', 'Kernel: bendras veiklos branduolys.', 'Crown: atsakymai ir paruošti darbai.'],
+    alert: 'HAI įspėja', toCeo: 'HAI vadovui', answers: 'HAI atsako', asks: who => who + ' klausia', and: ' ir ',
+    examples: 'Iliustraciniai pavyzdžiai iš filmo:',
+    example: (who, ask, answer) => `${who} klausia: ${ask} HAI atsako: ${answer}`,
+    ceoExample: (alert, answer) => `HAI įspėja: ${alert} HAI vadovui: ${answer}`,
+    replay: 'Žiūrėti iš naujo', replayLabel: 'Žiūrėti HAI Seed istoriją iš naujo',
+    pause: 'Pristabdyti animaciją', play: 'Paleisti animaciją'
+  } : {
+    years: 'Years of company knowledge. Buried in files, emails and systems.',
+    engineer: 'HAI Seed engineer', connects: 'One Seed connects it all.',
+    parts: 'The Seed opens into three parts',
+    partLines: ['Root: your company’s living memory.', 'Kernel: the shared operating core.', 'Crown: company intelligence at work.'],
+    alert: 'Heads-up from HAI', toCeo: 'HAI to the CEO', answers: 'HAI answers', asks: who => who + ' asks', and: ' and ',
+    examples: 'Illustrative examples from the film:',
+    example: (who, ask, answer) => `${who} asks: ${ask} HAI answers: ${answer}`,
+    ceoExample: (alert, answer) => `Heads-up from HAI: ${alert} HAI to the CEO: ${answer}`,
+    replay: 'Replay story', replayLabel: 'Replay the HAI Seed story',
+    pause: 'Pause animation', play: 'Play animation'
+  };
+  // A Lithuanian page never shows the English questions: without a complete Lithuanian set the film plays without words.
+  // Timings, positions and colours always come from the English data; only the words are swapped.
+  const localize = (data, words) => {
+    if (!data || !words || !words.sets || !words.from) return null;
+    const sets = {};
+    for (const [id, conf] of Object.entries(data.sets)) {
+      const lt = words.sets[id];
+      if (!lt || typeof lt.who !== 'string' || !Array.isArray(lt.sets) || lt.sets.length !== conf.sets.length) return null;
+      const out = [];
+      for (const [i, set] of conf.sets.entries()) {
+        const text = lt.sets[i] || {}, next = {...set, from: []};
+        for (const field of ['ask', 'answer', 'alert']) {
+          if (!(field in set)) continue;
+          if (typeof text[field] !== 'string') return null;
+          next[field] = text[field];
+        }
+        for (const [label, x, y] of set.from) {
+          if (typeof words.from[label] !== 'string') return null;
+          next.from.push([words.from[label], x, y]);
+        }
+        out.push(next);
+      }
+      sets[id] = {...conf, who: lt.who, sets: out};
+    }
+    return {...data, sets};
+  };
+  const DATA = LT ? localize(window.HAI_HERO_FILM, window.HAI_HERO_FILM_LT) : window.HAI_HERO_FILM;
+  const BASE = (me && me.src || 'assets/hero/').split('?')[0].replace(/[^/]*$/, '');
   const narrow = matchMedia('(max-width: 1100px)');
   const SVG = 'http://www.w3.org/2000/svg';
 
@@ -74,9 +135,10 @@
     const s = el('span', 'ht-siren', parent);
     for (const cls of ['dim', 'lit']) { const img = el('img', cls, s); img.src = BASE + 'siren.webp'; img.alt = ''; }
   };
+  // The answer's sources, as a plain list ("CRM, quotes and emails").
   const sources = from => {
     const names = from.map(([label]) => (label === label.toUpperCase() ? label : label.toLowerCase()));
-    return 'Read from ' + (names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0]) + '.';
+    return names.length > 1 ? names.slice(0, -1).join(', ') + W.and + names[names.length - 1] : names[0];
   };
 
   // ---------- the conversation: two turns, each a speaker line and the words ----------
@@ -113,14 +175,14 @@
     talk = {box, turns, overlay, ring, pass: 0};
     // Screen readers get the film's first conversations once, as a plain list, instead of the moving words.
     const said = el('div', 'ht-sr');
-    el('p', '', said, 'Illustrative examples from the film:');
+    el('p', '', said, W.examples);
     const list = el('ul', '', said);
     for (const key of ['sales', 'finance', 'marketing']) {
-      const set = DATA.sets[key].sets[0];
-      el('li', '', list, `${key[0].toUpperCase() + key.slice(1)} asks: ${set.ask} HAI answers: ${set.answer}`);
+      const conf = DATA.sets[key], set = conf.sets[0];
+      el('li', '', list, W.example(conf.who, set.ask, set.answer));
     }
     const ceo = DATA.sets.ceo.sets[0];
-    el('li', '', list, `Heads-up from HAI: ${ceo.alert} HAI to the CEO: ${ceo.answer}`);
+    el('li', '', list, W.ceoExample(ceo.alert, ceo.answer));
     message.appendChild(said);
   }
 
@@ -149,7 +211,7 @@
       t.wordLines.push(words);
       return item;
     });
-    t.note.textContent = (w.note || '').replace(/^Read from /, '').replace(/\.$/, '');
+    t.note.textContent = w.note || '';
     t.note.hidden = !w.note;
   };
   // Show what the film says now: fade out, swap the words while hidden, fade in.
@@ -180,14 +242,14 @@
     const I = DATA.intro;
     if (f < I.engineer[0] - 8) {
       return [{key: 'years', who: '', on: f >= I.years[0] && f < I.years[1],
-               text: 'Years of company knowledge. Buried in files, emails and systems.', revealAt: I.years[0], position: 'arrival'}, null];
+               text: W.years, revealAt: I.years[0], position: 'arrival'}, null];
     }
     if (f < I.root[0] - 8) {
-      return [{key: 'engineer', icon: 'mark', tone: 'hai', who: 'HAI Seed engineer', on: f >= I.engineer[0] && f < I.engineer[1],
-               text: 'One Seed connects it all.', revealAt: I.engineer[0], position: 'arrival'}, null];
+      return [{key: 'engineer', icon: 'mark', tone: 'hai', who: W.engineer, on: f >= I.engineer[0] && f < I.engineer[1],
+               text: W.connects, revealAt: I.engineer[0], position: 'arrival'}, null];
     }
-    return [{key: 'seed', who: 'The Seed opens into three parts', on: f >= I.root[0] && f < I.root[1],
-             text: ['Root: your company’s living memory.', 'Kernel: the shared operating core.', 'Crown: company intelligence at work.'],
+    return [{key: 'seed', who: W.parts, on: f >= I.root[0] && f < I.root[1],
+             text: W.partLines,
              items: [f >= I.root[0], f >= I.kernel[0], f >= I.crown[0]], revealAt: [I.root[0], I.kernel[0], I.crown[0]], position: 'context'}, null];
   };
 
@@ -205,15 +267,15 @@
       if (id === 'ceo') {
         if (!within(b.ripen - 4, b.until)) continue;
         talk.box.classList.add('is-proactive');
-        return [{key: key + 'q', icon: 'siren', tone: 'alert', who: 'Heads-up from HAI', on: true, text: set.alert, revealAt: b.ripen - 4},
-                {key: key + 'a', icon: 'mark', tone: 'hai', who: 'HAI to the CEO', on: within(b.pick + 20, b.until),
+        return [{key: key + 'q', icon: 'siren', tone: 'alert', who: W.alert, on: true, text: set.alert, revealAt: b.ripen - 4},
+                {key: key + 'a', icon: 'mark', tone: 'hai', who: W.toCeo, on: within(b.pick + 20, b.until),
                  text: set.answer, note: sources(set.from), revealAt: b.pick + 20}];
       }
       const qa = Math.max((b.enter ?? b.start) + 30, (b.stop ?? b.ripen) - 24);
       if (!within(qa, b.until)) continue;
       talk.box.classList.remove('is-proactive');
-      return [{key: key + 'q', dot: conf.fruit, who: conf.who + ' asks', on: true, text: set.ask, revealAt: qa},
-              {key: key + 'a', icon: 'mark', tone: 'hai', who: 'HAI answers', on: within(b.ripen - 10, b.until),
+      return [{key: key + 'q', dot: conf.fruit, who: W.asks(conf.who), on: true, text: set.ask, revealAt: qa},
+              {key: key + 'a', icon: 'mark', tone: 'hai', who: W.answers, on: within(b.ripen - 10, b.until),
                text: set.answer, note: sources(set.from), revealAt: b.ripen - 10}];
     }
     return [null, null];
@@ -236,14 +298,14 @@
 
   // Measure all final text once per layout: word reveal never changes line wrapping or rail height.
   const samples = () => {
-    const context = [{components: true, who: 'The Seed opens into three parts', text: ['Root: your company’s living memory.', 'Kernel: the shared operating core.', 'Crown: company intelligence at work.']}];
+    const context = [{components: true, who: W.parts, text: W.partLines}];
     for (const [id, conf] of Object.entries(DATA.sets)) for (const set of conf.sets) {
-      context.push({who: id === 'ceo' ? 'Heads-up from HAI' : conf.who + ' asks', text: set.ask || set.alert});
-      context.push({who: id === 'ceo' ? 'HAI to the CEO' : 'HAI answers', text: set.answer, note: sources(set.from)});
+      context.push({who: id === 'ceo' ? W.alert : W.asks(conf.who), text: set.ask || set.alert});
+      context.push({who: id === 'ceo' ? W.toCeo : W.answers, text: set.answer, note: sources(set.from)});
     }
     return {context, arrival: [
-      {who: '', text: 'Years of company knowledge. Buried in files, emails and systems.'},
-      {who: 'HAI Seed engineer', text: 'One Seed connects it all.'}
+      {who: '', text: W.years},
+      {who: W.engineer, text: W.connects}
     ]};
   };
   const sampleText = DATA ? samples() : {context: [], arrival: []};
@@ -258,7 +320,7 @@
       meta.hidden = !record.who && !record.note;
       who.textContent = '';
       if (record.who === '2025') el('span', 'ht-year', who, record.who); else who.textContent = record.who;
-      note.textContent = (record.note || '').replace(/^Read from /, '').replace(/\.$/, '');
+      note.textContent = record.note || '';
       note.hidden = !record.note;
       body.textContent = '';
       for (const line of Array.isArray(record.text) ? record.text : [record.text]) el('span', 'ht-item', body, line);
@@ -466,9 +528,9 @@
     play(loop).then(ok => { if (ok) showVideo(loop); else if (!active) staticTalk(); });
   };
 
-  const replay = el('button', 'hero-film-replay', hero, 'Replay story');
+  const replay = el('button', 'hero-film-replay', hero, W.replay);
   replay.type = 'button';
-  replay.setAttribute('aria-label', 'Replay the HAI Seed story');
+  replay.setAttribute('aria-label', W.replayLabel);
   intro.addEventListener('ended', () => {
     try { sessionStorage.setItem(KEY, 'seen'); } catch {}
     startLoop(true);
@@ -495,7 +557,7 @@
     paused = false;
     hero.classList.remove('is-paused');
     toggle.setAttribute('aria-pressed', 'false');
-    toggle.setAttribute('aria-label', 'Pause animation');
+    toggle.setAttribute('aria-label', W.pause);
     if (active) active.pause();
     if (!intro.getAttribute('src')) intro.src = source(intro);
     intro.currentTime = 0;
@@ -535,10 +597,10 @@
   toggle.addEventListener('click', () => {
     paused = !paused;
     toggle.setAttribute('aria-pressed', String(paused));
-    toggle.setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation');
+    toggle.setAttribute('aria-label', paused ? W.play : W.pause);
     hero.classList.toggle('is-paused', paused);           // the ring and the siren stop with the film
     if (!active) return;
     if (paused) { active.pause(); stopTick(); }
     else if (visible && pageVisible) active.play().then(scheduleTick).catch(() => {});
   });
-})();
+});
