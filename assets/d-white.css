@@ -60,3 +60,18 @@ body.d-site .hero .button.hero-demo{background:#fff;border-color:#fff}
 /* 404 top space (2026-11-02): the 404 main starts with the page intro, with no breadcrumb to clear the fixed header. */
 .d-site main>.d-page-intro:first-child{padding-top:154px}
 @media(max-width:760px){.d-site main>.d-page-intro:first-child{padding-top:124px}}
+
+/* After the LT launch (2026-11-02): Lab diagrams on phones scroll in their own box, with a fade on the side that has more and
+   keyboard focus (d-site.js sets has-less, has-more and tabindex). */
+@property --lab-fade-l{syntax:'<length>';inherits:false;initial-value:0px}
+@property --lab-fade-r{syntax:'<length>';inherits:false;initial-value:0px}
+@media(max-width:640px){
+.d-site .lab-fig{overflow:visible}
+.d-site .lab-fig-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(to right,transparent,#000 var(--lab-fade-l),#000 calc(100% - var(--lab-fade-r)),transparent);mask-image:linear-gradient(to right,transparent,#000 var(--lab-fade-l),#000 calc(100% - var(--lab-fade-r)),transparent);transition:--lab-fade-l .2s cubic-bezier(.23,1,.32,1),--lab-fade-r .2s cubic-bezier(.23,1,.32,1)}
+.d-site .lab-fig-scroll.has-less{--lab-fade-l:24px}
+.d-site .lab-fig-scroll.has-more{--lab-fade-r:48px}
+}
+.d-site .lab-fig-scroll:focus-visible{outline:2px solid currentColor;outline-offset:4px;border-radius:6px}
+@media(prefers-reduced-motion:reduce){.d-site .lab-fig-scroll{transition:none}}
+/* A form message brought into view (d-site.js) keeps some room from the screen edge. */
+.d-site #request-status{scroll-margin-bottom:24px}
