@@ -4,12 +4,16 @@
   const menu = document.getElementById('nav-menu');
   if (!header || !button || !menu) return;
   let open = false;
+  // The labels follow the page language (Lithuanian pages ship their own; this kept resetting them to English).
+  const words = document.documentElement.lang === 'lt'
+    ? {open: 'Atidaryti meniu', close: 'Uždaryti meniu', menu: 'Meniu', closeShort: 'Uždaryti'}
+    : {open: 'Open menu', close: 'Close menu', menu: 'Menu', closeShort: 'Close'};
   function setOpen(next, returnFocus = false) {
     open = next;
     header.classList.toggle('is-open', open);
     button.setAttribute('aria-expanded', String(open));
-    button.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    button.querySelector('.menu-label').textContent = open ? 'Close' : 'Menu';
+    button.setAttribute('aria-label', open ? words.close : words.open);
+    button.querySelector('.menu-label').textContent = open ? words.closeShort : words.menu;
     menu.hidden = !open;
     if (returnFocus) button.focus();
   }
