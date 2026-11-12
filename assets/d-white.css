@@ -75,3 +75,11 @@ body.d-site .hero .button.hero-demo{background:#fff;border-color:#fff}
 @media(prefers-reduced-motion:reduce){.d-site .lab-fig-scroll{transition:none}}
 /* A form message brought into view (d-site.js) keeps some room from the screen edge. */
 .d-site #request-status{scroll-margin-bottom:24px}
+
+/* Site review (2026-11-12): the case card anchor lands just below the fixed header (html already has scroll-padding-top); two proofs and three points fill their rows; authority line. */
+.d-site #case{scroll-margin-top:8px}
+.d-site .d-outcomes.is-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.d-site .d-setup-steps.is-three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.d-site .d-case-origin{font-size:.9375rem;line-height:1.5;color:var(--dim);margin:18px 0 22px;max-width:46ch}
+.d-site .d-limits{margin:32px 0 0;font-size:1.125rem;line-height:1.5;max-width:52ch}
+@media(max-width:760px){.d-site .d-outcomes.is-two,.d-site .d-setup-steps.is-three{grid-template-columns:1fr}.d-site .d-limits{margin-top:24px;font-size:1.0625rem}}
