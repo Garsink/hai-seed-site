@@ -35,6 +35,7 @@ Selected outcomes from the founder's business and early adopters, in aviation, f
 
 Articles from HAI Seed: ideas, experiments and lessons from building company AI inside a working business.
 
+- [What I Mean by Company AI](https://haiseed.ai/lab/what-i-mean-by-company-ai/): Not a smarter chat window. A company that keeps what it knows, notices what matters and gets better at its own work. By the founder, Deividas Jurkštas.
 - [The Company of 2046: When AI Becomes the Business](https://haiseed.ai/lab/company-of-2046/): A hypothetical morning twenty years from now, and the uncomfortable questions it raises. By the founder, Deividas Jurkštas.
 - [The AI Was Running. The Work Wasn't.](https://haiseed.ai/lab/the-ai-was-running/): What we found when we checked whether our own AI was actually doing its job. By the founder, Deividas Jurkštas.
 - [155 Enquiries. Zero Replies. Stock on the Shelf.](https://haiseed.ai/lab/155-enquiries/): An aviation business had a sales problem it did not know existed. Here is how it surfaced.
@@ -59,3 +60,4 @@ Articles from HAI Seed: ideas, experiments and lessons from building company AI 
 - [Jūsų DI genialus. Kodėl jis nepažįsta jūsų verslo?](https://haiseed.ai/lt/lab/kodel-di-nepazista-jusu-verslo/): Keistas atotrūkis tarp to, ką DI žino apie pasaulį, ir to, ką jis žino apie jūsų įmonę.
 - [Svarbiausias klausimas yra tas, kurio niekas neuždavė](https://haiseed.ai/lt/lab/klausimas-kurio-niekas-neuzdave/): Kodėl įmonės DI, kuris tik atsako į klausimus, praleidžia didžiąją dalį to, kas svarbu.
 - [Pataisėte DI. Kodėl jis vėl suklydo?](https://haiseed.ai/lt/lab/pataisete-di/): Du pataisymai ir kodėl geras DI turėtų juos vertinti labai skirtingai.
+- [Ką vadinu įmonės DI](https://haiseed.ai/lt/lab/ka-vadinu-imones-di/): Ne protingesnis pokalbių langas. Įmonė, kuri išsaugo tai, ką žino, pastebi, kas svarbu, ir vis geriau atlieka savo darbą. Autorius: Deividas Jurkštas, HAI Seed įkūrėjas.

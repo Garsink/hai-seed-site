@@ -193,3 +193,7 @@
 @media (prefers-reduced-motion: reduce) {
   .lab-filters button { transition: none; }
 }
+
+/* Founder film article (2026-11-12): the vision film is the article hero. Native controls, no autoplay. */
+.lab-hero.is-film { max-width: 900px; }
+.lab-hero.is-film video { width: 100%; height: auto; aspect-ratio: 16 / 9; display: block; border-radius: 10px; background: #0f1a19; }
