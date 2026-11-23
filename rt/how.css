@@ -1,0 +1,190 @@
+/* How it works V2 (2026-11-22): film on arrival, then the explanation. Loaded by this page only; shared pages keep their bytes.
+   Tokens and type from rt.css / fp.css: Hanken Grotesk, --rt-ink, --rt-dim, --rt-line, --rt-accent, --rt-mint, --rt-ease, --rt-head. */
+body.hw-page .rt-header.is-over{background:#0d0d0d}
+body.hw-page .rt-header.is-over.is-open{background:#fff}
+.hw-alias{display:block;height:0;overflow:hidden}
+
+/* ---------- opening: the film, edge to edge, then one dark bar with the title and its controls ---------- */
+.hw-stage{background:#0d0d0d;color:#fff;font-family:var(--rt-font)}
+.hw-screen{position:relative;margin-inline:auto;width:min(100%,calc((100svh - var(--rt-head) - 116px - var(--hw-lane)) * 16 / 9));aspect-ratio:16/9;background:#000}
+.hw-stage{--hw-lane:72px}
+.hw-video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+.hw-big{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:14px;min-height:64px;padding:0 30px 0 24px;border:0;border-radius:999px;background:#fff;color:var(--rt-ink);font:600 1.125rem/1 var(--rt-font);cursor:pointer;transition:transform .2s var(--rt-ease)}
+.hw-big[hidden]{display:none}
+.hw-big svg{width:18px;height:20px;fill:currentColor}
+.hw-big:focus-visible{outline:3px solid var(--rt-mint);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){.hw-big:hover{transform:translate(-50%,-50%) scale(1.03)}}
+.hw-bar{background:#0d0d0d}
+.hw-bar-in{width:min(1240px,100% - 48px);margin-inline:auto;min-height:116px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 32px;padding-block:18px;box-sizing:border-box}
+.hw-bar-t{flex:1 1 380px;min-width:0}
+body.rt .rt-flow .hw-bar .rt-display{font-size:clamp(1.75rem,2.7vw,2.5rem);line-height:1.08;color:#fff;max-width:none}
+.hw-bar .fp-crumbs{margin-bottom:6px;color:#8c9796}
+.hw-bar .fp-crumbs a{color:#aab4b3;text-decoration-color:#4b5555}
+.hw-bar .fp-crumbs [aria-current]{color:#fff}
+.hw-ctrl{display:flex;flex-wrap:wrap;gap:8px}
+.hw-ctrl[hidden]{display:none}
+.hw-cb{min-height:44px;padding:0 18px;border:1px solid #3d4545;border-radius:999px;background:transparent;color:#fff;font:500 .9375rem/1 var(--rt-font);cursor:pointer;transition:background-color .16s var(--rt-ease),border-color .16s var(--rt-ease),color .16s var(--rt-ease)}
+.hw-ic{width:44px;min-width:44px;padding:0;display:inline-grid;place-items:center}
+.hw-ic svg{width:20px;height:20px;fill:currentColor}
+.hw-ic .hw-i-line{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hw-ic .hw-i-play{display:none}
+.hw-ic.is-paused .hw-i-play{display:inline}.hw-ic.is-paused .hw-i-pause{display:none}
+.hw-ctrl{flex-wrap:nowrap}
+.hw-cb-sound{background:#fff;border-color:#fff;color:var(--rt-ink);font-weight:600}
+.hw-cb-sound[aria-pressed="true"]{background:transparent;color:#fff;border-color:#3d4545;font-weight:500}
+.hw-cb:focus-visible{outline:2px solid var(--rt-mint);outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.hw-cb:hover{border-color:var(--rt-mint)}}
+body.rt .rt-flow .hw-meta{flex-basis:100%;font-size:.875rem;color:#8c9796;margin-top:-4px}
+.hw-meta a{color:#aab4b3;text-underline-offset:3px}
+
+/* ---------- one definition, still in the film's dark ---------- */
+.hw-def{background:#0d0d0d;color:#fff;padding-block:clamp(40px,5vw,72px) clamp(72px,10vw,140px);border-top:1px solid #1d2222}
+.hw-cue{display:inline-flex;align-items:center;gap:10px;color:#aab4b3;font:500 1rem/1 var(--rt-font);text-decoration:none;margin-bottom:clamp(28px,4vw,48px)}
+.hw-cue i{font-style:normal;color:var(--rt-mint)}
+@media(prefers-reduced-motion:no-preference){.hw-cue i{animation:hw-cue 2.4s var(--rt-ease) infinite}@keyframes hw-cue{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(4px)}}}
+@media(hover:hover) and (pointer:fine){.hw-cue:hover{color:#fff}}
+body.rt .rt-flow .hw-def-text{font-size:clamp(1.625rem,3.3vw,3rem);line-height:1.18;font-weight:500;letter-spacing:-.02em;color:#fff;max-width:22em;text-wrap:balance}
+
+/* ---------- three layers: the homepage's own pieces, on the figures' own backdrop ---------- */
+.hw-inside{background:#eceeee}
+.hw-layer + .hw-layer .hw-layer-in{border-top:1px solid #d6dbdb}
+.hw-layer-in{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px clamp(32px,5vw,80px);align-items:center;padding-block:clamp(56px,8vw,112px)}
+body.rt .rt-flow .hw-k{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;font-size:1rem;color:var(--rt-dim);margin-bottom:14px}
+.hw-k b{font-weight:600;color:var(--rt-ink)}
+body.rt .rt-flow .hw-h{font-size:clamp(1.75rem,2.9vw,2.5rem);line-height:1.1;font-weight:600;letter-spacing:-.02em;text-wrap:balance;margin-bottom:18px;max-width:14em}
+body.rt .rt-flow .hw-where{margin-top:18px;padding-top:16px;border-top:1px solid #d6dbdb;font-size:.9375rem;line-height:1.55;color:var(--rt-dim);max-width:34em}
+
+.hw-vis{position:relative;container-type:inline-size;aspect-ratio:100/75}
+.hw-v-crown{aspect-ratio:100/80}
+.hw-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hw-lines path{fill:none;stroke:#7fd0bd;stroke-width:1.6px;vector-effect:non-scaling-stroke;stroke-linecap:round}
+.hw-lines .hw-ring{stroke:#9ad9c9;stroke-width:2px}
+.hw-lines .hw-bound{fill:none;stroke:#b8c2c1;stroke-width:1.2px;stroke-dasharray:5 6;vector-effect:non-scaling-stroke}
+.hw-lines .hw-back{stroke:#2f9e86;stroke-dasharray:4 5}
+.hw-dot{fill:#fff;stroke:#2fb597;stroke-width:.5}
+.hw-carry rect{fill:#8fd9c8;stroke:#2f9e86;stroke-width:.3}
+.hw-pc{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);width:calc(var(--w) * 1%);transform:translate(-50%,-50%);pointer-events:none}
+.hw-pc img{display:block;width:100%;height:auto}
+.hw-fig img{-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 80%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 80%,transparent 100%)}
+.hw-tag{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);transform:translate(-50%,-50%);white-space:nowrap;font:500 clamp(12px,2.15cqw,15px)/1.2 var(--rt-font);color:var(--rt-ink);background:#fff;border:1px solid #d3dad9;border-radius:999px;padding:.35em .8em;transition:background-color .3s var(--rt-ease),border-color .3s var(--rt-ease)}
+.hw-tag-back{color:#1f6f5e;border-color:#9ad9c9}
+.hw-tag-l{transform:translate(0,-50%)}
+.hw-tag-r{transform:translate(-100%,-50%)}
+.hw-tag-core{background:#0d0d0d;color:#fff;border-color:#0d0d0d}
+.hw-tag.is-on{background:#c9efe5;border-color:#7fd0bd}
+.hw-boundlabel{position:absolute;left:5.5%;bottom:7%;font:500 clamp(12px,1.9cqw,14px)/1.2 var(--rt-font);color:var(--rt-dim)}
+/* idle motion: small, independent, only while the scene is on screen */
+@media(prefers-reduced-motion:no-preference){
+ .hw-float img{animation:hw-bob 5.6s ease-in-out infinite alternate;animation-play-state:paused}
+ .hw-f1 img{animation-duration:6.4s;animation-delay:-2s}
+ .hw-f2 img{animation-duration:7.2s;animation-delay:-4s}
+ .hw-vis.is-live .hw-float img{animation-play-state:running}
+ @keyframes hw-bob{from{transform:translateY(-2.5%) rotate(-1deg)}to{transform:translateY(2.5%) rotate(1deg)}}
+}
+@media(prefers-reduced-motion:reduce){.hw-dots{display:none}}
+
+/* ---------- tools change, the foundation stays and grows ---------- */
+.hw-grow{background:#0d0d0d;color:#fff;padding-block:clamp(72px,9vw,128px)}
+.hw-grow-in{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:48px clamp(32px,5vw,80px);align-items:center}
+body.rt .rt-flow .hw-grow .rt-h2{color:#fff}
+body.rt .rt-flow .hw-grow-p{margin-top:20px;font-size:clamp(1.0625rem,1.4vw,1.1875rem);line-height:1.55;color:#c9d2d0;max-width:30em}
+.hw-swap{font-family:var(--rt-font)}
+.hw-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.hw-chip{display:grid;place-items:center;min-height:52px;border:1px solid #3d4545;border-radius:999px;color:#fff;font-size:clamp(.875rem,1.2vw,1rem);font-weight:500;overflow:hidden}
+.hw-chip i{grid-area:1/1;font-style:normal;white-space:nowrap}
+.hw-chip i + i{opacity:0}
+.hw-stems{display:grid;grid-template-columns:repeat(3,1fr);height:44px}
+.hw-stems i{justify-self:center;width:1px;background:linear-gradient(#3d4545,var(--rt-mint))}
+.hw-base{position:relative;border-radius:14px;background:#161b1b;border:1px solid #2a3232;padding:22px 24px;overflow:hidden}
+.hw-base span{position:relative;z-index:1;font-size:1.0625rem;font-weight:600}
+.hw-fill{position:absolute;left:0;bottom:0;height:4px;width:100%;background:var(--rt-mint);transform:scaleX(.34);transform-origin:left;transition:transform 6s cubic-bezier(.23,1,.32,1)}
+.hw-swap.is-live .hw-fill{transform:scaleX(.88)}
+@media(prefers-reduced-motion:no-preference){
+ .hw-chip i{animation:hw-a 7s var(--rt-ease) infinite;animation-play-state:paused}
+ .hw-chip i + i{animation-name:hw-b}
+ .hw-chip:nth-child(2) i{animation-delay:-2.3s}.hw-chip:nth-child(3) i{animation-delay:-4.6s}
+ .hw-swap.is-live .hw-chip i{animation-play-state:running}
+ @keyframes hw-a{0%,42%{opacity:1;transform:none}50%,92%{opacity:0;transform:translateY(-40%)}100%{opacity:1;transform:none}}
+ @keyframes hw-b{0%,42%{opacity:0;transform:translateY(40%)}50%,92%{opacity:1;transform:none}100%{opacity:0;transform:translateY(40%)}}
+}
+@media(prefers-reduced-motion:reduce){.hw-fill{transition:none;transform:scaleX(.88)}}
+
+/* ---------- a simple start, contact ---------- */
+body.rt .rt-flow .hw-stages{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px clamp(24px,4vw,56px);margin-top:clamp(28px,3.4vw,44px);counter-reset:hw-st;border-top:1px solid var(--rt-ink)}
+.hw-stages > li{counter-increment:hw-st;padding-top:22px}
+.hw-stages .rt-h3::before{content:counter(hw-st);display:inline-block;min-width:1.35em;color:var(--rt-accent)}
+body.rt .rt-flow .hw-stages .rt-p{margin-top:8px}
+body.rt .rt-flow .hw-start-more{margin-top:32px}
+body.rt .rt-flow .hw-contact-more{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:18px}
+.hw-credits{margin-top:clamp(40px,5vw,64px)}
+body.rt .rt-flow .hw-credits p{max-width:60em}
+.hw-credits a{color:var(--rt-dim);text-underline-offset:3px}
+
+.rt-flow .hw-layer[id],.rt-flow .hw-k[id],.rt-flow .hw-alias,.rt-flow .hw-credits,.rt-flow .hw-where{scroll-margin-top:calc(var(--rt-head) + 24px)}
+
+@media(max-width:900px){
+ .hw-layer-in,.hw-grow-in{grid-template-columns:1fr}
+ body.rt .rt-flow .hw-stages{grid-template-columns:1fr;gap:6px}
+}
+@media(max-width:700px){
+ .hw-screen{width:100%}
+ .hw-bar-in{min-height:0;padding-block:16px 20px}
+ .hw-cb{padding:0 14px;font-size:.875rem}
+ .hw-big{min-height:52px;padding:0 22px 0 18px;font-size:1rem}
+ .hw-layer-in{gap:20px}
+ .hw-vis{margin-inline:-8px}
+}
+
+/* small scenes (phones): drop the boundary caption (the paragraph says it), lighter role labels, shorter return label above the lines */
+@container (max-width:480px){
+ .hw-boundlabel{display:none}
+ .hw-v-crown .hw-tag:not(.hw-tag-back){background:none;border-color:transparent;padding:.2em 0;font-weight:600}
+ .hw-v-crown .hw-tag-l{top:4% !important}
+ .hw-wide{display:none}
+}
+
+/* ---------- V3: sound and key messages, directly under the picture (never over it) ---------- */
+.hw-lane{width:min(100%,calc((100svh - var(--rt-head) - 116px - var(--hw-lane)) * 16 / 9));margin-inline:auto;height:var(--hw-lane);box-sizing:border-box;display:flex;align-items:center;gap:16px;padding:0 clamp(12px,2vw,20px);background:#000;border-top:1px solid #1d2222}
+.hw-lane[hidden]{display:none}
+.hw-snd{flex:none;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 20px 0 16px;border:0;border-radius:999px;background:#fff;color:var(--rt-ink);font:600 1rem/1 var(--rt-font);cursor:pointer;transition:background-color .16s var(--rt-ease),color .16s var(--rt-ease)}
+.hw-snd svg{width:22px;height:22px;fill:currentColor}
+.hw-snd .hw-i-line{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.hw-snd .hw-i-mute{display:none}
+.hw-snd-short{display:none}
+.hw-snd:focus-visible{outline:3px solid var(--rt-mint);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){.hw-snd:hover{background:var(--rt-mint)}}
+/* after the first use it becomes a quiet mute / unmute switch in the same place */
+.hw-snd.is-used{background:transparent;color:#fff;border:1px solid #3d4545;padding:0 16px 0 12px;font-weight:500}
+.hw-snd.is-used.is-muted .hw-i-wave{display:none}.hw-snd.is-used.is-muted .hw-i-mute{display:inline}
+body.rt .rt-flow .hw-line{flex:1;min-width:0;color:#fff;font-size:clamp(.9375rem,1.35vw,1.1875rem);line-height:1.35;font-weight:500;text-wrap:balance;transition:opacity .18s var(--rt-ease)}
+.hw-line.is-out{opacity:0}
+@media(prefers-reduced-motion:reduce){.hw-line{transition:none}}
+.hw-tag-core{font-weight:600}
+.hw-after{padding-bottom:clamp(56px,8vw,104px)}
+body.rt .rt-flow .hw-after p{border-top:1px solid #d6dbdb;padding-top:28px;font-size:clamp(1.125rem,1.6vw,1.375rem);line-height:1.45;font-weight:500;color:var(--rt-ink);max-width:34em}
+@media(max-width:700px){
+ .hw-stage{--hw-lane:84px}
+ .hw-lane{width:100%;gap:12px;padding:0 12px}
+ .hw-snd{min-height:48px;padding:0 14px 0 12px;font-size:.9375rem}
+ body.rt .rt-flow .hw-line{font-size:.875rem;line-height:1.3}
+}
+@media(max-width:380px){.hw-snd-long{display:none}.hw-snd-short{display:inline}}
+
+/* ---------- V3 final: one strip under the picture. Desktop: sound | key line | pause, restart, full screen.
+   Phones: the key line gets the full width at a readable size, with the controls on their own row below it. ---------- */
+.hw-lane .hw-ctrl{display:contents}
+.hw-lane .hw-snd{order:-1}
+.hw-lane .hw-cb{flex:none}
+@media(max-width:700px){
+ .hw-lane{height:auto;display:block;padding:12px 16px 14px}
+ body.rt .rt-flow .hw-line{display:flex;align-items:center;height:calc(3 * 1.32em);font-size:1.0625rem;line-height:1.32;margin-bottom:10px}
+ .hw-lane .hw-ctrl{display:flex;flex-wrap:nowrap;align-items:center;gap:8px}
+ .hw-lane .hw-snd{min-height:44px;margin-right:auto}
+}
+
+/* ---------- short / landscape screens: the film keeps only header + strip in view (the title may fall below the fold),
+   never shrinks below a usable size, and the strip under it uses the page width instead of the film width ---------- */
+@media(min-width:701px) and (max-height:760px){
+ .hw-screen{width:min(100%,max(calc((100svh - var(--rt-head) - var(--hw-lane)) * 16 / 9),440px))}
+ .hw-lane{width:min(100%,1240px)}
+}
