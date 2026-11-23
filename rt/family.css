@@ -1,0 +1,71 @@
+/* Family layer (2026-11-23): the remaining menu pages join Home, How it works and Results.
+   Dark opening, dark closing band, one button and link style, no boxed cards. Loaded last on these pages only. */
+body.fm-page .rt-header.is-over{background:#0d0d0d}
+body.fm-page .rt-header.is-over.is-open{background:#fff}
+body.fm-page .rt-footer{border-top:0}
+
+/* ---- dark opening: pages built in the new system ---- */
+.rt-head.fm-stage{background:var(--rt-night);color:#fff;padding-block:calc(var(--rt-head) + clamp(40px,6vw,88px)) clamp(48px,6vw,88px)}
+.rt-head.fm-stage .rt-wrap{display:block}
+body.rt .rt-flow .fm-stage .rt-display{color:#fff}
+body.rt .rt-flow .fm-stage .rt-lead{color:#b9c2c1}
+.fm-stage .fp-crumbs,.fm-stage .fp-crumbs a{color:#9aa5a4}
+.fm-stage .fp-crumbs [aria-current]{color:#fff}
+body.rt .rt-flow .fm-stage .rs-says{list-style:none;padding:0;margin:clamp(40px,5vw,72px) 0 0 !important;border-top:1px solid #2a3030}
+.fm-stage .rs-says li{border-bottom:1px solid #2a3030}
+.fm-stage .rs-says a{display:block;padding-block:clamp(16px,2vw,26px);color:#dfe5e4;text-decoration:none;font-size:clamp(1.25rem,2.5vw,2.125rem);line-height:1.2;letter-spacing:-.015em;text-wrap:balance}
+.fm-stage .rs-says b{color:var(--rt-mint);font-weight:600;font-variant-numeric:tabular-nums}
+.fm-stage .rs-says a::after{content:"↓";margin-left:.5em;color:#6f7b7a}
+.fm-stage .rs-says a:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:4px}
+
+/* ---- dark closing band: new-system pages reuse the Results rules ---- */
+body.fm-page .fp-end.rs-end{background:var(--rt-night);color:#fff;padding-block:clamp(64px,8vw,112px)}
+body.fm-page .fp-end.rs-end .rt-wrap{border-top:0;padding-top:0}
+body.rt .rt-flow .rs-end .rt-h2{color:#fff}
+body.rt .rt-flow .rs-end .rt-lead{color:#aab4b3}
+.rs-end .rt-actions .rt-link{color:#fff;text-decoration-color:#5b6667}
+
+/* ---- no boxed cards ---- */
+body.fm-page .rt-flow .rt-band{background:none;border:0;border-top:1px solid var(--rt-ink);border-bottom:1px solid var(--rt-line);border-radius:0;box-shadow:none;padding:clamp(22px,2.6vw,32px) 0;max-width:none;font-size:clamp(1.125rem,1.7vw,1.5rem);line-height:1.35;font-weight:500;letter-spacing:-.01em}
+body.fm-page .rt-form{box-shadow:none;border:1px solid var(--rt-line);background:#fff}
+@media(max-width:820px){body.fm-page .rt-split{grid-template-columns:1fr !important}}
+
+/* ---- old-site pages: the same opening, drawn full width behind a width-limited block ---- */
+body.rt-legacy.fm-page main > nav.d-breadcrumb:has(+ .fm-stage),body.rt-legacy.fm-page .fm-stage{background:var(--rt-night);box-shadow:0 0 0 100vmax var(--rt-night);clip-path:inset(0 -100vmax);color:#fff}
+body.rt-legacy.fm-page main > nav.d-breadcrumb:has(+ .fm-stage){margin-top:0 !important;padding-top:clamp(28px,4vw,56px) !important;padding-bottom:0 !important}
+body.rt-legacy.fm-page .fm-stage{margin-top:0 !important;margin-bottom:clamp(40px,5vw,72px) !important;padding-block:clamp(20px,3vw,40px) clamp(48px,6vw,88px) !important;border:0 !important}
+body.rt-legacy.fm-page .fm-stage h1{color:#fff;font-size:clamp(2.5rem,5.2vw,4.375rem);line-height:1.03;font-weight:600;letter-spacing:-.025em;text-wrap:balance}
+body.rt-legacy.fm-page .fm-stage .lead,body.rt-legacy.fm-page .fm-stage p{color:#b9c2c1}
+body.rt-legacy.fm-page main > nav.d-breadcrumb:has(+ .fm-stage) a,body.rt-legacy.fm-page .fm-stage nav a,body.rt-legacy.fm-page main > nav.d-breadcrumb:has(+ .fm-stage),body.rt-legacy.fm-page .fm-stage nav{color:#9aa5a4}
+body.rt-legacy.fm-page main > nav.d-breadcrumb:has(+ .fm-stage) [aria-current],body.rt-legacy.fm-page .fm-stage nav [aria-current]{color:#fff}
+/* one button and one link style */
+body.rt-legacy.fm-page main .button{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;border:1.5px solid var(--rt-ink);background:var(--rt-ink);color:#fff;font:600 1rem/1 var(--rt-font);text-decoration:none;box-shadow:none}
+body.rt-legacy.fm-page main .button svg,body.rt-legacy.fm-page main .button .arrow{display:none}
+body.rt-legacy.fm-page main p a:not(.button),body.rt-legacy.fm-page main .text-link,body.rt-legacy.fm-page main .lab-more a{color:var(--rt-ink);font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--rt-accent)}
+/* reading size for the Lab articles */
+body.rt-legacy.fm-page .lab-article h1{font-size:clamp(2.25rem,4.6vw,3.75rem);line-height:1.05;font-weight:600;letter-spacing:-.025em}
+body.rt-legacy.fm-page .lab-article .lab-body p,body.rt-legacy.fm-page .lab-article .lab-body li{font-size:clamp(1.0625rem,1.35vw,1.1875rem);line-height:1.62}
+/* closing band, self-contained so it looks the same on every page generation */
+.fm-end{background:var(--rt-night);color:#fff;padding-block:clamp(64px,8vw,112px);margin-top:clamp(56px,7vw,96px)}
+.fm-end-in{width:min(1240px,100% - 48px);margin-inline:auto;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:24px 48px;align-items:end}
+.fm-end h2{margin:0;color:#fff;font:600 clamp(1.9375rem,3.5vw,2.875rem)/1.08 var(--rt-font);letter-spacing:-.02em;text-wrap:balance}
+.fm-end p{margin:16px 0 0;color:#aab4b3;font:400 clamp(1.1875rem,1.6vw,1.3125rem)/1.5 var(--rt-font);max-width:31em}
+.fm-end-act{display:flex;justify-content:flex-end}
+body.fm-page .pg-cta{background:var(--rt-night) !important;color:#fff}
+body.fm-page .pg-cta h2{color:#fff}
+body.fm-page .pg-cta .lead,body.fm-page .pg-cta p{color:#aab4b3}
+body.fm-page .pg-cta strong{color:#fff}
+body.fm-page .pg-cta .button{background:#fff !important;color:var(--rt-ink) !important;border-color:#fff !important}
+@media(max-width:820px){.fm-end-in{grid-template-columns:1fr}.fm-end-act{justify-content:stretch}}
+
+/* fixes after the first look: the old intro blocks were tall and centred, and two of their figures are drawn on white */
+body.rt-legacy.fm-page .fm-stage{min-height:0 !important;background-image:none !important;align-items:start !important}
+body.rt-legacy.fm-page .cmp-intro.fm-stage figure,body.rt-legacy.fm-page .cmp-intro.fm-stage > img,body.rt-legacy.fm-page .cmp-intro.fm-stage > div:last-child:has(img),
+body.rt-legacy.fm-page .lab-intro.fm-stage figure,body.rt-legacy.fm-page .lab-intro.fm-stage > img,body.rt-legacy.fm-page .lab-intro.fm-stage > div:last-child:has(img){display:none !important}
+body.rt-legacy.fm-page .cmp-intro.fm-stage,body.rt-legacy.fm-page .lab-intro.fm-stage{display:block !important}
+body.fm-page .pg-cta a:not(.button){color:#fff !important;text-decoration-color:#5b6667}
+/* the old site's film-hero rules also match the opening's marker classes: undo their full-screen height and overlay */
+body.rt-legacy.fm-page .fm-stage{height:auto !important;max-height:none !important}
+body.rt-legacy.fm-page .fm-stage::before,body.rt-legacy.fm-page .fm-stage::after{display:none !important}
+body.rt-legacy.fm-page .lab-filters [aria-pressed="true"]{background:var(--rt-ink) !important;border-color:var(--rt-ink) !important;color:#fff !important}
+body.rt-legacy.fm-page .page-head.fm-stage{padding-top:clamp(72px,8vw,112px) !important}
