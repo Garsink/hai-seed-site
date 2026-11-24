@@ -69,3 +69,22 @@ body.rt-legacy.fm-page .fm-stage{height:auto !important;max-height:none !importa
 body.rt-legacy.fm-page .fm-stage::before,body.rt-legacy.fm-page .fm-stage::after{display:none !important}
 body.rt-legacy.fm-page .lab-filters [aria-pressed="true"]{background:var(--rt-ink) !important;border-color:var(--rt-ink) !important;color:#fff !important}
 body.rt-legacy.fm-page .page-head.fm-stage{padding-top:clamp(72px,8vw,112px) !important}
+
+/* 2026-11-24: comparison table and small note inside a Lab article */
+body.rt-legacy.fm-page .lab-body .lab-table{overflow-x:auto;margin-block:1.4em;-webkit-overflow-scrolling:touch}
+body.rt-legacy.fm-page .lab-body .lab-table:focus-visible{outline:2px solid var(--rt-ink);outline-offset:4px}
+body.rt-legacy.fm-page .lab-body table{border-collapse:collapse;width:100%;min-width:540px;font-size:1rem;line-height:1.45}
+body.rt-legacy.fm-page .lab-body th,body.rt-legacy.fm-page .lab-body td{text-align:left;vertical-align:top;padding:14px 18px 14px 0;border-bottom:1px solid var(--rt-line)}
+body.rt-legacy.fm-page .lab-body thead th{font-weight:600;color:var(--rt-ink);border-bottom-color:var(--rt-ink)}
+body.rt-legacy.fm-page .lab-body thead th span{display:block;font-weight:400;font-size:.9375rem;color:#4a545c}
+body.rt-legacy.fm-page .lab-body tbody th{font-weight:600;color:var(--rt-ink);width:26%}
+body.rt-legacy.fm-page .lab-body td{color:#2f3840}
+body.rt-legacy.fm-page .lab-body .lab-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+body.rt-legacy.fm-page .lab-article .lab-body p.lab-note{font-size:.9375rem;color:#4a545c}
+@media(max-width:600px){
+ body.rt-legacy.fm-page .lab-body .lab-table{overflow-x:visible}
+ body.rt-legacy.fm-page .lab-body table{min-width:0;font-size:.9375rem;line-height:1.4;table-layout:fixed}
+ body.rt-legacy.fm-page .lab-body th,body.rt-legacy.fm-page .lab-body td{padding:12px 10px 12px 0;overflow-wrap:break-word}
+ body.rt-legacy.fm-page .lab-body tbody th,body.rt-legacy.fm-page .lab-body thead th:first-child{width:27%}
+ body.rt-legacy.fm-page .lab-body thead th span{font-size:.8125rem}
+}
